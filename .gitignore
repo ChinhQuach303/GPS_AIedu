@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+
+# Local / generated data
+data/raw/_tmp_*.csv
+data/raw/mock_week1_realistic.csv
+
+# Apps Script / editor artifacts
+src/tools/__pycache__/
