@@ -1,21 +1,21 @@
-submission_id,student_id,student_id_hash,timestamp,gps_step,question_text,ai_response,topic,satisfaction,difficulty,notes
-b2f1e2c1-7e62-4c3e-9b1b-8f2d2a8e1111,HS0001,HASH_HS0001,2026-03-10T08:10:00+07:00,G,Giải thích sự khác nhau giữa hoán vị và tổ hợp,AI giải thích khái niệm,To hop,4,3,
-4a1e2c1b-7f62-4c3e-9b1b-8f2d2a8e1112,HS0002,HASH_HS0002,2026-03-10T08:20:00+07:00,G,Giai thich giai thua la gi va vi sao thu tu quan trong,AI giải thích giai thua,To hop,5,2,
-9c2e2b1c-7f62-4c3e-9b1b-8f2d2a8e1113,HS0003,HASH_HS0003,2026-03-10T08:25:00+07:00,G,Giải thích xác suất có điều kiện bằng ví dụ,AI giải thích khái niệm,Xac suat,4,3,
-0c3f2c1d-7f62-4c3e-9b1b-8f2d2a8e1114,HS0004,HASH_HS0004,2026-03-10T08:35:00+07:00,G,Trình bày tham số của phân phối nhị thức,AI giải thích n va p,Xac suat,4,3,
-1d4f2d1e-7f62-4c3e-9b1b-8f2d2a8e1115,HS0005,HASH_HS0005,2026-03-10T08:40:00+07:00,G,Giải thích xác suất bù,AI giải thích khái niệm,Xac suat,4,2,
-2e5f2e1f-7f62-4c3e-9b1b-8f2d2a8e1116,HS0001,HASH_HS0001,2026-03-10T09:00:00+07:00,P,Lớp có 8 nam và 7 nữ chọn 3 học sinh hay hướng dẫn từng bước,AI gợi ý theo bước,To hop,4,4,
-3f6a2f1a-7f62-4c3e-9b1b-8f2d2a8e1117,HS0002,HASH_HS0002,2026-03-10T09:10:00+07:00,P,Từ 10 quyển sách chọn 4 quyển đi du lịch hãy hướng dẫn,AI gợi ý theo bước,To hop,4,3,
-4a7b2a1b-7f62-4c3e-9b1b-8f2d2a8e1118,HS0003,HASH_HS0003,2026-03-10T09:20:00+07:00,P,Gieo xúc xắc 2 lần tìm xác suất tổng bằng 7 theo từng bước,AI gợi ý theo bước,Xac suat,3,4,
-5b8c2b1c-7f62-4c3e-9b1b-8f2d2a8e1119,HS0004,HASH_HS0004,2026-03-10T09:30:00+07:00,P,Rút một lá từ bộ bài tính xác suất lá cơ hoặc lá vua hãy giúp em,AI gợi ý theo bước,Xac suat,3,3,
-6c9d2c1d-7f62-4c3e-9b1b-8f2d2a8e1120,HS0005,HASH_HS0005,2026-03-10T09:40:00+07:00,P,Túi có 5 bi đỏ và 4 bi xanh rút đỏ rồi xanh không hoàn lại hướng dẫn em,AI gợi ý theo bước,Xac suat,4,4,
-7d0e2d1e-7f62-4c3e-9b1b-8f2d2a8e1121,HS0001,HASH_HS0001,2026-03-10T10:00:00+07:00,S,Giải bài chọn 5 học sinh từ 12,AI kiểm tra lời giải,To hop,5,3,
-8e1f2e1f-7f62-4c3e-9b1b-8f2d2a8e1122,HS0002,HASH_HS0002,2026-03-10T10:10:00+07:00,S,Giải bài gieo một lần xác suất được số lớn hơn 4,AI kiểm tra lời giải,Xac suat,5,2,
-9f2a2f1a-7f62-4c3e-9b1b-8f2d2a8e1123,HS0003,HASH_HS0003,2026-03-10T10:20:00+07:00,S,Giải bài gieo hai xúc xắc xác suất tổng bằng 9,AI kiểm tra lời giải,Xac suat,4,3,
-0a3b2a1b-7f62-4c3e-9b1b-8f2d2a8e1124,HS0004,HASH_HS0004,2026-03-10T10:30:00+07:00,S,Giải bài rút một lá xác suất là vua hoặc hậu,AI kiểm tra lời giải,Xac suat,4,3,
-1b4c2b1c-7f62-4c3e-9b1b-8f2d2a8e1125,HS0005,HASH_HS0005,2026-03-10T10:40:00+07:00,S,Giải bài tung đồng xu 5 lần xác suất ít nhất 3 mặt ngửa,AI kiểm tra lời giải,Xac suat,4,4,
-2c5d2c1d-7f62-4c3e-9b1b-8f2d2a8e1126,HS0001,HASH_HS0001,2026-03-10T11:00:00+07:00,P,Vừa giải thích vừa cho em đáp án,AI gợi ý chung,Mo ho,2,4,mo_ho
-3d6e2d1e-7f62-4c3e-9b1b-8f2d2a8e1127,HS0002,HASH_HS0002,2026-03-10T11:10:00+07:00,P,Em làm rồi kiểm tra giúp em,AI kiểm tra bước,Mo ho,3,3,mo_ho
-4e7f2e1f-7f62-4c3e-9b1b-8f2d2a8e1128,HS0003,HASH_HS0003,2026-03-10T11:20:00+07:00,P,Đây là lời giải của em nhờ kiểm tra từng bước,AI kiểm tra bước,Mo ho,3,3,mo_ho
-5f8a2f1a-7f62-4c3e-9b1b-8f2d2a8e1129,HS0004,HASH_HS0004,2026-03-10T11:30:00+07:00,S,Cho em đáp án cuối nhanh,AI từ chối đáp án,Mo ho,2,4,mo_ho
-6a9b2a1b-7f62-4c3e-9b1b-8f2d2a8e1130,HS0005,HASH_HS0005,2026-03-10T11:40:00+07:00,P,Cho em công thức rồi giải luôn,AI gợi ý chung,Mo ho,2,4,mo_ho
+student_id,gps_step,question_text,ai_response,satisfaction,difficulty
+HS001,G,Giải thích hoán vị là gì?,Hoán vị n phần tử là cách sắp xếp thứ tự của chúng.,5,2
+HS001,P,Bấm máy tính tính hoán vị 5!,Bạn nhấn 5 rồi phím !,4,1
+HS002,G,Sự khác nhau giữa chỉnh hợp và tổ hợp?,Chỉnh hợp có tính thứ tự, tổ hợp thì không.,5,3
+HS003,P,Có 10 người chọn 3 người đi thi, tôi dùng C hay A?,Chọn người không phân biệt thứ tự nên dùng C.,4,2
+HS004,S,Bài của em đúng chưa: C(5,2)=10?,Đúng rồi, cách tính của bạn rất chuẩn.,5,1
+HS001,G,Quy tắc nhân dùng khi nào?,Dùng khi các hành động thực hiện liên tiếp nhau.,4,2
+HS005,P,Hướng dẫn bước 1 bài xác suất này.,Đầu tiên bạn liệt kê số phần tử không gian mẫu.,4,3
+HS002,P,Em tính sai bước này rồi phải không?,Chỗ này bạn cần lấy 10 chia 2 chứ không phải nhân.,4,2
+HS003,G,Tại sao 0! bằng 1?,Đó là quy ước toán học để đảm bảo các công thức đồng nhất.,5,4
+HS004,P,Cần 3 bước để giải, bước 2 làm gì?,Bước 2 bạn áp dụng công thức nCr vào dữ liệu đã tìm.,4,2
+HS001,S,Đáp án 120 cách đúng không AI?,Chính xác, bạn đã làm rất tốt!,5,1
+HS006,G,Xác suất là gì cho dễ hiểu?,Là khả năng xảy ra của một sự việc.,5,2
+HS002,G,Định nghĩa biến cố độc lập.,Hai biến cố không ảnh hưởng đến nhau khi xảy ra.,5,3
+HS005,P,Tính nCr trên máy tính Casio như thế nào?,Nhấn n rồi Shift rồi phím phép chia (nCr).,4,1
+HS003,S,Lời giải này ổn không ạ?,Logic rất tốt nhưng bạn cần ghi rõ đơn vị.,4,2
+HS001,G,Công thức tính xác suất cổ điển?,P(A) = n(A) / n(Omega).,5,2
+HS004,P,Em bị kẹt ở bước tìm n(A), giúp em.,Bạn hãy liệt kê các cặp số có tổng bằng 7.,4,3
+HS006,P,Hướng dẫn tính xác suất có điều kiện.,Bạn tính P(A và B) trước rồi chia cho P(B).,4,4
+HS002,S,Em ra kết quả 0.5, đúng không?,0.5 là kết quả chính xác cho bài này.,5,1
+HS005,S,Giải giúp em bài này với.,Tôi không giải hộ, nhưng tôi có thể hướng dẫn bạn bước đầu.,3,5

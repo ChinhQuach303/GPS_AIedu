@@ -1,54 +1,27 @@
-# Kế hoạch kiểm thử nội bộ Tuần 1
+# Kế hoạch Kiểm thử Nội bộ - Tuần 1 (v1.0)
 
-## Mục tiêu
-Kiểm thử luồng Form → Sheet → Apps Script → Dashboard trước khi pilot tuần 2.
+## 1. Đối tượng kiểm thử
+- Hệ thống thu thập dữ liệu (Google Form -> Sheet)
+- Logic tự động gán nhãn (Apps Script)
+- Logic cảnh báo (Email alerts)
+- Dashboard hiển thị dữ liệu
 
-## 1. Chuẩn bị
-- Đã tạo Google Form theo schema.
-- Đã có Google Sheet đích (Form Responses).
-- Đã dán `src/tools/gas_script.js` vào Apps Script.
-- Đã cấu hình `CONFIG` đúng tên sheet và cột thực tế.
-- Tạo trigger thời gian cho `checkInactivity` (mỗi 15 phút hoặc mỗi ngày).
+## 2. Checklist kiểm thử (Pass/Fail)
 
-## 2. Bộ dữ liệu thử (20 bản ghi)
-- File mẫu: `data/raw/mock_week1.csv`
-- Phân bổ: 5 G, 5 P, 5 S, 5 mơ hồ.
+| ID | Bước kiểm thử | Kết quả kỳ vọng | Trạng thái |
+| :--- | :--- | :--- | :--- |
+| **TC-01** | Nhập liệu đồng loạt | 20 bản ghi từ `mock_week1.csv` đổ về Sheet không lỗi. | [ ] |
+| **TC-02** | Gán nhãn tự động | Apps Script gán nhãn đúng > 90% các mẫu G/P/S rõ ràng. | [ ] |
+| **TC-03** | Tính ẩn danh | Student ID được thay thế bằng Hash+Salt trong Sheet công khai. | [ ] |
+| **TC-04** | Cảnh báo 3 ngày | Giả lập 1 HS không nộp bài 3 ngày -> Kiểm tra email có gửi không. | [ ] |
+| **TC-05** | Dashboard Update | Biểu đồ tự nhảy khi dữ liệu mới được nhập vào. | [ ] |
 
-## 3. Các bước kiểm thử chi tiết
+## 3. Dữ liệu Test (Mock Data)
+Sử dụng file `data/raw/mock_week1.csv` chứa 20 mẫu tương tác phân bổ:
+- 7 mẫu Guide (hỏi lý thuyết, phương pháp)
+- 8 mẫu Practice (hỏi bước giải, gợi ý)
+- 5 mẫu Solve (nhờ kiểm tra bài làm)
 
-### Bước 1: Kiểm Form → Sheet (Ingestion)
-- Nhập 20 bản ghi mẫu vào Form.
-- Pass nếu:
-  - 100% bản ghi xuất hiện trong Sheet.
-  - Cột dữ liệu không lệch (timestamp, student_id, question, response, gps_step, email, satisfaction, difficulty).
-
-### Bước 2: Kiểm Script gán nhãn (Regex)
-- Quan sát cột `gps_step` sau khi submit.
-- So sánh nhãn với “ground truth” trong file mock.
-- Pass nếu:
-  - >= 90% đúng với mẫu rõ ràng (G/P/S).
-  - >= 80% đúng với mẫu mơ hồ.
-
-### Bước 3: Kiểm Trigger nhắc nhở
-- Sửa thời gian trong 3 bản ghi thành cách đây > 3 ngày.
-- Chạy `checkInactivity` thủ công hoặc chờ trigger.
-- Pass nếu:
-  - Email nhắc gửi đúng tới HS tương ứng.
-
-### Bước 4: Kiểm Dashboard
-- Mở Dashboard và kiểm:
-  - Per Student: tổng số entry, last_entry_date, G/P/S count.
-  - Alerts: HS >= 3 ngày không nộp.
-  - GPS Tracker: biểu đồ phân bố G/P/S.
-- Pass nếu:
-  - Số liệu khớp 20 bản ghi đã nhập.
-
-### Bước 5: Kiểm Quy trình nhãn thủ công
-- 2 CTV gán nhãn 20 mẫu giống nhau.
-- Tính Cohen’s Kappa.
-- Pass nếu:
-  - Kappa > 0.8.
-
-## 4. Kết quả cần chốt
-- Ghi lỗi phát hiện và sửa.
-- Sau khi pass, đóng băng v1.0 cho tuần 2.
+## 4. Pass Criteria
+- Toàn bộ 5 test case trên đạt trạng thái passed.
+- Độ chính xác Regex > 90% (nếu < 90% cần điều cập nhật `gas_script.js`).
