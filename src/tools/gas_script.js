@@ -7,10 +7,12 @@
 
 // --- CONFIGURATION ---
 const CONFIG = {
+  SPREADSHEET_ID: "", // Optional: set to target a specific spreadsheet when deployed as Web App.
   SHEET_NAME: "Raw Data",
   QA_SHEET_NAME: "QA - Raw Data",
   QA_RESULTS_SHEET_NAME: "QA - Results",
   SALT: "GPS_AI_MATH_2026", // Change this and keep offline
+  LOG_TOKEN: "CHANGE_ME_LOG_TOKEN", // Shared secret for API logging (Web App -> GAS). Keep offline.
   STUDENT_ID_COL: 2, // Column B
   QUESTION_COL: 6,   // Column F
   RESPONSE_COL: 7,   // Column G
@@ -19,18 +21,173 @@ const CONFIG = {
   GROUND_TRUTH_COL: 11, // Column K (QA only)
   LABEL_COL: 12,     // Column L (Destination for auto-label)
   HASH_COL: 13,      // Column M (Destination for Salted Hash)
-  ADMIN_EMAIL: "chinh303@example.com", // Replace with actual
+  ADMIN_EMAIL: "22022518@vnu.edu.vn", // Replace with actual
   DAYS_INACTIVE_LIMIT: 3,
   ENABLE_EMAIL_ALERTS: false // Set true in production after testing
 };
 
+/**
+ * Web App endpoint for auto-logging (Option B).
+ * Deploy this Apps Script as a Web App and POST JSON to it.
+ *
+ * Expected JSON:
+ * {
+ *   "token": "...",
+ *   "studentId": "HS0001",
+ *   "className": "11A1",
+ *   "topic": "Xác suất cơ bản",
+ *   "profile": "Typical ...",
+ *   "question": "...",
+ *   "aiResponse": "...",
+ *   "notes": "",
+ *   "satisfaction": 3,
+ *   "difficulty": 3,
+ *   "gpsTruth": "G" | "P" | "S" | ""
+ * }
+ */
+function doPost(e) {
+  try {
+    const payload = parseJsonBody_(e);
+    assertToken_(payload);
+    if (isDuplicateMessage_(payload)) {
+      return jsonResponse_({ ok: true, deduped: true });
+    }
+
+    const rowValues = buildRawRowFromPayload_(payload);
+    const ss = CONFIG.SPREADSHEET_ID
+      ? SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID)
+      : SpreadsheetApp.getActiveSpreadsheet();
+    const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
+    if (!sheet) throw new Error("Raw Data sheet not found: " + CONFIG.SHEET_NAME);
+
+    sheet.appendRow(rowValues);
+    const row = sheet.getLastRow();
+    processSubmissionRow(sheet, row, rowValues);
+
+    return jsonResponse_({ ok: true, row });
+  } catch (err) {
+    return jsonResponse_({ ok: false, error: String(err && err.message ? err.message : err) }, 400);
+  }
+}
+
+function isDuplicateMessage_(payload) {
+  const messageId = payload && payload.messageId ? String(payload.messageId).trim() : "";
+  if (!messageId) return false;
+
+  const cache = CacheService.getScriptCache();
+  const key = "gps_msg_" + messageId;
+  if (cache.get(key)) return true;
+  cache.put(key, "1", 6 * 60 * 60); // 6 hours
+  return false;
+}
+
+function parseJsonBody_(e) {
+  if (!e || !e.postData || !e.postData.contents) return {};
+  const raw = String(e.postData.contents || "").trim();
+  if (!raw) return {};
+  return JSON.parse(raw);
+}
+
+function assertToken_(payload) {
+  const token = payload && (payload.token || payload.LOG_TOKEN || payload.secret);
+  if (!CONFIG.LOG_TOKEN || CONFIG.LOG_TOKEN === "CHANGE_ME_LOG_TOKEN") {
+    throw new Error("CONFIG.LOG_TOKEN not configured.");
+  }
+  if (!token || token !== CONFIG.LOG_TOKEN) {
+    throw new Error("Unauthorized.");
+  }
+}
+
+function buildRawRowFromPayload_(payload) {
+  const now = new Date();
+  const studentId = String((payload && payload.studentId) || "").trim();
+  const className = String((payload && payload.className) || "").trim();
+  const topic = String((payload && payload.topic) || "").trim();
+  const profile = String((payload && payload.profile) || "").trim();
+  const question = String((payload && payload.question) || "").trim();
+  const aiResponse = String((payload && payload.aiResponse) || "").trim();
+  const notes = String((payload && payload.notes) || "").trim();
+
+  // Defaults: keep dashboard stable even when MVP skips ratings.
+  const satisfaction = to1to5OrDefault_(payload && payload.satisfaction, 3);
+  const difficulty = to1to5OrDefault_(payload && payload.difficulty, 3);
+
+  const gpsTruthRaw = String((payload && payload.gpsTruth) || "").trim().toUpperCase();
+  const gpsTruth = gpsTruthRaw === "G" || gpsTruthRaw === "P" || gpsTruthRaw === "S" ? gpsTruthRaw : "";
+
+  // A..M (13 columns). L/M are filled by processSubmissionRow().
+  return [
+    now,        // A Timestamp
+    studentId,  // B Student ID
+    className,  // C Class
+    topic,      // D Topic
+    profile,    // E Profile
+    question,   // F Question
+    aiResponse, // G AI Response
+    notes,      // H Notes
+    satisfaction, // I Satisfaction (1-5)
+    difficulty,   // J Difficulty (1-5)
+    gpsTruth,     // K GPS Step (Truth)
+    "",         // L Auto Label (written later)
+    ""          // M Student Hash (written later)
+  ];
+}
+
+function to1to5OrDefault_(value, defaultValue) {
+  if (value === null || value === undefined || value === "") return defaultValue;
+  const n = Number(value);
+  if (!isFinite(n)) return defaultValue;
+  if (n < 1) return 1;
+  if (n > 5) return 5;
+  return Math.round(n);
+}
+
+function jsonResponse_(obj, statusCode) {
+  const output = ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+  return output;
+}
+
 function onOpen() {
   SpreadsheetApp.getUi()
     .createMenu("GPS QA")
+    .addItem("Init Raw Data Schema", "initRawDataSchema")
     .addItem("Setup QA Sheets", "qaSetupSheets")
     .addItem("Seed Realistic Mock Data", "qaSeedRealisticMockData")
     .addItem("Run Week1 Smoke Test", "qaRunWeek1SmokeTest")
     .addToUi();
+}
+
+function initRawDataSchema() {
+  const ss = CONFIG.SPREADSHEET_ID
+    ? SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID)
+    : SpreadsheetApp.getActiveSpreadsheet();
+
+  const sheet = ss.getSheetByName(CONFIG.SHEET_NAME) || ss.insertSheet(CONFIG.SHEET_NAME);
+
+  sheet.getRange(1, 1, 1, 13).setValues([[
+    "Timestamp",          // A
+    "Student ID",         // B
+    "Class",              // C
+    "Topic",              // D
+    "Profile",            // E
+    "Question",           // F
+    "AI Response",        // G
+    "Notes",              // H
+    "Satisfaction (1-5)", // I
+    "Difficulty (1-5)",   // J
+    "GPS Step (Truth)",   // K
+    "Auto Label",         // L
+    "Student Hash"        // M
+  ]]);
+  sheet.setFrozenRows(1);
+  sheet.getRange(1, 1, 1, 13).setFontWeight("bold");
+  sheet.setColumnWidth(6, 320);
+  sheet.setColumnWidth(7, 320);
+
+  SpreadsheetApp.flush();
+  Logger.log("Initialized schema for sheet: " + CONFIG.SHEET_NAME);
 }
 
 function normalizeForMatch(text) {

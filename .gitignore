@@ -2,6 +2,21 @@
 __pycache__/
 *.pyc
 
+# Node / Next.js
+node_modules/
+.next/
+out/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Env (never commit secrets)
+.env
+.env.*
+!.env.example
+
 # Local / generated data
 data/raw/_tmp_*.csv
 data/raw/mock_week1_realistic.csv
