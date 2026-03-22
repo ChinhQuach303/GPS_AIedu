@@ -14,6 +14,11 @@ export async function generateReply(params: {
     return { provider, reply };
   }
 
+  if (provider === "vllm" || provider === "openai") {
+    const reply = await generateWithOpenAI(params);
+    return { provider: provider, reply };
+  }
+
   // default: openai
   const reply = await generateWithOpenAI(params);
   return { provider: "openai", reply };
@@ -38,6 +43,17 @@ export async function generateReplyStream(params: {
     return { provider, stream, replyPromise: Promise.resolve(reply), streamed: false };
   }
 
+  if (provider === "vllm" || provider === "openai") {
+    const { stream, replyPromise } = await generateWithOpenAIStream(params);
+    return { provider, stream, replyPromise, streamed: true };
+  }
+
+  if (provider === "vllm" || provider === "openai") {
+    const { stream, replyPromise } = await generateWithOpenAIStream(params);
+    return { provider, stream, replyPromise, streamed: true };
+  }
+
+  // Fallback to OpenAI
   const { stream, replyPromise } = await generateWithOpenAIStream(params);
   return { provider: "openai", stream, replyPromise, streamed: true };
 }

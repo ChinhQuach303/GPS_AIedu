@@ -14,15 +14,28 @@ async function pingOllama() {
   }
 }
 
+async function pingVLLM() {
+  const baseUrl = (process.env.OPENAI_BASE_URL || "http://127.0.0.1:8000/v1").replace(/\/+$/, "");
+  try {
+    const res = await fetch(`${baseUrl}/models`, { method: "GET" });
+    if (!res.ok) return { ok: false as const, error: `HTTP ${res.status}` };
+    return { ok: true as const, status: "available" };
+  } catch (err) {
+    return { ok: false as const, error: String(err instanceof Error ? err.message : err) };
+  }
+}
+
 export async function GET() {
   const provider = (process.env.LLM_PROVIDER || "openai").trim().toLowerCase();
   const ollama = provider === "ollama" ? await pingOllama() : null;
+  const vllm = provider === "vllm" ? await pingVLLM() : null;
+  
   return NextResponse.json({
     ok: true,
     provider,
     openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
-    gasLoggingConfigured: Boolean(process.env.GAS_LOG_URL && process.env.GAS_LOG_TOKEN)
-    ,
-    ollama
+    gasLoggingConfigured: Boolean(process.env.GAS_LOG_URL && process.env.GAS_LOG_TOKEN),
+    ollama,
+    vllm
   });
 }

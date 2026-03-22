@@ -15,20 +15,23 @@ export async function GET() {
     }
 
     const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) return NextResponse.json({ ok: false, error: "Missing OPENAI_API_KEY." }, { status: 500 });
-
     const baseUrl = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
+    const headers: Record<string, string> = {};
+    if (apiKey && apiKey !== "vllm-not-needed") {
+      headers["authorization"] = `Bearer ${apiKey}`;
+    }
+
     const response = await fetch(`${baseUrl}/models`, {
       method: "GET",
-      headers: { authorization: `Bearer ${apiKey}` }
+      headers
     });
     if (!response.ok) {
       const text = await response.text().catch(() => "");
-      return NextResponse.json({ ok: false, error: `OpenAI models error: ${response.status} ${text}` }, { status: 500 });
+      return NextResponse.json({ ok: false, error: `${provider} models error: ${response.status} ${text}` }, { status: 500 });
     }
     const data = (await response.json()) as OpenAIListModelsResponse;
     const models = (data.data || []).map((m) => m.id).filter(Boolean);
-    return NextResponse.json({ ok: true, provider: "openai", models });
+    return NextResponse.json({ ok: true, provider, models });
   } catch (err) {
     return NextResponse.json(
       { ok: false, error: String(err instanceof Error ? err.message : err) },
