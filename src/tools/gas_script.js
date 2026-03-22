@@ -9,10 +9,15 @@
 const CONFIG = {
   SPREADSHEET_ID: "", // Optional: set to target a specific spreadsheet when deployed as Web App.
   SHEET_NAME: "Raw Data",
+  SUMMARY_SHEET_NAME: "Summary",
   QA_SHEET_NAME: "QA - Raw Data",
   QA_RESULTS_SHEET_NAME: "QA - Results",
-  SALT: "GPS_AI_MATH_2026", // Change this and keep offline
+  SALT_PROPERTY: "GPS_STUDENT_SALT", // Store real salt in Script Properties, not in source.
+  SALT_FALLBACK: "CHANGE_ME_SALT", // Quick dev fallback; replace via Script Properties in production.
   LOG_TOKEN: "CHANGE_ME_LOG_TOKEN", // Shared secret for API logging (Web App -> GAS). Keep offline.
+  TELEGRAM_BOT_TOKEN: "", // Set to send alerts via Telegram.
+  TELEGRAM_CHAT_ID: "",
+  TELEGRAM_SATISFACTION_THRESHOLD: 2,
   STUDENT_ID_COL: 2, // Column B
   QUESTION_COL: 6,   // Column F
   RESPONSE_COL: 7,   // Column G
@@ -21,10 +26,97 @@ const CONFIG = {
   GROUND_TRUTH_COL: 11, // Column K (QA only)
   LABEL_COL: 12,     // Column L (Destination for auto-label)
   HASH_COL: 13,      // Column M (Destination for Salted Hash)
+  THINKING_COL: 14,  // Column N (Thinking time minutes)
   ADMIN_EMAIL: "22022518@vnu.edu.vn", // Replace with actual
   DAYS_INACTIVE_LIMIT: 3,
   ENABLE_EMAIL_ALERTS: false // Set true in production after testing
 };
+
+function getScriptSalt_() {
+  const stored = PropertiesService.getScriptProperties().getProperty(CONFIG.SALT_PROPERTY);
+  if (stored && stored.trim()) return stored.trim();
+  const fallback = String(CONFIG.SALT_FALLBACK || "").trim();
+  if (fallback && !fallback.toLowerCase().includes("change_me")) return fallback;
+  throw new Error(
+    "Student ID salt not configured. Set Script Property " + CONFIG.SALT_PROPERTY + " with a secret value."
+  );
+}
+
+function getSummarySnapshot_() {
+  const sheet = ensureSummarySheet_();
+  const lastRow = sheet.getLastRow();
+  const data = lastRow > 1 ? sheet.getRange(2, 1, lastRow - 1, 2).getValues() : [];
+  return { sheet, data };
+}
+
+function findStudentSummaryRecord_(studentId, snapshot) {
+  const normalized = String(studentId || "").trim();
+  if (!normalized || !snapshot) return { rowIndex: 0, timestamp: null };
+  for (let i = 0; i < snapshot.data.length; i++) {
+    if (String(snapshot.data[i][0]) === normalized) {
+      return { rowIndex: i + 2, timestamp: snapshot.data[i][1] };
+    }
+  }
+  return { rowIndex: 0, timestamp: null };
+}
+
+function computeThinkingTimeMinutes_(studentId, refTimestamp, snapshot) {
+  const previous = findStudentSummaryRecord_(studentId, snapshot).timestamp;
+  if (!previous) return 0;
+  const prevDate = previous instanceof Date ? previous : new Date(previous);
+  if (isNaN(prevDate.getTime()) || !(refTimestamp instanceof Date)) return 0;
+  const diffMs = Math.max(0, refTimestamp.getTime() - prevDate.getTime());
+  return Math.round((diffMs / (1000 * 60)) * 10) / 10;
+}
+
+function autoLabelAndHash_(studentId, questionText, existingLabel) {
+  const normalizedLabel = normalizeLabel_(existingLabel);
+  const label = normalizedLabel || classifyGpsStep(questionText);
+  const hash = hashStudentId(studentId);
+  return { label, hash };
+}
+
+function maybeSendTelegramAlert_(payload, thinkingMinutes) {
+  const token = String(CONFIG.TELEGRAM_BOT_TOKEN || "").trim();
+  const chatId = String(CONFIG.TELEGRAM_CHAT_ID || "").trim();
+  if (!token || !chatId) return;
+
+  const profile = String(payload && payload.profile || "").toLowerCase();
+  const satisfaction = to1to5OrDefault_(payload && payload.satisfaction, 3);
+  const lowSatisfaction = satisfaction <= CONFIG.TELEGRAM_SATISFACTION_THRESHOLD;
+  const offTrack = profile.includes("offtrack") || profile.includes("off-track");
+  if (!lowSatisfaction && !offTrack) return;
+
+  const parts = [
+    "⚠️ GPS ALERT",
+    `Student: ${payload.studentId || "N/A"}`,
+    `Class: ${payload.className || "N/A"}`,
+    `Profile: ${payload.profile || "N/A"}`,
+    `Topic: ${payload.topic || "N/A"}`,
+    `Satisfaction: ${satisfaction}`,
+    `Thinking time: ${thinkingMinutes ? thinkingMinutes + " min" : "0 min"}`,
+    `Flags: ${payload.behaviorFlags || "none"}`,
+    `Question: ${payload.question || ""}`.trim()
+  ];
+
+  const url = `https://api.telegram.org/bot${token}/sendMessage`;
+  try {
+    const response = UrlFetchApp.fetch(url, {
+      method: "post",
+      payload: {
+        chat_id: chatId,
+        text: parts.filter(Boolean).join("\n"),
+        parse_mode: "HTML"
+      },
+      muteHttpExceptions: true
+    });
+    if (!response || response.getResponseCode() < 200 || response.getResponseCode() >= 300) {
+      Logger.log("Telegram alert failed: " + (response.getContentText ? response.getContentText() : "no response"));
+    }
+  } catch (err) {
+    Logger.log("Telegram alert error: " + err.message);
+  }
+}
 
 /**
  * Web App endpoint for auto-logging (Option B).
@@ -42,7 +134,9 @@ const CONFIG = {
  *   "notes": "",
  *   "satisfaction": 3,
  *   "difficulty": 3,
- *   "gpsTruth": "G" | "P" | "S" | ""
+ *   "gpsTruth": "G" | "P" | "S" | "",
+ *   "gpsAuto": "G" | "P" | "S" | "",
+ *   "behaviorFlags": "skip_step,looping,prompt_injection"
  * }
  */
 function doPost(e) {
@@ -53,16 +147,20 @@ function doPost(e) {
       return jsonResponse_({ ok: true, deduped: true });
     }
 
-    const rowValues = buildRawRowFromPayload_(payload);
     const ss = CONFIG.SPREADSHEET_ID
       ? SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID)
       : SpreadsheetApp.getActiveSpreadsheet();
     const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
     if (!sheet) throw new Error("Raw Data sheet not found: " + CONFIG.SHEET_NAME);
 
-    sheet.appendRow(rowValues);
+    const now = new Date();
+    const summarySnapshot = getSummarySnapshot_();
+    const thinkingMinutes = computeThinkingTimeMinutes_(payload.studentId, now, summarySnapshot);
+    const rowWithExtras = buildRawRowFromPayload_(payload, now, thinkingMinutes);
+    sheet.getRange(sheet.getLastRow() + 1, 1, 1, rowWithExtras.length).setValues([rowWithExtras]);
     const row = sheet.getLastRow();
-    processSubmissionRow(sheet, row, rowValues);
+    updateSummaryFromRow_(rowWithExtras, summarySnapshot);
+    maybeSendTelegramAlert_(payload, thinkingMinutes);
 
     return jsonResponse_({ ok: true, row });
   } catch (err) {
@@ -98,8 +196,8 @@ function assertToken_(payload) {
   }
 }
 
-function buildRawRowFromPayload_(payload) {
-  const now = new Date();
+function buildRawRowFromPayload_(payload, timestamp, thinkingMinutes) {
+  const now = timestamp instanceof Date ? timestamp : new Date();
   const studentId = String((payload && payload.studentId) || "").trim();
   const className = String((payload && payload.className) || "").trim();
   const topic = String((payload && payload.topic) || "").trim();
@@ -107,15 +205,20 @@ function buildRawRowFromPayload_(payload) {
   const question = String((payload && payload.question) || "").trim();
   const aiResponse = String((payload && payload.aiResponse) || "").trim();
   const notes = String((payload && payload.notes) || "").trim();
+  const behaviorFlags = String((payload && payload.behaviorFlags) || "").trim();
+  const notesCombined = behaviorFlags
+    ? (notes ? (notes + " | behavior:" + behaviorFlags) : ("behavior:" + behaviorFlags))
+    : notes;
 
   // Defaults: keep dashboard stable even when MVP skips ratings.
   const satisfaction = to1to5OrDefault_(payload && payload.satisfaction, 3);
   const difficulty = to1to5OrDefault_(payload && payload.difficulty, 3);
 
-  const gpsTruthRaw = String((payload && payload.gpsTruth) || "").trim().toUpperCase();
-  const gpsTruth = gpsTruthRaw === "G" || gpsTruthRaw === "P" || gpsTruthRaw === "S" ? gpsTruthRaw : "";
+  const gpsTruth = normalizeLabel_(payload && payload.gpsTruth);
+  const { label, hash } = autoLabelAndHash_(studentId, question, payload && payload.gpsAuto);
+  const thinkingTime = typeof thinkingMinutes === "number" && isFinite(thinkingMinutes) ? thinkingMinutes : 0;
 
-  // A..M (13 columns). L/M are filled by processSubmissionRow().
+  // A..N (14 columns)
   return [
     now,        // A Timestamp
     studentId,  // B Student ID
@@ -124,12 +227,13 @@ function buildRawRowFromPayload_(payload) {
     profile,    // E Profile
     question,   // F Question
     aiResponse, // G AI Response
-    notes,      // H Notes
+    notesCombined, // H Notes
     satisfaction, // I Satisfaction (1-5)
     difficulty,   // J Difficulty (1-5)
     gpsTruth,     // K GPS Step (Truth)
-    "",         // L Auto Label (written later)
-    ""          // M Student Hash (written later)
+    label,        // L Auto Label
+    hash,         // M Student Hash
+    thinkingTime  // N Thinking Time (minutes)
   ];
 }
 
@@ -166,7 +270,7 @@ function initRawDataSchema() {
 
   const sheet = ss.getSheetByName(CONFIG.SHEET_NAME) || ss.insertSheet(CONFIG.SHEET_NAME);
 
-  sheet.getRange(1, 1, 1, 13).setValues([[
+  sheet.getRange(1, 1, 1, CONFIG.THINKING_COL).setValues([[
     "Timestamp",          // A
     "Student ID",         // B
     "Class",              // C
@@ -179,12 +283,14 @@ function initRawDataSchema() {
     "Difficulty (1-5)",   // J
     "GPS Step (Truth)",   // K
     "Auto Label",         // L
-    "Student Hash"        // M
+    "Student Hash",       // M
+    "Thinking Time (minutes)" // N
   ]]);
   sheet.setFrozenRows(1);
-  sheet.getRange(1, 1, 1, 13).setFontWeight("bold");
+  sheet.getRange(1, 1, 1, CONFIG.THINKING_COL).setFontWeight("bold");
   sheet.setColumnWidth(6, 320);
   sheet.setColumnWidth(7, 320);
+  sheet.setColumnWidth(CONFIG.THINKING_COL, 120);
 
   SpreadsheetApp.flush();
   Logger.log("Initialized schema for sheet: " + CONFIG.SHEET_NAME);
@@ -216,7 +322,8 @@ function classifyGpsStep(questionText) {
 
 function hashStudentId(studentId) {
   if (!studentId) return "";
-  return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, CONFIG.SALT + studentId)
+  const salt = getScriptSalt_();
+  return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, salt + studentId)
     .map(b => (b < 0 ? b + 256 : b).toString(16).padStart(2, "0"))
     .join("");
 }
@@ -225,11 +332,91 @@ function processSubmissionRow(sheet, row, values) {
   const studentId = values[CONFIG.STUDENT_ID_COL - 1] || "";
   const questionText = values[CONFIG.QUESTION_COL - 1] || "";
 
-  const label = classifyGpsStep(questionText);
-  const hash = hashStudentId(studentId);
+  const { label, hash } = autoLabelAndHash_(studentId, questionText, values[CONFIG.LABEL_COL - 1]);
 
-  sheet.getRange(row, CONFIG.LABEL_COL).setValue(label);
-  sheet.getRange(row, CONFIG.HASH_COL).setValue(hash);
+  sheet.getRange(row, CONFIG.LABEL_COL, 1, 2).setValues([[label, hash]]);
+}
+
+function normalizeLabel_(value) {
+  const raw = String(value || "").trim().toUpperCase();
+  if (raw === "G" || raw === "P" || raw === "S") return raw;
+  return "";
+}
+
+function ensureSummarySheet_() {
+  const ss = CONFIG.SPREADSHEET_ID
+    ? SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID)
+    : SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(CONFIG.SUMMARY_SHEET_NAME);
+  if (!sheet) sheet = ss.insertSheet(CONFIG.SUMMARY_SHEET_NAME);
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, 2).setValues([["Student ID", "Last Timestamp"]]);
+    sheet.setFrozenRows(1);
+  }
+  return sheet;
+}
+
+function updateSummaryFromRow_(values, snapshot) {
+  const studentId = values[CONFIG.STUDENT_ID_COL - 1];
+  if (!studentId) return;
+
+  const tsRaw = values[0];
+  const ts = tsRaw instanceof Date ? tsRaw : new Date(tsRaw);
+  if (!(ts instanceof Date) || isNaN(ts.getTime())) return;
+
+  const summaryInfo = snapshot || getSummarySnapshot_();
+  const summary = summaryInfo.sheet;
+  const data = summaryInfo.data;
+  if (!data || data.length === 0) {
+    summary.appendRow([studentId, ts]);
+    return;
+  }
+
+  for (let i = 0; i < data.length; i++) {
+    if (String(data[i][0]) === String(studentId)) {
+      const existing = data[i][1];
+      const existingTs = existing instanceof Date ? existing : new Date(existing);
+      if (!(existingTs instanceof Date) || isNaN(existingTs.getTime()) || ts > existingTs) {
+        summary.getRange(i + 2, 1, 1, 2).setValues([[studentId, ts]]);
+      }
+      return;
+    }
+  }
+
+  summary.appendRow([studentId, ts]);
+}
+
+function rebuildSummaryFromRaw_() {
+  const ss = CONFIG.SPREADSHEET_ID
+    ? SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID)
+    : SpreadsheetApp.getActiveSpreadsheet();
+  const raw = ss.getSheetByName(CONFIG.SHEET_NAME);
+  if (!raw) return;
+
+  const data = raw.getDataRange().getValues();
+  if (data.length < 2) return;
+
+  const lastLogs = {}; // student_id -> last_timestamp
+  for (let i = 1; i < data.length; i++) {
+    const ts = data[i][0];
+    const sid = data[i][CONFIG.STUDENT_ID_COL - 1];
+    if (!sid || !(ts instanceof Date)) continue;
+    if (!lastLogs[sid] || ts > lastLogs[sid]) {
+      lastLogs[sid] = ts;
+    }
+  }
+
+  const rows = Object.keys(lastLogs)
+    .sort()
+    .map(sid => [sid, lastLogs[sid]]);
+
+  const summary = ensureSummarySheet_();
+  summary.clear();
+  summary.getRange(1, 1, 1, 2).setValues([["Student ID", "Last Timestamp"]]);
+  if (rows.length > 0) {
+    summary.getRange(2, 1, rows.length, 2).setValues(rows);
+  }
+  summary.setFrozenRows(1);
 }
 
 /**
@@ -244,31 +431,33 @@ function onFormSubmit(e) {
   if (!sheet || sheet.getName() !== CONFIG.SHEET_NAME) return;
 
   processSubmissionRow(sheet, e.range.getRow(), e.values);
+  updateSummaryFromRow_(e.values);
 }
 
 /**
  * Weekly/Daily Trigger to check inactivity
  */
 function checkInactivity() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(CONFIG.SHEET_NAME);
-  const data = sheet.getDataRange().getValues();
-  const now = new Date();
-  const lastLogs = {}; // student_id -> last_timestamp
-
-  // Skip header
-  for (let i = 1; i < data.length; i++) {
-    const ts = new Date(data[i][0]);
-    const sid = data[i][CONFIG.STUDENT_ID_COL - 1];
-    if (!sid || !ts || isNaN(ts.getTime())) continue;
-    if (!lastLogs[sid] || ts > lastLogs[sid]) {
-      lastLogs[sid] = ts;
-    }
+  const summary = ensureSummarySheet_();
+  if (summary.getLastRow() < 2) {
+    rebuildSummaryFromRaw_();
   }
+  const lastRow = summary.getLastRow();
+  if (lastRow < 2) {
+    Logger.log("No summary data found.");
+    return;
+  }
+  const data = summary.getRange(2, 1, lastRow - 1, 2).getValues();
+  const now = new Date();
 
   // Check gaps
   const inactiveStudents = [];
-  for (const sid in lastLogs) {
-    const diffDays = (now - lastLogs[sid]) / (1000 * 60 * 60 * 24);
+  for (let i = 0; i < data.length; i++) {
+    const sid = data[i][0];
+    const tsRaw = data[i][1];
+    const ts = tsRaw instanceof Date ? tsRaw : new Date(tsRaw);
+    if (!sid || !(ts instanceof Date) || isNaN(ts.getTime())) continue;
+    const diffDays = (now - ts) / (1000 * 60 * 60 * 24);
     if (diffDays >= CONFIG.DAYS_INACTIVE_LIMIT) {
       inactiveStudents.push(sid);
     }
@@ -294,7 +483,7 @@ function qaSetupSheets() {
 
   const raw = ss.getSheetByName(CONFIG.QA_SHEET_NAME) || ss.insertSheet(CONFIG.QA_SHEET_NAME);
   raw.clear();
-  raw.getRange(1, 1, 1, 13).setValues([[
+  raw.getRange(1, 1, 1, CONFIG.THINKING_COL).setValues([[
     "Timestamp",          // A
     "Student ID",         // B
     "Class",              // C
@@ -307,7 +496,8 @@ function qaSetupSheets() {
     "Difficulty (1-5)",   // J
     "GPS Step (Truth)",   // K (QA only)
     "Auto Label",         // L (written by script)
-    "Student Hash"        // M (written by script)
+    "Student Hash",       // M (written by script)
+    "Thinking Time (minutes)" // N
   ]]);
   raw.setFrozenRows(1);
 
@@ -330,7 +520,7 @@ function qaSeedRealisticMockData() {
   if (rows.length === 0) return;
 
   const startRow = sheet.getLastRow() + 1;
-  sheet.getRange(startRow, 1, rows.length, 13).setValues(rows);
+  sheet.getRange(startRow, 1, rows.length, CONFIG.THINKING_COL).setValues(rows);
 
   for (let i = 0; i < rows.length; i++) {
     processSubmissionRow(sheet, startRow + i, rows[i]);
@@ -510,7 +700,7 @@ function qaGenerateLogs_(students, startDate, endDate, totalLogs) {
     ]
   };
 
-  const rows = [];
+  let rows = [];
   if (students.length === 0 || totalLogs <= 0) return rows;
 
   const dayMs = 24 * 60 * 60 * 1000;
@@ -628,14 +818,17 @@ function qaGenerateLogs_(students, startDate, endDate, totalLogs) {
           pickDifficulty(st.profile, step),   // J Difficulty
           step,              // K Ground truth step (QA)
           "",                // L Auto label (filled)
-          ""                 // M Hash (filled)
+          "",                // M Hash (filled)
+          0                  // N Thinking time placeholder
         ]);
       }
     }
   }
 
   rows.sort((a, b) => a[0].getTime() - b[0].getTime());
-  if (rows.length > totalLogs) return rows.slice(0, totalLogs);
+  if (rows.length > totalLogs) {
+    rows = rows.slice(0, totalLogs);
+  }
 
   // If we still need more rows, top up with additional random sessions.
   while (rows.length < totalLogs) {
@@ -663,10 +856,31 @@ function qaGenerateLogs_(students, startDate, endDate, totalLogs) {
         pickDifficulty(st.profile, step),
         step,
         "",
-        ""
+        "",
+        0
       ]);
     }
   }
 
-  return rows;
+ assignThinkingTimeToRows(rows);
+ return rows;
+}
+
+function assignThinkingTimeToRows(rows) {
+  const lastSeen = {};
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const sid = row[CONFIG.STUDENT_ID_COL - 1];
+    const tsRaw = row[0];
+    const ts = tsRaw instanceof Date ? tsRaw : new Date(tsRaw);
+    let thinking = 0;
+    if (sid && lastSeen[sid] instanceof Date && ts instanceof Date && !isNaN(ts.getTime())) {
+      const prev = lastSeen[sid];
+      thinking = Math.max(0, (ts.getTime() - prev.getTime()) / (1000 * 60));
+    }
+    row[CONFIG.THINKING_COL - 1] = Math.round(thinking * 10) / 10;
+    if (sid && ts instanceof Date && !isNaN(ts.getTime())) {
+      lastSeen[sid] = ts;
+    }
+  }
 }

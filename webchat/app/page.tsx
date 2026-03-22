@@ -1,7 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import type { ChatMessage, ChatResponse } from "@/lib/types";
 
 type SessionInfo = {
@@ -25,6 +28,32 @@ export default function HomePage() {
   const [status, setStatus] = useState<string>("");
 
   const canChat = useMemo(() => session.studentId.trim().length >= 3, [session.studentId]);
+  const storageKey = "gps_aiedu_chat_v1";
+  const maxStoredMessages = 200;
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      if (!raw) return;
+      const parsed = JSON.parse(raw) as { session?: SessionInfo; messages?: ChatMessage[] };
+      if (parsed.session) setSession(parsed.session);
+      if (Array.isArray(parsed.messages)) setMessages(parsed.messages);
+    } catch {
+      // ignore storage errors
+    }
+  }, []);
+
+  useEffect(() => {
+    try {
+      const payload = {
+        session,
+        messages: messages.slice(-maxStoredMessages)
+      };
+      localStorage.setItem(storageKey, JSON.stringify(payload));
+    } catch {
+      // ignore storage errors
+    }
+  }, [session, messages]);
 
   async function sendMessage() {
     if (!canChat || busy) return;
@@ -36,7 +65,7 @@ export default function HomePage() {
     setInput("");
 
     const nextMessages = [...messages, { role: "user", content: text } as const];
-    setMessages(nextMessages);
+    setMessages([...nextMessages, { role: "assistant", content: "" }]);
 
     try {
       const response = await fetch("/api/chat", {
@@ -48,13 +77,49 @@ export default function HomePage() {
           topic: session.topic.trim(),
           profile: session.profile.trim(),
           message: text,
-          history: messages
+          history: messages,
+          stream: true
         })
       });
+
+      const contentType = response.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) {
+        if (!response.ok || !response.body) {
+          const text = await response.text().catch(() => "");
+          setStatus(text || "Chat failed.");
+          setMessages(nextMessages);
+          return;
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let acc = "";
+
+        while (true) {
+          const { value, done } = await reader.read();
+          if (value) {
+            acc += decoder.decode(value, { stream: !done });
+            setMessages((prev) => {
+              if (prev.length === 0) return prev;
+              const next = [...prev];
+              const last = next[next.length - 1];
+              if (last.role !== "assistant") {
+                next.push({ role: "assistant", content: acc });
+              } else {
+                next[next.length - 1] = { ...last, content: acc };
+              }
+              return next;
+            });
+          }
+          if (done) break;
+        }
+        return;
+      }
 
       const data = (await response.json()) as ChatResponse;
       if (!data.ok || !data.reply) {
         setStatus(data.error || "Chat failed.");
+        setMessages(nextMessages);
         return;
       }
 
@@ -62,6 +127,7 @@ export default function HomePage() {
       if (data.logError) setStatus(`Đã trả lời, nhưng log lỗi: ${data.logError}`);
     } catch (err) {
       setStatus(String(err instanceof Error ? err.message : err));
+      setMessages(nextMessages);
     } finally {
       setBusy(false);
     }
@@ -167,7 +233,9 @@ export default function HomePage() {
               <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 6 }}>
                 {m.role === "user" ? "Học sinh" : "Gia sư GPS"}
               </div>
-              {m.content}
+              <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                {m.content}
+              </ReactMarkdown>
             </div>
           ))}
         </div>

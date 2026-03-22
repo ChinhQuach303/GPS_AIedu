@@ -87,3 +87,14 @@ Deploy:
 
 - Setup chi tiết: `docs/research/webchat_autolog_setup.md`
 - Playbook tuần 1: `docs/research/week1_real_run_playbook.md`
+- Phân tích nâng cao: `src/analysis/behavior_analysis.py` (Markov Chain & K-means Clustering)
+
+## 7) Phân tích hành vi (Nâng cao cho Tuần 3+)
+
+Hệ thống đã sẵn sàng cho phân tích chuyên sâu cho nhóm nghiên cứu:
+1.  **Ma trận chuyển trạng thái (Markov Chain)**: Theo dõi xác suất học sinh đi từ G sang P, P sang S.
+    - Công cụ: `src/analysis/behavior_analysis.py` hàm `calculate_markov_transitions()`.
+2.  **Phân nhóm học sinh (K-means Clustering)**: Tự động phân loại học sinh thành 3 nhóm (Học sâu, Giải nhanh, Cần hỗ trợ) dựa trên:
+    - Tỷ lệ %G, %P, %S.
+    - Điểm trình tự (sequence score) của lộ trình G->P->S.
+    - Mức độ hài lòng và độ khó trung bình.

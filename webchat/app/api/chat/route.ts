@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { randomUUID } from "node:crypto";
+import { StreamingTextResponse } from "ai";
 import { getSystemPrompt } from "@/lib/systemPrompt";
-import { generateReply } from "@/lib/llm";
+import { generateReply, generateReplyStream } from "@/lib/llm";
 import { logTurnToGas } from "@/lib/gasLog";
+import { detectBehaviorSignals } from "@/lib/behavior";
 import type { ChatRequest, ChatResponse } from "@/lib/types";
 
 export const runtime = "nodejs";
@@ -24,23 +26,58 @@ export async function POST(req: Request) {
   if (validationError) return NextResponse.json<ChatResponse>({ ok: false, error: validationError }, { status: 400 });
 
   const history = Array.isArray(body.history) ? body.history.slice(-20) : [];
-  const systemPrompt = getSystemPrompt();
+  const behavior = detectBehaviorSignals({ history, message: body.message });
+  const systemPrompt = getSystemPrompt({ profile: body.profile, behavior });
   const messageId = randomUUID();
+  const streamRequested = body.stream === true;
 
   try {
+    if (streamRequested) {
+      const canLog = Boolean(process.env.GAS_LOG_URL && process.env.GAS_LOG_TOKEN);
+      const result = await generateReplyStream({
+        systemPrompt,
+        history,
+        message: body.message
+      });
+      if (!result.stream) {
+        throw new Error("LLM does not support streaming.");
+      }
+      if (canLog) {
+        void result.replyPromise
+          .then((reply) => {
+            if (reply) {
+              void logTurnToGas({ request: body, aiResponse: reply, messageId }).catch((err) => {
+                console.error("logTurnToGas failed", err);
+              });
+            }
+          })
+          .catch((err) => {
+            console.error("Unable to capture LLM reply for logging", err);
+          });
+      }
+
+      return new StreamingTextResponse(result.stream, {
+        headers: {
+          "content-type": "text/plain; charset=utf-8",
+          "x-message-id": messageId
+        }
+      });
+    }
+
     const { reply } = await generateReply({
       systemPrompt,
       history,
       message: body.message
     });
 
-    let logged = false;
+    const canLog = Boolean(process.env.GAS_LOG_URL && process.env.GAS_LOG_TOKEN);
+    const logged = canLog;
     let logError: string | undefined;
-    try {
-      await logTurnToGas({ request: body, aiResponse: reply, messageId });
-      logged = Boolean(process.env.GAS_LOG_URL && process.env.GAS_LOG_TOKEN);
-    } catch (err) {
-      logError = String(err instanceof Error ? err.message : err);
+    if (canLog) {
+      void Promise.resolve(logTurnToGas({ request: body, aiResponse: reply, messageId })).catch((err) => {
+        logError = String(err instanceof Error ? err.message : err);
+        console.error("logTurnToGas failed", err);
+      });
     }
 
     return NextResponse.json<ChatResponse>({

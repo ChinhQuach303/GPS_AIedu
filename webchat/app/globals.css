@@ -25,6 +25,11 @@ a {
   color: var(--accent);
 }
 
+.katex,
+.katex-display {
+  color: var(--text);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -35,4 +40,3 @@ textarea,
 button {
   font: inherit;
 }
-

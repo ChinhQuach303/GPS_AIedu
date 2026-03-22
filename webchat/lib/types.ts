@@ -16,6 +16,7 @@ export type ChatRequest = {
   satisfaction?: number;
   difficulty?: number;
   gpsTruth?: "G" | "P" | "S" | "";
+  stream?: boolean;
 };
 
 export type ChatResponse = {
@@ -26,4 +27,3 @@ export type ChatResponse = {
   logged?: boolean;
   logError?: string;
 };
-

@@ -10,15 +10,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "ai": "^3.0.5",
+    "katex": "0.16.9",
     "next": "15.1.6",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "react-markdown": "9.0.1",
+    "rehype-katex": "7.0.1",
+    "remark-math": "6.0.0"
   },
   "devDependencies": {
     "@types/node": "22.13.4",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^16.2.0",
     "typescript": "5.7.3"
   }
 }
-
