@@ -1,21 +1,49 @@
+# Python artifacts
 .venv/
+env/
+ENV/
+venv/
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Node / Next.js
+# Node / Next.js outputs
 node_modules/
-.next/
-out/
-dist/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+.npm/
+.nvmrc
+.next/
+webchat/.next/
+out/
+webchat/out/
+dist/
+build/
+webchat/build/
+webchat/.turbo/
+.webscraper/
+webchat/.vercel/
+webchat/.expo/
 
-# Env (never commit secrets)
+# Local env files
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+**/.env.local
+**/.env.*.local
 .env.*
 !.env.example
+!**/.env.example
 
 # Local / generated data
 data/raw/_tmp_*.csv
@@ -23,3 +51,15 @@ data/raw/mock_week1_realistic.csv
 
 # Apps Script / editor artifacts
 src/tools/__pycache__/
+
+# IDE / OS
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
