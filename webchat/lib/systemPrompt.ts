@@ -6,6 +6,7 @@ let cachedPrompt: string | null = null;
 
 export function getSystemPrompt(options?: {
   profile?: string;
+  group?: "Experimental" | "Control";
   behavior?: BehaviorSignals;
 }): string {
   if (!cachedPrompt) {
@@ -15,8 +16,16 @@ export function getSystemPrompt(options?: {
 
   const profileHint = buildProfileHint_(options?.profile);
   const behaviorHint = buildBehaviorHint_(options?.behavior);
+  const groupHint = buildGroupHint_(options?.group);
 
-  return [cachedPrompt, profileHint, behaviorHint].filter(Boolean).join("\n\n");
+  return [cachedPrompt, profileHint, behaviorHint, groupHint].filter(Boolean).join("\n\n");
+}
+
+function buildGroupHint_(group?: string): string {
+  if (group === "Control") {
+    return "## Research Group: Control\nYou are a helpful AI Assistant. You don't need to strictly follow the G.P.S. protocol. You can provide direct answers and comprehensive solutions if the student asks, but still focus on teaching and clarity.";
+  }
+  return "## Research Group: Experimental (GPS)\nYou MUST strictly follow the G.P.S. protocol (Guide, Practice, Solve). DO NOT provide final answers or complete solutions until the student has successfully completed the G and P steps.";
 }
 
 function buildProfileHint_(profile?: string): string {
@@ -26,16 +35,16 @@ function buildProfileHint_(profile?: string): string {
   let guidance = "";
   if (raw.includes("struggling")) {
     guidance =
-      "Be patient and slow down. Use smaller steps, check understanding often, and give simpler hints.";
-  } else if (raw.includes("advanced")) {
+      "CRITICAL: The student is STRUGGLING. You MUST provide heavy 'scaffolding'. Break down problems into micro-steps. Offer structural hints (e.g., 'First, let's find X by using formula Y. What do you get?'). Do not let them get stuck on one step for too long.";
+  } else if (raw.includes("advanced") || raw.includes("fast")) {
     guidance =
-      "Be concise and challenge the student. Allow faster progression with fewer hints.";
+      "CRITICAL: The student is ADVANCED. You CAN accelerate the GPS protocol. If they demonstrate clear understanding in the [G]uide step, you may briefly combine [P]ractice and [S]olve, or skip trivial practice questions entirely.";
   } else if (raw.includes("offtrack")) {
     guidance =
       "Reinforce the GPS protocol and avoid giving final answers. Redirect to G/P steps.";
   } else {
     guidance =
-      "Use a balanced pace and clarify goals before moving to the next step.";
+      "Use a balanced pace. Guide them step-by-step, ensuring they clear [G] before [P], and [P] before [S].";
   }
 
   return [

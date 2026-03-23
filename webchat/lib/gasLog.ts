@@ -31,6 +31,7 @@ export async function logTurnToGas(params: {
     messageId: params.messageId,
     studentId: params.request.studentId,
     className: params.request.className,
+    group: params.request.group || "Experimental",
     topic: params.request.topic,
     profile: params.request.profile || "",
     question: params.request.message,

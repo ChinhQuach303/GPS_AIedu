@@ -12,9 +12,9 @@ const CONFIG = {
   SUMMARY_SHEET_NAME: "Summary",
   QA_SHEET_NAME: "QA - Raw Data",
   QA_RESULTS_SHEET_NAME: "QA - Results",
-  SALT_PROPERTY: "GPS_STUDENT_SALT", // Store real salt in Script Properties, not in source.
-  SALT_FALLBACK: "CHANGE_ME_SALT", // Quick dev fallback; replace via Script Properties in production.
-  LOG_TOKEN: "CHANGE_ME_LOG_TOKEN", // Shared secret for API logging (Web App -> GAS). Keep offline.
+  SALT_PROPERTY: "GPS_STUDENT_SALT", // Lấy từ Script Properties
+  SALT_FALLBACK: "", // Bỏ fallback hardcode để bắt lỗi khi chưa thiết lập
+  LOG_TOKEN: "", // Bỏ hardcode, đọc từ Script properties (TOKEN_PROPERTY = "GPS_LOG_TOKEN")
   TELEGRAM_BOT_TOKEN: "", // Set to send alerts via Telegram.
   TELEGRAM_CHAT_ID: "",
   TELEGRAM_SATISFACTION_THRESHOLD: 2,
@@ -27,19 +27,20 @@ const CONFIG = {
   LABEL_COL: 12,     // Column L (Destination for auto-label)
   HASH_COL: 13,      // Column M (Destination for Salted Hash)
   THINKING_COL: 14,  // Column N (Thinking time minutes)
+  GROUP_COL: 15,     // Column O (Experimental/Control)
+  MESSAGE_ID_COL: 16, // Column P (Unique ID for turn-based rating)
   ADMIN_EMAIL: "22022518@vnu.edu.vn", // Replace with actual
   DAYS_INACTIVE_LIMIT: 3,
   ENABLE_EMAIL_ALERTS: false // Set true in production after testing
 };
 
 function getScriptSalt_() {
-  const stored = PropertiesService.getScriptProperties().getProperty(CONFIG.SALT_PROPERTY);
-  if (stored && stored.trim()) return stored.trim();
-  const fallback = String(CONFIG.SALT_FALLBACK || "").trim();
-  if (fallback && !fallback.toLowerCase().includes("change_me")) return fallback;
-  throw new Error(
-    "Student ID salt not configured. Set Script Property " + CONFIG.SALT_PROPERTY + " with a secret value."
-  );
+  const props = PropertiesService.getScriptProperties();
+  const salt = props.getProperty(CONFIG.SALT_PROPERTY) || CONFIG.SALT_FALLBACK;
+  if (!salt) {
+    throw new Error(`Salt not configured. Please set ${CONFIG.SALT_PROPERTY} in Script Properties for security.`);
+  }
+  return salt;
 }
 
 function getSummarySnapshot_() {
@@ -143,15 +144,23 @@ function doPost(e) {
   try {
     const payload = parseJsonBody_(e);
     assertToken_(payload);
-    if (isDuplicateMessage_(payload)) {
-      return jsonResponse_({ ok: true, deduped: true });
-    }
-
+    
+    // Support two types of actions: log (default) and rate
+    const action = payload.action || "log";
+    
     const ss = CONFIG.SPREADSHEET_ID
       ? SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID)
       : SpreadsheetApp.getActiveSpreadsheet();
     const sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
     if (!sheet) throw new Error("Raw Data sheet not found: " + CONFIG.SHEET_NAME);
+
+    if (action === "rate") {
+      return handleRateAction_(sheet, payload);
+    }
+
+    if (isDuplicateMessage_(payload)) {
+      return jsonResponse_({ ok: true, deduped: true });
+    }
 
     const now = new Date();
     const summarySnapshot = getSummarySnapshot_();
@@ -187,11 +196,14 @@ function parseJsonBody_(e) {
 }
 
 function assertToken_(payload) {
+  const props = PropertiesService.getScriptProperties();
+  const validToken = props.getProperty("GPS_LOG_TOKEN") || CONFIG.LOG_TOKEN; // Cố gắng lấy từ Props trước
+  
   const token = payload && (payload.token || payload.LOG_TOKEN || payload.secret);
-  if (!CONFIG.LOG_TOKEN || CONFIG.LOG_TOKEN === "CHANGE_ME_LOG_TOKEN") {
-    throw new Error("CONFIG.LOG_TOKEN not configured.");
+  if (!validToken) {
+    throw new Error("Log Token is not configured in Script Properties or CONFIG (GPS_LOG_TOKEN).");
   }
-  if (!token || token !== CONFIG.LOG_TOKEN) {
+  if (!token || token !== validToken) {
     throw new Error("Unauthorized.");
   }
 }
@@ -233,7 +245,9 @@ function buildRawRowFromPayload_(payload, timestamp, thinkingMinutes) {
     gpsTruth,     // K GPS Step (Truth)
     label,        // L Auto Label
     hash,         // M Student Hash
-    thinkingTime  // N Thinking Time (minutes)
+    thinkingTime, // N Thinking Time (minutes)
+    String(payload && payload.group || "Experimental"), // O Group
+    String(payload && payload.messageId || "") // P Message ID
   ];
 }
 
@@ -244,6 +258,34 @@ function to1to5OrDefault_(value, defaultValue) {
   if (n < 1) return 1;
   if (n > 5) return 5;
   return Math.round(n);
+}
+
+function handleRateAction_(sheet, payload) {
+  const messageId = String(payload && payload.messageId || "").trim();
+  const satisfaction = to1to5OrDefault_(payload && payload.satisfaction, null);
+  const difficulty = to1to5OrDefault_(payload && payload.difficulty, null);
+
+  if (!messageId || (satisfaction === null && difficulty === null)) {
+    throw new Error("Missing messageId or ratings (satisfaction/difficulty) for rate action.");
+  }
+
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) throw new Error("No data in sheet to rate.");
+
+  // Scan last 100 rows for the messageId (most likely near the end)
+  const startRow = Math.max(2, lastRow - 100);
+  const data = sheet.getRange(startRow, CONFIG.MESSAGE_ID_COL, (lastRow - startRow) + 1, 1).getValues();
+  
+  for (let i = data.length - 1; i >= 0; i--) {
+    if (String(data[i][0]) === messageId) {
+      const targetRow = startRow + i;
+      if (satisfaction !== null) sheet.getRange(targetRow, CONFIG.SATISFACTION_COL).setValue(satisfaction);
+      if (difficulty !== null) sheet.getRange(targetRow, CONFIG.DIFFICULTY_COL).setValue(difficulty);
+      return jsonResponse_({ ok: true, row: targetRow, messageId });
+    }
+  }
+
+  throw new Error("Message ID not found: " + messageId);
 }
 
 function jsonResponse_(obj, statusCode) {
@@ -284,13 +326,16 @@ function initRawDataSchema() {
     "GPS Step (Truth)",   // K
     "Auto Label",         // L
     "Student Hash",       // M
-    "Thinking Time (minutes)" // N
+    "Thinking Time (minutes)", // N
+    "Group",              // O
+    "Message ID"          // P
   ]]);
   sheet.setFrozenRows(1);
-  sheet.getRange(1, 1, 1, CONFIG.THINKING_COL).setFontWeight("bold");
+  sheet.getRange(1, 1, 1, CONFIG.MESSAGE_ID_COL).setFontWeight("bold");
   sheet.setColumnWidth(6, 320);
   sheet.setColumnWidth(7, 320);
   sheet.setColumnWidth(CONFIG.THINKING_COL, 120);
+  sheet.setColumnWidth(CONFIG.GROUP_COL, 100);
 
   SpreadsheetApp.flush();
   Logger.log("Initialized schema for sheet: " + CONFIG.SHEET_NAME);
@@ -308,14 +353,14 @@ function normalizeForMatch(text) {
 function classifyGpsStep(questionText) {
   const q = normalizeForMatch(questionText);
 
-  // Guide: conceptual / definitions / explain-why
-  if (/(giai thich|khai niem|cong thuc|la gi|tai sao|dinh nghia|phan biet|tom tat)/i.test(q)) return "G";
+  // Guide: conceptual / definitions / explain-why (Basic concepts)
+  if (/(giai thich|khai niem|cong thuc|la gi|tai sao|dinh nghia|phan biet|tom tat|y nghia|cho em hoi ve)/i.test(q)) return "G";
 
-  // Practice: step-by-step guidance / hints / stuck
-  if (/(huong dan|goi y|buoc|em bi ket|lam the nao|sai o dau|kiem tra buoc)/i.test(q)) return "P";
+  // Practice: step-by-step guidance / hints / stuck (Process & Hints)
+  if (/(huong dan|goi y|buoc|em bi ket|lam the nao|sai o dau|kiem tra|tiep theo|giup em phan nay|giai thich buoc)/i.test(q)) return "P";
 
-  // Solve: ask for final answer / verify result / "solve for me" (off-protocol)
-  if (/(dap an|ket qua|dung khong|xong chua|kiem tra loi giai|giai giup|ra (ket qua|dap an))/i.test(q)) return "S";
+  // Solve: ask for final answer / verify result / "solve for me" (Final outputs)
+  if (/(dap an|ket qua|dung khong|xong chua|kiem tra loi giai|giai giup|ra (ket qua|dap an)|vay la (xong|dung)|chot lai|dap so)/i.test(q)) return "S";
 
   return "Unknown";
 }

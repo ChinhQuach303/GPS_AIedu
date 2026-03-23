@@ -3,11 +3,15 @@ export type ChatRole = "user" | "assistant";
 export type ChatMessage = {
   role: ChatRole;
   content: string;
+  messageId?: string;
+  satisfaction?: number;
+  difficulty?: number;
 };
 
 export type ChatRequest = {
   studentId: string;
   className: string;
+  group?: "Experimental" | "Control";
   topic: string;
   profile?: string;
   message: string;

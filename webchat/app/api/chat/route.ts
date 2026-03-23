@@ -27,7 +27,11 @@ export async function POST(req: Request) {
 
   const history = Array.isArray(body.history) ? body.history.slice(-20) : [];
   const behavior = detectBehaviorSignals({ history, message: body.message });
-  const systemPrompt = getSystemPrompt({ profile: body.profile, behavior });
+  const systemPrompt = getSystemPrompt({
+    profile: body.profile,
+    group: body.group,
+    behavior
+  } as any);
   const messageId = randomUUID();
   const streamRequested = body.stream === true;
 

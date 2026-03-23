@@ -6,8 +6,9 @@ Mục tiêu: thay quy trình thủ công (chat ngoài → copy/paste → Google 
 
 **Option B (khuyến nghị)**: Web App có backend riêng + GAS chỉ nhận log.
 
-- **Web Chat**: Next.js (deploy Vercel), source ở `webchat/`
-- **LLM**: OpenAI API (model mặc định `gpt-4o-mini`, cấu hình bằng env)
+- **Web Chat**: Next.js (deploy Vercel hoặc local), source ở `webchat/`
+- **LLM (Khuyến nghị)**: **vLLM** chạy model **Qwen2.5-Coder-7B-Instruct-AWQ** (local) để đạt hiệu năng toán học và lập trình cao nhất.
+- **Dự phòng**: OpenAI API (model `gpt-4o-mini`).
 - **Logging**: Google Apps Script Web App `doPost(e)` (source ở `src/tools/gas_script.js`)
 
 Luồng:
@@ -15,7 +16,7 @@ Luồng:
 
 ## 2) Hợp đồng dữ liệu (không làm gãy Dashboard)
 
-Hệ thống log đúng schema **A..M (13 cột)** của `Raw Data` (xem `src/tools/setup_form_and_sheet.js`):
+Hệ thống log đúng schema **A..P (16 cột)** của `Raw Data` (xem `src/tools/gas_script.js`):
 - A `Timestamp` (server-set)
 - B `Student ID`
 - C `Class`
@@ -23,12 +24,15 @@ Hệ thống log đúng schema **A..M (13 cột)** của `Raw Data` (xem `src/to
 - E `Profile`
 - F `Question`
 - G `AI Response`
-- H `Notes`
-- I `Satisfaction (1-5)`
-- J `Difficulty (1-5)`
-- K `GPS Step (Truth)`
-- L `Auto Label` (tự sinh)
-- M `Student Hash` (tự sinh)
+- H `Notes` (kèm behavior flags)
+- I `Satisfaction (1-5)` - Thu thập từ UI ⭐
+- J `Difficulty (1-5)` - Thu thập từ UI 🤔
+- K `GPS Step (Truth)` (Dành cho gán nhãn thủ công)
+- L `Auto Label` (tự sinh từ LLM Backend + Regex Fallback)
+- M `Student Hash` (tự sinh SHA-256)
+- N `Thinking Time` (tính toán chênh lệch giây/phút)
+- O `Group` (Experimental vs Control)
+- P `Message ID` (Unique ID để mapping đánh giá sau khi chat)
 
 Sau khi append, GAS gọi lại `processSubmissionRow()` để ghi:
 - Cột `L`: auto label `G/P/S/Unknown`
@@ -38,9 +42,10 @@ MVP: nếu web UI chưa thu `Satisfaction/Difficulty` thì backend gửi mặc �
 
 ## 3) Bảo mật tối thiểu cho endpoint log
 
-- `LOG_TOKEN`: secret lưu trong `src/tools/gas_script.js` (`CONFIG.LOG_TOKEN`)
-- Backend Next.js gửi `token` trong JSON body (Apps Script Web App không đọc header ổn định)
-- Học sinh chỉ gọi `/api/chat` (không gọi trực tiếp GAS), nên token không lộ ra client
+- `GPS_LOG_TOKEN`: Secret lưu trong **Script Properties** của GAS.
+- `GPS_STUDENT_SALT`: Secret dùng để băm ID, lưu trong **Script Properties**.
+- Backend Next.js gửi `token` trong JSON body để xác thực quyền ghi log.
+- Học sinh tương tác qua Webchat, Token không lộ ra phía Client (chỉ nằm ở Server-side API).
 
 ## 4) Cài đặt (Implementation)
 
@@ -97,4 +102,8 @@ Hệ thống đã sẵn sàng cho phân tích chuyên sâu cho nhóm nghiên c�
 2.  **Phân nhóm học sinh (K-means Clustering)**: Tự động phân loại học sinh thành 3 nhóm (Học sâu, Giải nhanh, Cần hỗ trợ) dựa trên:
     - Tỷ lệ %G, %P, %S.
     - Điểm trình tự (sequence score) của lộ trình G->P->S.
-    - Mức độ hài lòng và độ khó trung bình.
+    - Mức độ hài lòng và độ khó trung bình thực tế từ người dùng.
+
+## 8) Tính năng hỗ trợ học tập (Gamification & Scaffolding)
+- **Widget Tiến độ**: Hiển thị số lượt G, P, S trực quan để khích lệ học sinh hoàn thành quy trình.
+- **Adaptive Scaffolding**: Hệ thống tự động nhận diện Profile (Struggling/Advanced) để bẻ nhỏ bước giải hoặc cho phép tăng tốc.
