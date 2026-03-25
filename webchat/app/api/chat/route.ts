@@ -25,7 +25,7 @@ export async function POST(req: Request) {
   const validationError = validateRequest(body);
   if (validationError) return NextResponse.json<ChatResponse>({ ok: false, error: validationError }, { status: 400 });
 
-  const history = Array.isArray(body.history) ? body.history.slice(-20) : [];
+  const history = Array.isArray(body.history) ? body.history.slice(-6) : [];
   const behavior = detectBehaviorSignals({ history, message: body.message });
   const systemPrompt = getSystemPrompt({
     profile: body.profile,

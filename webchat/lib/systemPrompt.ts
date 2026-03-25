@@ -17,15 +17,20 @@ export function getSystemPrompt(options?: {
   const profileHint = buildProfileHint_(options?.profile);
   const behaviorHint = buildBehaviorHint_(options?.behavior);
   const groupHint = buildGroupHint_(options?.group);
+  const thoughtHint = buildThoughtHint_();
 
-  return [cachedPrompt, profileHint, behaviorHint, groupHint].filter(Boolean).join("\n\n");
+  return [cachedPrompt, profileHint, behaviorHint, groupHint, thoughtHint].filter(Boolean).join("\n\n");
 }
 
 function buildGroupHint_(group?: string): string {
   if (group === "Control") {
     return "## Research Group: Control\nYou are a helpful AI Assistant. You don't need to strictly follow the G.P.S. protocol. You can provide direct answers and comprehensive solutions if the student asks, but still focus on teaching and clarity.";
   }
-  return "## Research Group: Experimental (GPS)\nYou MUST strictly follow the G.P.S. protocol (Guide, Practice, Solve). DO NOT provide final answers or complete solutions until the student has successfully completed the G and P steps.";
+  return "## Research Group: Experimental (GPS)\nYou MUST strictly follow the G.P.S. protocol (Guide, Practice, Solve). For normal students, ensure they clear G and P before S. However, for [Advanced/Fast] students or when a student presents complete logic in the [Solve] step, you SHOULD check and confirm their results immediately in the [S] step to maintain engagement.";
+}
+
+function buildThoughtHint_(): string {
+  return "## Quy trình tư duy\nBạn hãy dành 1-2 câu để suy nghĩ ngầm về hướng giải Toán đúng (logic), sau đó đưa ra câu trả lời chính thức bằng TIẾNG VIỆT bắt đầu với [G], [P] hoặc [S].";
 }
 
 function buildProfileHint_(profile?: string): string {

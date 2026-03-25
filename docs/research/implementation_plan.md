@@ -7,7 +7,7 @@ Mục tiêu: thay quy trình thủ công (chat ngoài → copy/paste → Google 
 **Option B (khuyến nghị)**: Web App có backend riêng + GAS chỉ nhận log.
 
 - **Web Chat**: Next.js (deploy Vercel hoặc local), source ở `webchat/`
-- **LLM (Khuyến nghị)**: **vLLM** chạy model **Qwen2.5-Coder-7B-Instruct-AWQ** (local) để đạt hiệu năng toán học và lập trình cao nhất.
+- **LLM (Khuyến nghị)**: **vLLM** chạy model **Qwen2.5-Coder-7B-Instruct-AWQ** (local) để đạt hiệu năng tổng hợp và coding tốt nhất.
 - **Dự phòng**: OpenAI API (model `gpt-4o-mini`).
 - **Logging**: Google Apps Script Web App `doPost(e)` (source ở `src/tools/gas_script.js`)
 

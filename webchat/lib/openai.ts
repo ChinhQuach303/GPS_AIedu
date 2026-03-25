@@ -42,7 +42,10 @@ export async function generateWithOpenAI(params: {
         model,
         messages,
         temperature: 0.4,
-        max_tokens: 700
+        max_tokens: 700,
+        frequency_penalty: 1.1,
+        presence_penalty: 1.1,
+        stop: ["<|im_end|>", "<|endoftext|>"]
       })
     },
     timeoutMs
@@ -95,6 +98,9 @@ export async function generateWithOpenAIStream(params: {
         messages,
         temperature: 0.4,
         max_tokens: 700,
+        frequency_penalty: 1.1,
+        presence_penalty: 1.1,
+        stop: ["<|im_end|>", "<|endoftext|>"],
         stream: true
       })
     },

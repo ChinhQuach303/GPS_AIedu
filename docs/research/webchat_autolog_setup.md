@@ -29,20 +29,18 @@ Code web chat nằm ở `webchat/`.
 1. `cd webchat`
 2. `cp .env.example .env.local`
 3. Điền:
-   - Nếu dùng **vLLM** (Khuyến nghị): `LLM_PROVIDER=vllm`, `OPENAI_API_KEY=dummy`, `OPENAI_MODEL=Qwen/Qwen2.5-Coder-7B-Instruct-AWQ`, `OPENAI_BASE_URL=http://localhost:8001/v1`
+   - Nếu dùng **vLLM** (Khuyến nghị): `LLM_PROVIDER=vllm`, `OPENAI_API_KEY=dummy`, `OPENAI_MODEL="Qwen/Qwen2.5-Coder-7B-Instruct-AWQ"`, `OPENAI_BASE_URL=http://localhost:8001/v1`
    - Nếu dùng OpenAI public chính thức: `LLM_PROVIDER=openai`, điền API Key thực tế.
    - Nếu dùng Ollama: `LLM_PROVIDER=ollama`.
    - `GAS_LOG_URL`, `GAS_LOG_TOKEN`, `GAS_LOG_TIMEOUT_MS`
-4. `npm install`
+4. `npm install --legacy-peer-deps`
 5. `npm run dev`
 
 Nếu chat bị treo ở “Đang trả lời…” khi dùng Ollama/vLLM:
 - Mở `http://localhost:3000/api/health` để xem trạng thái provider.
-- **Dành cho vLLM**: Bạn có thể chạy server bằng lệnh:
   ```bash
-  VLLM_USE_V1=0 \
-  python -m vllm.entrypoints.openai.api_server \
-    --model "/media/chinh303/New Volume1/ai_models/huggingface/hub/models--Qwen--Qwen2.5-Coder-7B-Instruct-AWQ/snapshots/8e8ed243bbe6f9a5aff549a0924562fc719b2b8a" \
+  /home/chinh303/vllm_env/bin/python -m vllm.entrypoints.openai.api_server \
+    --model Qwen/Qwen2.5-Coder-7B-Instruct-AWQ \
     --port 8001 \
     --trust-remote-code \
     --max-model-len 4096 \

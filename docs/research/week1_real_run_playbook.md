@@ -80,23 +80,19 @@ https://script.google.com/macros/s/AKfycbyngEQdvo_AxMDpRYKUPy67y8vgHpk0nq9z122CD
 
 ## Bước 2 – Tải Model và Khởi chạy Hệ thống Local (Next.js + vLLM)
 
-Vì bạn đang sử dụng môi trường GPU nội bộ (NVIDIA RTX 3060 12GB), chúng ta sẽ chạy model **Qwen2.5-Math-7B-Instruct** thông qua server **vLLM** ở định dạng nén **AWQ** để tránh lỗi tràn RAM (OOM).
+Vì bạn đang sử dụng môi trường GPU nội bộ, chúng ta sẽ chạy model **Qwen2.5-Coder-7B-Instruct-AWQ** thông qua server **vLLM**.
 
-### 2.1. Tải Model AWQ về máy dự phòng
-Mở terminal và kích hoạt môi trường ảo đang cài `vllm_env`. Chạy lệnh để tải model về đúng thư mục ổ đĩa của bạn:
+### 2.1. Tải và chuẩn bị Model
+Nếu chưa có model, vLLM sẽ tự động tải khi chạy lệnh serve ở bước tiếp theo hoặc bạn có thể tải trước:
 ```bash
-/home/chinh303/vllm_env/bin/huggingface-cli download \
-  adriszmar/Qwen2.5-Math-7B-Instruct-AWQ \
-  --local-dir "/media/chinh303/New Volume1/ai_models/Qwen2.5-Math-7B-Instruct-AWQ" \
-  --local-dir-use-symlinks False
+# Lệnh mẫu gợi ý
+vllm serve "Qwen/Qwen2.5-Coder-7B-Instruct-AWQ" --help
 ```
 
-### 2.2. Khởi động AI Server (vLLM)
-Khi tải xong, chạy lệnh sau để bật Server suy luận của AI:
+Khi môi trường đã sẵn sàng, chạy lệnh sau để bật Server suy luận của AI:
 ```bash
-VLLM_USE_V1=0 \
 /home/chinh303/vllm_env/bin/python -m vllm.entrypoints.openai.api_server \
-  --model "/media/chinh303/New Volume1/ai_models/huggingface/hub/models--Qwen--Qwen2.5-Coder-7B-Instruct-AWQ/snapshots/8e8ed243bbe6f9a5aff549a0924562fc719b2b8a" \
+  --model Qwen/Qwen2.5-Coder-7B-Instruct-AWQ \
   --port 8001 \
   --trust-remote-code \
   --max-model-len 4096 \
@@ -115,11 +111,11 @@ Mở một Terminal thứ 2, đi vào thư mục webchat:
 cd /home/chinh303/code/aiedu/webchat
 cp .env.example .env.local
 ```
-Mở tệp `.env.local` và đảm bảo cấu hình như sau (để Frontend gọi đúng tới localhost:8000):
+Mở tệp `.env.local` và đảm bảo cấu hình như sau (để Frontend gọi đúng tới localhost:8001):
 ```env
 LLM_PROVIDER=vllm
-OPENAI_API_KEY=vllm-token-dummy
-OPENAI_MODEL=Qwen2.5-Coder-7B-Instruct-AWQ
+OPENAI_API_KEY=token-vllm-optional
+OPENAI_MODEL="Qwen/Qwen2.5-Coder-7B-Instruct-AWQ"
 OPENAI_BASE_URL=http://localhost:8001/v1
 GAS_LOG_URL=https://script.google.com/.../exec    <-- (Dán link Web App của bạn ở bước 1)
 GAS_LOG_TOKEN=CHUOI_BI_MAT_CUA_BAN                <-- (Dán chuỗi đã cấu hình trong Script Properties)
@@ -128,7 +124,7 @@ GAS_LOG_TOKEN=CHUOI_BI_MAT_CUA_BAN                <-- (Dán chuỗi đã cấu h
 ### 2.4. Chạy Giao diện người dùng
 Tại chính Terminal thứ 2 này, tiến hành chạy web:
 ```bash
-npm install
+npm install --legacy-peer-deps
 npm run dev
 ```
 Truy cập `http://localhost:3000` để kiểm tra chat. Khi chat, dữ liệu sẽ tự động đồng bộ thời gian thực về tab `Raw Data` trên Google Sheet.
@@ -183,7 +179,7 @@ Trong hệ thống, chúng ta phân loại 5 kiểu tính cách mẫu:
 3. Giao diện hiện ra, tại ô **Student ID**, nhập mã `HS0001`. Mục **Class** (Lớp) bạn gõ `11A1`. Mục **Topic** (Chủ đề) gõ `Toán xác suất`. 
 4. Bấm **Bắt đầu**.
 5. Mở file `docs/research/week1_persona_question_scripts.md` trong mã nguồn. Tại đây tôi đã soạn sẵn kịch bản 24 dòng tin nhắn mẫu cho từng Persona. 
-6. Chỉ việc copy từng dòng tin nhắn đó, dán vào Webchat, và chờ AI (Qwen2.5-Math) suy nghĩ và trả lời.
+6. Chỉ việc copy từng dòng tin nhắn đó, dán vào Webchat, và chờ AI (Qwen2.5-Coder-7B) suy nghĩ và trả lời.
    *(Nhớ đánh giá số Sao ⭐ và độ khó 🤔 sau mỗi câu trả lời của AI nhé)*.
 
 ### 5.3. Kiểm tra phép màu tự động

@@ -7,7 +7,7 @@ This app provides a single web chat UI and automatically logs each Q/A turn into
 1. Copy env:
    - `cp .env.example .env.local`
 2. Install + run:
-   - `npm install`
+   - `npm install --legacy-peer-deps`
    - `npm run dev`
 
 Notes:
