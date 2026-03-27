@@ -1,6 +1,7 @@
 import { ChatMessage } from "./types";
 import { fetchWithTimeout } from "./fetchWithTimeout";
 import { OpenAIStream } from "ai";
+import { getOpenAIApiKey, getOpenAIBaseUrl, getOpenAIModelName } from "./env";
 
 type OpenAIChatCompletionsResponse = {
   choices?: Array<{
@@ -14,11 +15,11 @@ export async function generateWithOpenAI(params: {
   history: ChatMessage[];
   message: string;
 }): Promise<string> {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = getOpenAIApiKey();
   if (!apiKey) throw new Error("Missing OPENAI_API_KEY.");
 
-  const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
-  const baseUrl = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
+  const model = getOpenAIModelName();
+  const baseUrl = getOpenAIBaseUrl();
   const timeoutMs = Number(process.env.OPENAI_TIMEOUT_MS || process.env.LLM_TIMEOUT_MS || 60_000);
 
   const messages = [
@@ -69,11 +70,11 @@ export async function generateWithOpenAIStream(params: {
   history: ChatMessage[];
   message: string;
 }): Promise<{ stream: ReadableStream<Uint8Array>; replyPromise: Promise<string> }> {
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = getOpenAIApiKey();
   if (!apiKey) throw new Error("Missing OPENAI_API_KEY.");
 
-  const model = process.env.OPENAI_MODEL || "gpt-4o-mini";
-  const baseUrl = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
+  const model = getOpenAIModelName();
+  const baseUrl = getOpenAIBaseUrl();
   const timeoutMs = Number(process.env.OPENAI_TIMEOUT_MS || process.env.LLM_TIMEOUT_MS || 60_000);
 
   const messages = [

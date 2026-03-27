@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getOpenAIApiKey, getOpenAIBaseUrl } from "@/lib/env";
 
 export const runtime = "nodejs";
 
@@ -14,8 +15,8 @@ export async function GET() {
       return NextResponse.json({ ok: true, provider, models: [], note: "For Ollama, run `ollama list` locally." });
     }
 
-    const apiKey = process.env.OPENAI_API_KEY;
-    const baseUrl = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
+    const apiKey = getOpenAIApiKey();
+    const baseUrl = getOpenAIBaseUrl();
     const headers: Record<string, string> = {};
     if (apiKey && apiKey !== "vllm-not-needed") {
       headers["authorization"] = `Bearer ${apiKey}`;

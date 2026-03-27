@@ -1,4 +1,5 @@
 import { fetchWithTimeout } from "./fetchWithTimeout";
+import { getOpenAIApiKey, getOpenAIBaseUrl, getOpenAIModelName } from "./env";
 
 export type GpsLabel = "G" | "P" | "S";
 
@@ -8,15 +9,14 @@ export async function classifyGpsStepLLM(params: {
   const enabledRaw = (process.env.GPS_CLASSIFY_ENABLED || "true").trim().toLowerCase();
   const enabled = enabledRaw !== "false" && enabledRaw !== "0";
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = getOpenAIApiKey();
   if (!enabled || !apiKey) return "";
 
   const model =
     process.env.GPS_CLASSIFIER_MODEL ||
     process.env.OPENAI_CLASSIFIER_MODEL ||
-    process.env.OPENAI_MODEL ||
-    "gpt-4o-mini";
-  const baseUrl = (process.env.OPENAI_BASE_URL || "https://api.openai.com/v1").replace(/\/+$/, "");
+    getOpenAIModelName();
+  const baseUrl = getOpenAIBaseUrl();
   const timeoutMs = Number(process.env.GPS_CLASSIFIER_TIMEOUT_MS || 12_000);
 
   const systemPrompt =

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { getOpenAIApiKey } from "@/lib/env";
 
 export const runtime = "nodejs";
 
@@ -33,7 +34,7 @@ export async function GET() {
   return NextResponse.json({
     ok: true,
     provider,
-    openaiConfigured: Boolean(process.env.OPENAI_API_KEY),
+    openaiConfigured: Boolean(getOpenAIApiKey()),
     gasLoggingConfigured: Boolean(process.env.GAS_LOG_URL && process.env.GAS_LOG_TOKEN),
     ollama,
     vllm

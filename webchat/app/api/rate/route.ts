@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   const gasToken = process.env.GAS_LOG_TOKEN;
 
   if (!gasUrl || !gasToken) {
-    return NextResponse.json({ ok: false, error: "GAS_LOG_URL or GAS_LOG_TOKEN not configured." }, { status: 500 });
+    return NextResponse.json({ ok: true, note: "Rating is disabled because GAS logging is not configured." });
   }
 
   try {
