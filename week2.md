@@ -67,3 +67,11 @@ Kết thúc tuần 2, nhóm nghiên cứu cần có:
 - **Webchat**: `https://your-pilot-link.vercel.app`
 - **Dashboard**: Link Google Sheet (tab `Alerts` và `GPS Tracker`).
 - **Feedback**: Nhóm Zalo/Messenger hỗ trợ kỹ thuật nhanh cho giáo viên.
+
+## TÓM TẮT CODE TUẦN 2
+
+- Giao diện Webchat lưu session/message vào `localStorage`, hiển thị thanh tiến độ [G/P/S] và bật các nút đánh giá chỉ sau khi bài toán được trả lời; luồng gửi/nhận cũng bảo đảm trạng thái `busy` để tránh gửi chồng (xem `webchat/app/page.tsx:38`, `webchat/app/page.tsx:141`, `webchat/app/page.tsx:168`).
+- API `/api/chat` kiểm tra payload, phán đoán hành vi, áp prompt phù hợp rồi trả về stream kèm header `x-message-id` để front-end và GAS log theo dõi, đồng thời ghi log bất kể sử dụng stream hay đơn lẻ (xem `webchat/app/api/chat/route.ts:12`, `webchat/app/api/chat/route.ts:29`, `webchat/app/api/chat/route.ts:41`, `webchat/app/api/chat/route.ts:53`).
+- `webchat/lib/gasLog.ts` gọi `classifyGpsStepLLM` và `detectBehaviorSignals` để nhồi nhét tag vào payload trước khi gọi Apps Script, còn `src/tools/gas_script.js` kiểm tra token, dedup, tự gắn nhãn, băm ID và cảnh báo Telegram khi cần (xem `webchat/lib/gasLog.ts:6`, `src/tools/gas_script.js:73`, `src/tools/gas_script.js:80`, `src/tools/gas_script.js:143`).
+- Stack prompt/behavior được neo vào `webchat/prompts/system_prompt.md` và `webchat/lib/systemPrompt.ts`/`webchat/lib/behavior.ts` để điều chỉnh nhắc nhở theo profile, nhóm nghiên cứu và cờ skip/looping (xem `webchat/prompts/system_prompt.md:1`, `webchat/lib/systemPrompt.ts:7`, `webchat/lib/behavior.ts:16`).
+- Quy trình Option B (Next.js + GAS) và bước triển khai Apps Script đã được ghi lại để đảm bảo mọi thành phần tự động cùng chạy (xem `docs/research/implementation_plan.md:7`, `docs/research/webchat_autolog_setup.md:7`).
