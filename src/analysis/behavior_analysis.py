@@ -118,7 +118,29 @@ class GPSBehaviorAnalysis:
             return score / (len(steps)-1)
             
         student_stats['sequence_score'] = self.df.groupby('Student Hash').apply(calc_sequence_score)
-        return student_stats.fillna(0)
+        
+        # Final cleanup for clustering
+        final_features = student_stats.replace([np.inf, -np.inf], 0).fillna(0)
+        
+        # New: Independence Index (Current snapshot)
+        if 'G' in gps_counts.columns and 'P' in gps_counts.columns and 'S' in gps_counts.columns:
+            final_features['independence_index'] = gps_counts['S'] / (gps_counts['G'] + gps_counts['P'] + 0.1)
+        else:
+            final_features['independence_index'] = 0.0
+            
+        return final_features
+
+    def calculate_learning_gain(self, pre_test_df, post_test_df):
+        """
+        Calculates normalized learning gain: (Post - Pre) / (Max - Pre)
+        """
+        # Merging based on common ID/Hash
+        merged = pd.merge(pre_test_df, post_test_df, on='Student Hash', suffixes=('_pre', '_post'))
+        merged['absolute_gain'] = merged['Score_post'] - merged['Score_pre']
+        # Normalized gain (Hake's g)
+        max_score = 100 # Assuming 100
+        merged['norm_gain'] = (merged['Score_post'] - merged['Score_pre']) / (max_score - merged['Score_pre'])
+        return merged
 
     def perform_clustering(self, n_clusters=3):
         """
@@ -130,7 +152,7 @@ class GPSBehaviorAnalysis:
             return features, None
             
         # Select active features for clustering
-        cluster_cols = [c for c in ['pct_G', 'pct_P', 'pct_S', 'sequence_score', 'Satisfaction (1-5)'] if c in features.columns]
+        cluster_cols = [c for c in ['pct_G', 'pct_P', 'pct_S', 'sequence_score', 'efficiency_score', 'Satisfaction (1-5)'] if c in features.columns]
         X = features[cluster_cols]
         
         # Scale features
@@ -181,9 +203,75 @@ class GPSBehaviorAnalysis:
         
         # Calculate daily GPS distribution
         gps_dist = self.df.groupby(['Date', 'Auto Label']).size().unstack(fill_value=0)
-        daily_trends = pd.concat([daily_trends, gps_dist], axis=1)
+        daily_trends = pd.concat([daily_trends, gps_dist], axis=1).fillna(0)
         
         return daily_trends
+
+    def calculate_sequence_chaos(self):
+        """
+        Calculates Sequence Chaos Index: entropy-like measure of transitions.
+        Pure GPS (G -> P -> S) has low chaos.
+        Random jumping (G -> S -> G -> G) has high chaos.
+        """
+        chaos_scores = {}
+        for student, group in self.df.groupby('Student Hash'):
+            steps = group['Auto Label'].tolist()
+            if len(steps) < 2:
+                chaos_scores[student] = 1.0 # Max chaos for low data
+                continue
+            
+            # Count repeated steps or backward jumps
+            anomalies = 0
+            for i in range(len(steps)-1):
+                # Penalty for S -> G or S -> P (Regression after solving)
+                if steps[i] == 'S' and steps[i+1] in ['G', 'P']:
+                    anomalies += 1.5
+                # Penalty for G -> S (Skipping Practice)
+                elif steps[i] == 'G' and steps[i+1] == 'S':
+                    anomalies += 1.0
+                # Penalty for too many repeats of G
+                elif steps[i] == 'G' and steps[i+1] == 'G':
+                   anomalies += 0.2
+            
+            chaos_scores[student] = anomalies / len(steps)
+            
+        return pd.Series(chaos_scores, name='chaos_index')
+
+    def track_cluster_transitions(self, split_date=None):
+        """
+        Compares clusters before and after a split date to track 'graduation'.
+        """
+        if self.df.empty: return pd.DataFrame()
+        
+        if split_date is None:
+            # Default to splitting mid-way in time
+            dates = sorted(self.df['Timestamp'].dt.date.unique())
+            if len(dates) < 2: return pd.DataFrame()
+            split_date = dates[len(dates)//2]
+            
+        df_early = self.df[self.df['Timestamp'].dt.date < split_date]
+        df_late = self.df[self.df['Timestamp'].dt.date >= split_date]
+        
+        if df_early.empty or df_late.empty: return pd.DataFrame()
+        
+        # Analyze clusters for both periods
+        early_analyzer = GPSBehaviorAnalysis(df_early)
+        late_analyzer = GPSBehaviorAnalysis(df_late)
+        
+        early_clusters, _ = early_analyzer.perform_clustering()
+        late_clusters, _ = late_analyzer.perform_clustering()
+        
+        if early_clusters.empty or late_clusters.empty: return pd.DataFrame()
+        
+        # Merge to see transitions
+        transitions = pd.merge(
+            early_clusters[['cluster']].rename(columns={'cluster': 'cluster_before'}),
+            late_clusters[['cluster']].rename(columns={'cluster': 'cluster_after'}),
+            on='Student Hash',
+            how='inner'
+        )
+        
+        return transitions
 
     def calculate_scaffolding_efficiency(self):
         """
@@ -205,7 +293,6 @@ class GPSBehaviorAnalysis:
             gp_counts = []
             last_s_idx = -1
             for s_idx in s_indices:
-                # Count G and P between last S and current S
                 segment = steps[last_s_idx+1:s_idx]
                 gp_count = len([x for x in segment if x in ['G', 'P']])
                 gp_counts.append(gp_count)
@@ -214,6 +301,29 @@ class GPSBehaviorAnalysis:
             efficiency[student] = np.mean(gp_counts) if gp_counts else 0
             
         return pd.Series(efficiency, name='Avg G/P per S')
+
+    def calculate_independence_index(self):
+        """
+        Calculates the Independence Index: Count(S) / (Count(G) + Count(P) + 1).
+        A higher index indicates more independence from AI scaffolding.
+        Tracks how this index changes over time (Day-by-Day).
+        """
+        if self.df.empty: return pd.DataFrame()
+        
+        # Calculate daily counts per student
+        self.df['Date'] = self.df['Timestamp'].dt.date
+        daily_gps = self.df.groupby(['Date', 'Student Hash', 'Auto Label']).size().unstack(fill_value=0)
+        
+        # Ensure G, P, S columns exist
+        for col in ['G', 'P', 'S']:
+            if col not in daily_gps.columns:
+                daily_gps[col] = 0
+        
+        daily_gps['independence_index'] = daily_gps['S'] / (daily_gps['G'] + daily_gps['P'] + 0.1)
+        
+        # Average across all students per day
+        daily_avg_independence = daily_gps.groupby('Date')['independence_index'].mean()
+        return daily_avg_independence
 
     def prove_improvement(self):
         """
@@ -239,6 +349,8 @@ class GPSBehaviorAnalysis:
 - **Satisfaction Trend**: Satisfaction changed from {start_satisfaction:.2f} to {end_satisfaction:.2f} ({sat_change:+.1f}%). 
 - **Perceived Difficulty**: Difficulty changed from {start_diff:.2f} to {end_diff:.2f} ({diff_change:+.1f}%). 
 - **Learning Independence**: Average G+P steps per Solve (S) is {self.calculate_scaffolding_efficiency().mean():.2f}.
+- **Independence Index (Week 5 Focus)**: Current avg index is {self.calculate_independence_index().iloc[-1]:.2f} (Target: > 1.0).
+- **Sequence Chaos (Ordering)**: Avg Chaos Index is {self.calculate_sequence_chaos().mean():.3f} (Lower is better, indicates structured learning).
 
 ### 2. Teacher Intelligence (Actionable Data)
 - **Total Interactions Logged**: {total_interactions} across {len(self.df['Student Hash'].unique())} unique student sessions.
@@ -306,8 +418,61 @@ The data suggests that the G.P.S. scaffolding approach is **{'improving' if sat_
                 plt.grid(True, alpha=0.2)
                 plt.savefig(f'{output_dir}/student_segmentation_pca.png')
                 plt.close()
+                
+            # 4. Chaos Index Distribution
+            chaos_scores = self.calculate_sequence_chaos()
+            plt.figure(figsize=(10, 6))
+            sns.histplot(chaos_scores, kde=True, color='purple')
+            plt.title('Sequence Chaos Distribution (Behavioral Consistency)', fontsize=15)
+            plt.xlabel('Chaos Index (Lower = More Disciplined)', fontsize=12)
+            plt.savefig(f'{output_dir}/chaos_distribution.png')
+            plt.close()
+
+            # 5. Graduation / Transitions
+            transitions = self.track_cluster_transitions()
+            if not transitions.empty:
+                transition_matrix = pd.crosstab(transitions['cluster_before'], transitions['cluster_after'], normalize='index')
+                plt.figure(figsize=(10, 8))
+                sns.heatmap(transition_matrix, annot=True, cmap='RdYlGn', fmt='.2f')
+                plt.title('Student Migration: Profile Transitions (Graduation)', fontsize=15)
+                plt.xlabel('Late Session Profile (After)', fontsize=12)
+                plt.ylabel('Early Session Profile (Before)', fontsize=12)
+                plt.savefig(f'{output_dir}/graduation_matrix.png')
+                plt.close()
             
-            # 4. Summary Text Report
+            # 6. Independence Index Trend
+            independence_trend = self.calculate_independence_index()
+            if not independence_trend.empty:
+                plt.figure(figsize=(12, 6))
+                independence_trend.plot(marker='s', color='green', linewidth=2)
+                plt.title('Daily Independence Index (AI Dependency Reduction)', fontsize=15)
+                plt.ylabel('Independence Index (S / (G+P+0.1))')
+                plt.axhline(y=1.0, color='r', linestyle='--', label='Independence Threshold')
+                plt.legend()
+                plt.grid(True, alpha=0.3)
+                plt.savefig(f'{output_dir}/independence_trend.png')
+                plt.close()
+
+            # 7. GPS Step Distribution over Time
+            trends = self.analyze_trends_over_time()
+            if not trends.empty and all(col in trends.columns for col in ['G', 'P', 'S']):
+                plt.figure(figsize=(12, 6))
+                trends[['G', 'P', 'S']].plot(kind='bar', stacked=True, color=['#ff9999','#66b3ff','#99ff99'])
+                plt.title('Daily GPS Activity Composition', fontsize=15)
+                plt.ylabel('Step Count')
+                plt.xticks(rotation=45)
+                plt.savefig(f'{output_dir}/gps_distribution_bar.png')
+                plt.close()
+
+            # 8. Thinking Time vs Difficulty Correlation
+            if 'Difficulty (1-5)' in self.df.columns and 'Thinking Time (minutes)' in self.df.columns:
+                plt.figure(figsize=(10, 6))
+                sns.regplot(data=self.df, x='Difficulty (1-5)', y='Thinking Time (minutes)', scatter_kws={'alpha':0.5})
+                plt.title('Cognitive Load: Thinking Time vs complexity', fontsize=15)
+                plt.savefig(f'{output_dir}/difficulty_vs_time.png')
+                plt.close()
+            
+            # 9. Summary Text Report
             summary = self.prove_improvement()
             with open(f'{output_dir}/impact_report.md', 'w', encoding='utf-8') as f:
                 f.write(summary)

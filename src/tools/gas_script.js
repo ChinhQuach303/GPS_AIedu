@@ -929,3 +929,20 @@ function assignThinkingTimeToRows(rows) {
     }
   }
 }
+
+/**
+ * Send alert if a student is struggling (e.g. > 3 Guide steps in a row or high thinking time without S)
+ */
+function checkAndSendAlert(studentHash, lastSteps) {
+  const struggleThreshold = 3;
+  const guideSteps = lastSteps.filter(s => s === 'Guide').length;
+  
+  if (guideSteps >= struggleThreshold) {
+      const teacherEmail = "teacher@example.edu.vn"; // Should be configurable
+      MailApp.sendEmail({
+        to: teacherEmail,
+        subject: `[GPS-Alert] Học sinh ${studentHash.substring(0,6)} đang gặp khó khăn`,
+        body: `Cảnh báo: Học sinh này đã yêu cầu hướng dẫn (Guide) ${guideSteps} lần liên tiếp mà chưa chuyển sang thực hành. Hãy can thiệp theo bước 'Intervene' trong quy trình GUIDE.`
+      });
+  }
+}
