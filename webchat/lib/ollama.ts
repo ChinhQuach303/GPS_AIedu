@@ -32,7 +32,9 @@ export async function generateWithOllama(params: {
       stream: false,
       messages,
       options: {
-        temperature: 0.4
+        temperature: 0.3, # Giảm nhiệt độ để AI trả lời kỷ luật hơn theo GPS
+        num_ctx: 4096,    # Đảm bảo đủ bộ nhớ ngữ cảnh cho các hội thoại dài
+        top_p: 0.9
       }
     })
     },

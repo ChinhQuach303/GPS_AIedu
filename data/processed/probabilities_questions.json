@@ -1,0 +1,542 @@
+[
+  {
+    "id": 1,
+    "question": "Gieo một đồng tiền cân đối và đồng chất bốn lần. Xác suất để cả bốn lần xuất hiện mặt sấp là?",
+    "options": {
+      "A": "4 16 .",
+      "B": "2 16 .",
+      "C": "1 16 .",
+      "D": "6 .16"
+    },
+    "answer": "C",
+    "solution": "Số phần tử của không gian mẫu là \n2.2.2.2 16.    \nGọi \nA  là biến cố ” Cả bốn lần gieo xuất hiện mặt sấp” \n1.A    \nVậy xác suất cần tính \n  1\n16PA  ."
+  },
+  {
+    "id": 2,
+    "question": "Gieo một con súc sắc hai lần. Xác suất để ít nhất một lần xuất hiện mặt sáu chấm là?",
+    "options": {
+      "A": "12 36 .",
+      "B": "11 36 .",
+      "C": "6 36 .",
+      "D": "8 .36"
+    },
+    "answer": "B",
+    "solution": "Số phần tử của không gian mẫu là \n6.6 36.    \nGọi \nA  là biến cố ” Ít nhất một lần xuất hiện mặt sáu chấm” . Để tìm số phần tử của \nbiến cố \nA  , ta đi tìm số phần tử của biến cố đối \nA  là ” Không xuất hiện mặt sáu \nchấm” \nR 5.5 25 36 25 11.AA         \nVậy xác suất cần tính \n  11\n36PA  ."
+  },
+  {
+    "id": 3,
+    "question": "Gieo một con xúc xắc cân đối đồng chất 2 lần. Tính xác suất để biến cố có tổng hai mặt bằng 8.",
+    "options": {
+      "A": "1 6 .",
+      "B": "5 36 .",
+      "C": "1 9 .",
+      "D": "1 .2"
+    },
+    "answer": "A",
+    "solution": "Số phần tử của không gian mẫu là \n6.6 36.    \nGọi \nA  là biến cố ” Số chấm trên mặt hai lần gieo có tổng bằng 8 ” . \nGọi số chấm trên mặt khi gieo lần một là \nx , số chấm trên mặt khi gieo lần hai là \n.y  \nTheo bài ra, ta có \n   \n16\n1 6 ; { 2;6\n8\nx\ny x y\nxy\n\n    \n  , (3;5), (4;4), \n( 6;2 , (5;3 , (4;4)}. \n \n \nKhi đó số kết quả thuận lợi của biến cố là \n6.A  \nVậy xác suất cần tính \n  61\n36 6PA  ."
+  },
+  {
+    "id": 4,
+    "question": "Gieo một con xúc xắc cân đối đồng chất 2 lần, tính xác suất để biến cố có tích 2 lần số chấm khi gieo xúc xắc là một số chẵn.",
+    "options": {
+      "A": "0,25.",
+      "B": "0,5.",
+      "C": "0,75.",
+      "D": "0,85."
+    },
+    "answer": "C",
+    "solution": "Số phần tử của không gian mẫu là \n6.6 36.    \nGọi \nA  là biến cố ” Tích hai lần số chấm khi gieo xúc xắc là một số chẵn” . Ta xét các \ntrường hợp: \nTH1. Gieo lần một, số chấm xuất hiện trên mặt là số lẻ thì khi gieo lần hai, số chấm \nxuất hiện phải là số chẵn. Khi đó có \n3.3 9  cách gieo. \nTH2. Gieo lần một, số chấm xuất hiện trên mặt là số chẵn thì có hai trường hợp xảy \nra là số chấm xuất hiện trên mặt khi gieo lần hai là số lẻ hoặc số chẵn. Khi đó có \n3.3 3.3 18\n cách gieo. \nSuy ra số kết quả thuận lợi cho biến cố là \n9 18 27.A     \nVậy xác suất cần tìm tính \n  27 0,7536PA  ."
+  },
+  {
+    "id": 5,
+    "question": "Gieo ba con súc sắc. Xác suất để số chấm xuất hiện trên ba con súc sắc như nhau là?",
+    "options": {
+      "A": "12 216 .",
+      "B": "1 216 .",
+      "C": "6 216 .",
+      "D": "3 .216"
+    },
+    "answer": "C",
+    "solution": "Số phần tử của không gian mẫu là \n6.6.6 36.    \nGọi \nA  là biến cố ” Số chấm xuất hiện trên ba con súc sắc như nhau” . Ta có các \ntrường hợp thuận lợi cho biến cố \nA  là (1;1;1), (2;2;2), (3;3;3), \n...  \n 6;6;6  . \nSuy ra \n6.A  \nVậy xác suất cần tính \n  6\n216PA  ."
+  },
+  {
+    "id": 6,
+    "question": "Một đội gồm 5 nam và 8 nữ. Lập một nhóm gồm 4 người hát tốp ca, tính xác suất để trong 4 người được chọn có ít nhất 3 nữ.",
+    "options": {
+      "A": "70 143 .",
+      "B": "73 143 .",
+      "C": "56 143 .",
+      "D": "87 .143"
+    },
+    "answer": "A",
+    "solution": "Không gian mẫu là chọn tùy ý 4 người từ 13 người. \nSuy ra số phần tử của không gian mẫu là \n4\n13 715.C    \nGọi \nA  là biến cố ” 4 người được chọn có ít nhất 3 nữ” . Ta có hai trường hợp thuận lợi \ncho biến cố \nA  như sau: \n● TH1: Chọn 3 nữ và 1 nam, có \n31\n85CC  cách. \n● TH2: Chọn cả 4 nữ, có \n4\n8C  cách. \nSuy ra số phần tử của biến cố \nA  là \n3 1 4\n8 5 8 350.A C C C     \nVậy xác suất cần tính \n  350 70\n715 143\nAPA    ."
+  },
+  {
+    "id": 7,
+    "question": "Một hộp có 5 viên bi xanh, 6 viên bi đỏ và 7 viên bi vàng. Chọn ngẫu nhiên 5 viên bi trong hộp, tính xác suất để 5 viên bi được chọn có đủ màu và số bi đỏ bằng số bi vàng.",
+    "options": {
+      "A": "313 408 .",
+      "B": "95 408 .",
+      "C": "5 102 .",
+      "D": "25 .136"
+    },
+    "answer": "B",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 5 viên bi từ hộp chứa 18 viên \nbi. Suy ra số phần tử của không gian mẫu là \n5\n18 8568.C    \nGọi \nA  là biến cố ” 5 viên bi được chọn có đủ màu và số bi đỏ bằng số bi vàng” . Ta có \ncác trường hợp thuận lợi cho biến cố \nA  là: \n● TH1: Chọn 1 bi đỏ, 1 bi vàng và 3 bi xanh nên có \n1 1 3\n6 7 5..C C C  cách. \n● TH2: Chọn 2 bi đỏ, 2 bi vàng và 1 bi xanh nên có \n2 2 1\n6 7 5..CCC  cách. \nSuy ra số phần tử của biến cố \nA  là \n1 1 3 2 2 1\n6 7 5 6 7 5. . . . 1995.A C C C C C C     \nVậy xác suất cần tính \n  1995 95\n8568 408\nAPA    ."
+  },
+  {
+    "id": 8,
+    "question": "Một hộp có 5 viên bi đỏ, 3 viên bi vàng và 4 viên bi xanh. Chọn ngẫu nhiên từ hộp 4 viên bị, tính xác suất để 4 viên bi được chọn có số bi đỏ lớn hơn số bi vàng và nhất thiết phải có mặt bi xanh.",
+    "options": {
+      "A": "1 12 .",
+      "B": "1 3 .",
+      "C": "16 33 .",
+      "D": "1 .2"
+    },
+    "answer": "C",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 4 viên bi từ hộp chứa 12 viên \nbi. Suy ra số phần tử của không gian mẫu là \n4\n12 495.C    \nGọi \nA  là biến cố ” 4 viên bi được chọn có số bi đỏ lớn hơn số bi vàng và nhất thiết \nphải có mặt bi xanh” . Ta có các trường hợp thuận lợi cho biến cố \nA  là: \n● TH1: Chọn 1 bi đỏ và 3 bi xanh nên có \n13\n54.CC  cách. \n● TH2: Chọn 2 bi đỏ và 2 bi xanh nên có \n22\n54CC  cách. \n● TH3: Chọn 3 bi đỏ và 1 bi xanh nên có \n31\n54.CC  cách. \n● TH4: Chọn 2 bi đỏ, 1 bi vàng và 1 bi xanh nên có \n2 1 1\n5 3 4C C C  cách. \nSuy ra số phần tử của biến cố \nA  là \n1 3 2 2 3 1 2 1 1\n5 4 5 4 5 4 5 3 4. . 240.A C C C C C C C C C       \nVậy xác suất cần tính \n  240 16\n495 33\nAPA    ."
+  },
+  {
+    "id": 9,
+    "question": "Có 3 bó hoa. Bó thứ nhất có 8 hoa hồng, bó thứ hai có 7 bông hoa ly, bó thứ ba có 6 bông hoa huệ. Chọn ngẫu nhiên 7 hoa từ ba bó hoa trên để cắm vào lọ hoa, tính xác suất để trong 7 hoa được chọn có số hoa hồng bằng số hoa ly.",
+    "options": {
+      "A": "3851 4845 .",
+      "B": "1 71 .",
+      "C": "36 71 .",
+      "D": "994 4845 ."
+    },
+    "answer": "D",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 7 hoa từ ba bó hoa gồm 21 hoa. \nSuy ra số phần tử của không gian mẫu là \n7\n21 116280.C    \nGọi \nA  là biến cố ” 7 hoa được chọn có số hoa hồng bằng số hoa ly” . Ta có các trường \nhợp thuận lợi cho biến cố \nA  là: \n● TH1: Chọn 1 hoa hồng, 1 hoa ly và 5 hoa huệ nên có \n1 1 5\n8 7 6..C C C  cách. \n● TH2: Chọn 2 hoa hồng, 2 hoa ly và 3 hoa huệ nên có \n2 2 3\n8 7 6..CCC  cách. \n● TH3: Chọn 3 hoa hồng, 3 hoa ly và 1 hoa huệ nên có \n3 3 1\n8 7 6..CCC  cách. \nSuy ra số phần tử của biến cố \nA  là \n1 1 5 2 2 3 3 3 1\n8 7 6 8 7 6 8 7 6. . . . . . 23856.A C C C C C C C C C      \nVậy xác suất cần tính \n  23856 994\n116280 4845\nAPA    ."
+  },
+  {
+    "id": 10,
+    "question": "Có 13 học sinh của một trường THPT đạt danh hiệu học sinh xuất sắc trongđó khối 12 có 8 học sinh nam và 3 học sinh nữ, khối 11 có 2 học sinh nam. Chọn ngẫu nhiên 3 học sinh bất kỳ để trao thưởng, tính xác suất để 3 học sinh được chọn có cả nam và nữ đồng thời có cả khối 11 và khối 12 .",
+    "options": {
+      "A": "57 286 .",
+      "B": "24 143 .",
+      "C": "27 143 .",
+      "D": "229 .286"
+    },
+    "answer": "A",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 3 học sinh từ 13 học sinh. \nSuy ra số phần tử của không gian mẫu là \n3\n13 286.C    \nGọi \nA  là biến cố ” 3 học sinh được chọn có cả nam và nữ đồng thời có cả khối 11 và \nkhối 12 ” . Ta có các trường hợp thuận lợi cho biến cố \nA  là: \n● TH1: Chọn 1 học sinh khối 11; 1 học sinh nam khối 12 và 1 học sinh nữ khối 12 nên \ncó \n1 1 1\n2 8 3 48C C C   cách. \n● TH2: Chọn 1 học sinh khối 11; 2 học sinh nữ khối 12 có \n12\n23 6CC   cách. \n● TH3: Chọn 2 học sinh khối 11; 1 học sinh nữ khối 12 có \n21\n23 3CC   cách. \nSuy ra số phần tử của biến cố \nA  là \n48 6 3 57.A      \nVậy xác suất cần tính \n  57\n286\nAPA   ."
+  },
+  {
+    "id": 11,
+    "question": "Một chiếc hộp đựng 7 viên bi màu xanh, 6 viên bi màu đen, 5 viên bi màu đỏ, 4 viên bi màu trắng. Chọn ngẫu nhiên ra 4 viên bi, tính xác suất để lấy được ít nhất 2 viên bi cùng màu.",
+    "options": {
+      "A": "2808 7315 .",
+      "B": "185 209 .",
+      "C": "24 209 .",
+      "D": "4507 .7315"
+    },
+    "answer": "B",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 4 viên bi từ 22 viên bi đã cho. \nSuy ra số phần tử của không gian mẫu là \n4\n22 7315.C    \nGọi \nA  là biến cố ” Lấy được 4 viên bi trong đó có ít nhất hai viên bi cùng màu” . Để \ntìm số phần tử của \nA , ta đi tìm số phần tử của biến cố \nA  , với biến cố \nA  là lấy được 4 \nviên bi trong đó không có hai viên bi nào cùng màu. \nSuy ra số phần tử của biến cố \nA  là \n1 1 1 1\n7 6 5 4 840.A C C C C    \nSuy ra số phần tử của biến cố \nA  là \n6475.A A       \nVậy xác suất cần tính \n  6475 185\n7315 209\nAPA    ."
+  },
+  {
+    "id": 12,
+    "question": "Một hộp đựng 8 quả cầu trắng, 12 quả cầu đen. Lần thứ nhất lấy ngẫu nhiên 1 quả cầu trong hộp, lần thứ hai lấy ngẫu nhiên 1 quả cầu trong các quả cầu còn lại. Tính xác suất để kết quả của hai lần lấy được 2 quả cầu cùng màu.",
+    "options": {
+      "A": "14 95 .",
+      "B": "48 95 .",
+      "C": "47 95 .",
+      "D": "81 .95"
+    },
+    "answer": "C",
+    "solution": "Không gian mẫu là lấy 2 quả cầu trong hộp một cách lần lượt ngẫu nhiên. \nSuy ra số phần tử của không gian mẫu là \n11\n20 19..CC  \nGọi \nA  biến cố ” 2 quả cầu được lấy cùng màu” . Ta có các trường hợp thuận lợi cho \nbiến cố \nA  như sau: \n● TH1: Lần thứ nhất lấy quả màu trắng và lần thứ hai cũng màu trắng. \nDo đó trường hợp này có \n11\n87.CC  cách. \n \n \n● TH2: Lần thứ nhất lấy quả màu đen và lần thứ hai cũng màu đen. \nDo đó trường hợp này có \n11\n12 11.CC  cách. \nSuy ra số phần tử của biến cố \nA  là \n1 1 1 1\n8 7 12 11. . .A C C C C    \nVậy xác suất cần tính \n \n1 1 1 1\n8 7 12 11\n11\n20 19\n.. 47\n. 95\nA C C C CPA CC\n    ."
+  },
+  {
+    "id": 13,
+    "question": "Một hộp chứa 12 viên bi kích thước như nhau, trong đó có 5 viên bi màu xanh được đánh số từ 1 đến 5; có 4 viên bi màu đỏ được đánh số từ 1 đến 4 và 3 viên bi màu vàng được đánh số từ 1 đến 3. Lấy ngẫu nhiên 2 viên bi từ hộp, tính xác suất để 2 viên bi được lấy vừa khác màu vừa khác số.",
+    "options": {
+      "A": "8 33 .",
+      "B": "14 33 .",
+      "C": "29 66 .",
+      "D": "37 .66"
+    },
+    "answer": "D",
+    "solution": "Không gian mẫu là số sách lấy tùy ý 2 viên từ hộp chứa 12 viên bi. \nSuy ra số phần tử của không gian mẫu là \n2\n12 66.C    \nGọi \nA  là biến cố ” 2 viên bi được lấy vừa khác màu vừa khác số ” . \n● Số cách lấy 2 viên bi gồm: 1 bi xanh và 1 bi đỏ là \n4.4 16  cách (do số bi đỏ ít hơn \nnên ta lấy trước, có 4 cách lấy bi đỏ. Tiếp tục lấy bi xanh nhưng không lấy viên trùng \nvới số của bi đỏ nên có 4 cách lấy bi xanh). \n● Số cách lấy 2 viên bi gồm: 1 bi xanh và 1 bi vàng là \n3.4 12  cách. \n● Số cách lấy 2 viên bi gồm: 1 bi đỏ và 1 bi vàng là \n3.3 9  cách. \nSuy ra số phần tử của biến cố \nA  là \n16 12 9 37.A      \nVậy xác suất cần tính \n  37\n66\nAPA   ."
+  },
+  {
+    "id": 14,
+    "question": "Một hộp chứa 3 viên bi xanh, 5 viên bi đỏ và 6 viên bi vàng. Lấy ngẫu nhiên 6 viên bi từ hộp, tính xác suất để 6 viên bi được lấy ra có đủ cả ba màu.",
+    "options": {
+      "A": "810 .1001",
+      "B": "191 .1001",
+      "C": "4 .21",
+      "D": "17 .21"
+    },
+    "answer": "A",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 6 viên bi từ hộp chứa 14 viên \nbi. Suy ra số phần tử của không gian mẫu là \n6\n14 3003.C    \nGọi \nA  là biến cố ” 6 viên bi được lấy ra có đủ cả ba màu” . Để tìm số phần tử của biến \ncố \nA  ta đi tìm số phần tử của biến cố \nA  tức là 6 viên bi lấy ra không có đủ ba màu \nnhư sau: \n● TH1: Chọn 6 viên bi chỉ có một màu (chỉ chọn được màu vàng). \nDo đó trường hợp này có \n6\n6 1C   cách. \n● TH2: Chọn 6 viên bi có đúng hai màu xanh và đỏ, có \n6\n8C  cách. \nChọn 6 viên bi có đúng hai màu đỏ và vàng, có \n66\n11 6CC  cách. \nChọn 6 viên bi có đúng hai màu xanh và vàng, có \n66\n96CC  cách. \nDo đó trường hợp này có \n   \n6 6 6 6 6\n8 11 6 9 6 572C C C C C      cách. \nSuy ra số phần tử của biến cố \nA  là \n1 572 573.A     \nSuy ra số phần tử của biến cố \nA  là \n3003 573 2430.A A         \n \n \nVậy xác suất cần tính \n  2430 810\n3003 1001\nAPA    ."
+  },
+  {
+    "id": 15,
+    "question": "Trong một hộp có 50 viên bi được đánh số từ 1 đến 50. Chọn ngẫu nhiên 3 viên bi trong hộp, tính xác suất để tổng ba số trên 3 viên bi được chọn là một số chia hết cho 3.",
+    "options": {
+      "A": "816 1225 .",
+      "B": "409 1225 .",
+      "C": "289 1225 .",
+      "D": "936 .1225"
+    },
+    "answer": "B",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 3 viên bi từ hộp chứa 50 viên \nbi. Suy ra số phần tử của không gian mẫu là \n3\n50 19600.C    \nGọi \nA  là biến cố ” 3 viên bi được chọn là một số chia hết cho 3” . Trong 50 viên bi \nđược chia thành ba loại gồm: 16 viên bi có số chia hết cho 3; 17 viên bi có số chia cho 3 \ndư 1 và 17 viên bi còn lại có số chia cho 3 dư 2. Để tìm số kết quả thuận lợi cho biến \ncố \nA  , ta xét các trường hợp \n● TH1: 3 viên bi được chọn cùng một loại, có \n \n3 3 3\n16 17 17C C C  cách. \n● TH2: 3 viên bi được chọn có mỗi viên mỗi loại, có \n1 1 1\n16 17 17..C C C  cách. \nSuy ra số phần tử của biến cố \nA  là \n \n3 3 3 1 1 1\n16 17 17 16 17 17 . . 6544.A C C C C C C       \nVậy xác suất cần tính \n  6544 409\n19600 1225\nAPA    ."
+  },
+  {
+    "id": 16,
+    "question": "Cho tập hợp {0A  ; 1; 2; 3; 4; 5 } . Gọi S là tập hợp các số có 3 chữ số khác nhau được lập thành từ các chữ số của tập A . Chọn ngẫu nhiên một số từ S ,tính xác suất để số được chọn có chữ số cuối gấp đôi chữ số đầu. www.thuvienhoclieu.com www.thuvienhoclieu.com Trang 3",
+    "options": {
+      "A": "1 5 .",
+      "B": "23 25 .",
+      "C": "2 25 .",
+      "D": "4 .5"
+    },
+    "answer": "C",
+    "solution": "Gọi số cần tìm của tập \nS  có dạng \nabc  . Trong đó \n,,\n0\n;;\na b c A\na\na b b c c a\n\n \n     \nKhi đó \n● Số cách chọn chữ số \na  có 5 cách chọn vì \n0.a   \n● Số cách chọn chữ số \nb  có 5 cách chọn vì \n.ba  \n● Số cách chọn chữ số \nc  có 4 cách chọn vì \nca  và \n.cb  \nDo đó tập \nS  có \n5.5.4 100  phần tử. \nKhông gian mẫu là chọn ngẫu nhiên 1 số từ tập \nS  . \nSuy ra số phần tử của không gian mẫu là \n1\n100 100.C    \nGọi \nX  là biến cố ” Số được chọn có chữ số cuối gấp đôi chữ số đầu” . Khi đó ta có các \nbộ số là \n12b  hoặc \n24b  thỏa mãn biến cố \nX  và cứ mỗi bộ thì \nb  có 4 cách chọn nên có \ntất cả 8 số thỏa yêu cầu. \nSuy ra số phần tử của biến cố \nX  là \n8.X  \nVậy xác suất cần tính \n  82\n100 25\nXPX    ."
+  },
+  {
+    "id": 17,
+    "question": "Cho tập hợp  2;3;4;5;6;7;8A  . Gọi S là tập hợp các số tự nhiên có 4 chữ số đôi một khác nhau được lập thành từ các chữ số của tập A . Chọn ngẫu nhiên một số từ S , tính xác suất để số được chọn mà trong mỗi số luôn luôn có mặt hai chữ số chẵn và hai chữ số lẻ.",
+    "options": {
+      "A": "1 5 .",
+      "B": "3 35 .",
+      "C": "17 35 .",
+      "D": "18 .35"
+    },
+    "answer": "D",
+    "solution": "Số phần tử của tập \nS  là \n4\n7 840.A   \nKhông gian mẫu là chọn ngẫu nhiên 1 số từ tập \nS  . \nSuy ra số phần tử của không gian mẫu là \n1\n840 840.C    \nGọi \nX  là biến cố ” Số được chọn luôn luôn có mặt hai chữ số chẵn và hai chữ số lẻ ” . \n● Số cách chọn hai chữ số chẵn từ bốn chữ số 2; 4; 6; 8 là \n2\n4 6C   cách. \n● Số cách chọn hai chữ số lẻ từ ba chữ số 3; 5; 7 là \n2\n3 3C   cách. \n● Từ bốn chữ số được chọn ta lập số có bốn chữ số khác nhau, số cách lập tương ứng \nvới một hoán vị của 4 phần tử nên có 4! cách. \nSuy ra số phần tử của biến cố \nX  là \n22\n43. .4! 432.X CC    \nVậy xác suất cần tính \n  432 18\n840 35\nXPX    ."
+  },
+  {
+    "id": 18,
+    "question": "Gọi S là tập hợp các số tự nhiên có 3 chữ số đôi một khác nhau được lập thành từ các chữ số 1; 2; 3; 4; 6 . Chọn ngẫu nhiên một số từ S , tính xác xuất để số được chọn chia hết cho 3 .",
+    "options": {
+      "A": "1 10 .",
+      "B": "3 5 .",
+      "C": "2 5 .",
+      "D": "1 15 ."
+    },
+    "answer": "C",
+    "solution": "Số phần tử của \nS  là \n3\n5 60.A   \nKhông gian mẫu là chọn ngẫu nhiên 1 số từ tập \nS  . \nSuy ra số phần tử của không gian mẫu là \n1\n60 60.C    \nGọi \nA  là biến cố ” Số được chọn chia hết cho 3 ” . Từ 5 chữ số đã cho ta có 4 bộ gồm \nba chữ số có tổng chia hết cho 3 là (1; 2; 3), (1; 2; 6), (2; 3; 4) và (2; 4; 6). Mỗi bộ ba \nchữ số này ta lập được \n3! 6  số thuộc tập hợp \nS  . \nSuy ra số phần tử của biến cố \nA  là \n6.4 24.A    \nVậy xác suất cần tính \n  24 2\n60 5\nAPA    ."
+  },
+  {
+    "id": 19,
+    "question": "Cho tập hợp {1A  ; 2; 3; 4; 5 } . Gọi S là tập hợp tất cả các số tự nhiên có ít nhất 3 chữ số, các chữ số đôi một khác nhau được lập thành từ các chữ số thuộc tập A . Chọn ngẫu nhiên một số từ S , tính xác xuất để số được chọn có tổng các chữ số bằng 10 .",
+    "options": {
+      "A": "1 30 .",
+      "B": "3 25 .",
+      "C": "22 25 .",
+      "D": "2 25 ."
+    },
+    "answer": "B",
+    "solution": "Ta tính số phần tử thuộc tập \nS  như sau: \n● Số các số thuộc \nS  có 3 chữ số là \n3\n5 .A  \n● Số các số thuộc \nS  có 4 chữ số là \n4\n5 .A  \n● Số các số thuộc \nS  có 5 chữ số là \n5\n5 .A  \nSuy ra số phần tử của tập \nS  là \n345\n5 5 5 300.A A A    \nKhông gian mẫu là chọn ngẫu nhiên 1 số từ tập \nS  . \nSuy ra số phần tử của không gian mẫu là \n1\n300 300.C    \nGọi \nX  là biến cố ” Số được chọn có tổng các chữ số bằng 10 ” . Các tập con của \nA  có \ntổng số phần tử bằng 10 là \n1 {1A  ; 2; 3; 4\n},  \n2 {2A  ; 3; 5\n},  \n3 {1A  ; 4; 5\n}.  \n● Từ \n1A  lập được các số thuộc \nS  là 4! . \n \n \n● Từ \n2A  lập được các số thuộc \nS  là 3! . \n● Từ \n3A  lập được các số thuộc \nS  là 3! . \nSuy ra số phần tử của biến cố \nX  là \n4! 3! 3! 36.X      \nVậy xác suất cần tính \n  36 3\n300 25\nXPX    ."
+  },
+  {
+    "id": 20,
+    "question": "Một hộp đựng 10 chiếc thẻ được đánh số từ 0 đến 9 . Lấy ngẫu nhiên ra 3 chiếc thẻ, tính xác suất để 3 chữ số trên 3 chiếc thẻ được lấy ra có thể ghép thành một số chia hết cho 5 .",
+    "options": {
+      "A": "8 15 .",
+      "B": "7 15 .",
+      "C": "2 5 .",
+      "D": "3 .5"
+    },
+    "answer": "A",
+    "solution": "Không gian mẫu là số cách lấy ngẫu nhiên 3 chiếc thẻ từ 10 chiếc thẻ. \nSuy ra số phần tử của không gian mẫu là \n3\n10.C  \nGọi \nA  là biến cố ” 3 chữ số trên 3 chiếc thẻ được lấy ra có thể ghép thành một số \nchia hết cho 5 ” . Để cho biến cố \nA  xảy ra thì trong 3 thẻ lấy được phải có thẻ mang \nchữ số \n0  hoặc chữ số 5 . Ta đi tìm số phần tử của biến cố \nA  , tức 3 thẻ lấy ra không \ncó thẻ mang chữ số \n0  và cũng không có thẻ mang chữ số 5 là \n3\n8C  cách. \nSuy ra số phần tử của biến cố \nA  là \n33\n10 8 .A CC    \nVậy xác suất cần tính \n \n33\n10 8\n3\n10\n8\n15\nA CCPA C\n    ."
+  },
+  {
+    "id": 21,
+    "question": "Có 20 tấm thẻ được đánh số từ 1 đến 20 . Chọn ngẫu nhiên ra 8 tấm thẻ, tính xác suất để có 3 tấm thẻ mang số lẻ, 5 tấm thẻ mang số chẵn trong đó chỉ có đúng 1 tấm thẻ mang số chia hết cho 10 .",
+    "options": {
+      "A": "560 4199 .",
+      "B": "4 15 .",
+      "C": "11 15 .",
+      "D": "3639 .4199"
+    },
+    "answer": "A",
+    "solution": "Không gian mẫu là cách chọn 8 tấm thể trong 20 tấm thẻ. \nSuy ra số phần tử của không mẫu là \n8\n20.C  \nGọi \nA  là biến cố ” 3 tấm thẻ mang số lẻ, 5 tấm thẻ mang số chẵn trong đó chỉ có \nđúng 1 tấm thẻ mang số chia hết cho 10 ” . Để tìm số phần tử của \nA  ta làm như sau: \n● Đầu tiên chọn 3 tấm thẻ trong 10 tấm thẻ mang số lẻ, có \n3\n10C  cách. \n● Tiếp theo chọn 4 tấm thẻ trong 8 tấm thẻ mang số chẵn (không chia hết cho 10 ), \ncó \n4\n8C  cách. \n● Sau cùng ta chọn 1 trong 2 tấm thẻ mang số chia hết cho 10 , có \n1\n2C  cách. \nSuy ra số phần tử của biến cố \nA  là \n3 4 1\n10 8 2. . .A C C C  \nVậy xác suất cần tính \n \n3 4 1\n10 8 2\n8\n20\n.. 560\n4199\nA C C CPA C\n   ."
+  },
+  {
+    "id": 22,
+    "question": "Gọi S là tập hợp các số tự nhiên có hai chữ số. Chọn ngẫu nhiên đồng thời hai số từ tập hợp S . Tính xác suất để hai số được chọn có chữ số hàng đơn vị giống nhau.",
+    "options": {
+      "A": "8 89 .",
+      "B": "81 89 .",
+      "C": "36 89 .",
+      "D": "53 .89"
+    },
+    "answer": "A",
+    "solution": "Số phần tử của tập \nS  là \n9.10 90.  \nKhông gian mẫu là chọn ngẫu nhiên 2 số từ tập \nS  . \nSuy ra số phần tử của không gian mẫu là \n2\n90 4005.C    \nGọi \nX  là biến cố ” Số được chọn có chữ số hàng đơn vị giống nhau” . Ta mô tả không \n \n \ngian của biến cố \nX  như sau: \n● Có 10 cách chọn chữ số hàng đơn vị (chọn từ các chữ số \n{0 ; 1; 2; 3 9}). \n● Có \n2\n9C  cách chọn hai chữ số hàng chục (chọn từ các chữ số {1; 2; 3 9}). \nSuy ra số phần tử của biến cố \nX  là \n2\n910. 360.X C    \nVậy xác suất cần tính \n  360 8\n4005 89\nXPX    ."
+  },
+  {
+    "id": 23,
+    "question": "Gọi S là tập hợp các số tự nhiên gồm 9 chữ số khác nhau. Chọn ngẫu nhiên một số từ S , tính xác suất để chọn được một số gồm 4 chữ số lẻ và chữ số 0 luôn đứng giữa hai chữ số lẻ (hai số hai bên chữ số 0 là số lẻ).",
+    "options": {
+      "A": "49 54 .",
+      "B": "5 54 .",
+      "C": "1 7776 .",
+      "D": "45 .54"
+    },
+    "answer": "B",
+    "solution": "Số phần tử của tập \nS  là \n8\n99. .A  \nKhông gian mẫu là chọn ngẫu nhiên 1 số từ tập \nS  . \nSuy ra số phần tử của không gian mẫu là \n8\n99. .A  \nGọi \nX  là biến cố ” Số được chọn gồm 4 chữ số lẻ và chữ số \n0  luôn đứng giữa hai chữ \nsố lẻ ” . Do số \n0  luôn đứng giữa 2 số lẻ nên số \n0  không đứng ở vị trí đầu tiên và vị trí \ncuối cùng. Ta có các khả năng \n● Chọn 1 trong 7 vị trí để xếp số \n0  , có \n1\n7C  cách. \n● Chọn 2 trong 5 số lẻ và xếp vào 2 vị trí cạnh số \n0  vừa xếp, có \n2\n5A  cách. \n● Chọn 2 số lẻ trong 3 số lẻ còn lại và chọn 4 số chẵn từ {2; 4; 6; 8} sau đó xếp 6 \nsố này vào 6 vị trí trống còn lại có \n24\n34. .6!CC  cách. \nSuy ra số phần tử của biến cố \nX  là \n1 2 2 4\n7 5 3 4. . . .6!.X C A C C  \nVậy xác suất cần tính \n \n1 2 2 4\n7 5 3 4\n8\n9\n. . . .6! 5\n9. 54\nX C A C CPX A\n   ."
+  },
+  {
+    "id": 24,
+    "question": "Giải bóng chuyền VTV Cup gồm 9 đội bóng tham dự, trong đó có 6 đội nước ngoài và 3 đội của Việt Nam. Ban tổ chức cho bốc thăm ngẫu nhiên để chia thành 3 bảng ,A ,B C và mỗi bảng có 3đội. Tính xác suất để 3 đội bóng của Việt Nam ở 3 bảng khác nhau.",
+    "options": {
+      "A": "3 56 .",
+      "B": "19 28 .",
+      "C": "9 28 .",
+      "D": "53 .56"
+    },
+    "answer": "C",
+    "solution": "Không gian mẫu là số cách chia tùy ý 9 đội thành 3 bảng. \nSuy ra số phần tử của không gian mẫu là \n333\n9 6 3...CCC  \nGọi \nX  là biến cố ” 3 đội bóng của Việt Nam ở 3 bảng khác nhau \n● Bước 1. Xếp 3 đội Việt Nam ở 3 bảng khác nhau nên có 3! cách. \n● Bước 2. Xếp 6 đội còn lại vào 3 bảng \n,A  \n,B  \nC  này có \n222\n6 4 2..CCC  cách. \nSuy ra số phần tử của biến cố \nX  là \n222\n6 4 23!. . . .X CCC  \nVậy xác suất cần tính \n \n222\n6 4 2\n333\n9 6 3\n3!. . . 540 9\n. . 1680 28\nX CCCPX CCC\n    ."
+  },
+  {
+    "id": 25,
+    "question": "Trong giải cầu lông kỷ niệm ngày truyền thống học sinh sinh viên có 8 người tham gia trong đó có hai bạn Việt và Nam. Các vận động viên được chia làm hai bảng A và B , mỗi bảng gồm 4 người. Giả sử việc chia bảng thực hiện bằng cách bốc thăm ngẫu nhiên, tính xác suất để cả 2 bạn Việt và Nam nằm chung 1 bảng đấu.",
+    "options": {
+      "A": "6 7 .",
+      "B": "5 7 .",
+      "C": "4 7 .",
+      "D": "3 .7"
+    },
+    "answer": "D",
+    "solution": "Không gian mẫu là số cách chia tùy ý 8 người thành 2 bảng. \nSuy ra số phần tử của không gian mẫu là \n44\n84..CC  \nGọi \nX  là biến cố ” 2 bạn Việt và Nam nằm chung 1 bảng đấu \n● Bước 1. Xếp 2 bạn Việt và Nam nằm chung 1 bảng đấu nên có \n1\n2C  cách. \n● Bước 2. Xếp 6 bạn còn lại vào 2 bảng \n,A  \nB  cho đủ mỗi bảng là 4 bạn thì có \n24\n64.CC\n cách. \nSuy ra số phần tử của biến cố \nX  là \n1 2 4\n2 6 4..X C C C  \nVậy xác suất cần tính \n \n44\n84\n1 2 4\n2 6 4\n. 3\n. . 7\nX CCPX C C C\n   ."
+  },
+  {
+    "id": 26,
+    "question": "Một bộ đề thi toán học sinh giỏi lớp 12 mà mỗi đề gồm 5 câu được chọn từ 15 câu dễ, 10 câu trung bình và 5 câu khó. Một đề thi được gọi là” Tốt ” nếu trong đề thi có cả ba câu dễ, trung bình và khó, đồng thời số câu dễ không ít hơn 2 . Lấy ngẫu nhiên một đề thi trong bộ đề trên. Tìm xác suất để đề thi lấy ra là một đề thi ” Tốt ” . www.thuvienhoclieu.com www.thuvienhoclieu.com Trang 4",
+    "options": {
+      "A": "941 1566 .",
+      "B": "2 5 .",
+      "C": "4 5 .",
+      "D": "625 .1566"
+    },
+    "answer": "D",
+    "solution": "Số phần tử của không gian mẫu là \n5\n30 142506.C    \nGọi \nA  là biến cố ” Đề thi lấy ra là một đề thi ” Tốt ”  \nVì trong một đề thi ” Tốt ” có cả ba câu dễ, trung bình và khó, đồng thời số câu dễ \nkhông ít hơn 2 nên ta có các trường hợp sau đây thuận lợi cho biến cố\nA . \n \n● Đề thi gồm 3 câu dễ, 1 câu trung bình và 1 câu khó: có \n3 1 1\n15 10 5C C C  đề. \n● Đề thi gồm 2 câu dễ, 2 câu trung bình và 1 câu khó: có \n3 1 1\n15 10 5C C C  đề. \n● Đề thi gồm 2 câu dễ, 1 câu trung bình và 2 câu khó: có \n2 1 2\n15 10 5C C C  đề. \nSuy ra số phần tử của biến cố \nA  là  \n3 1 1 3 1 1\n15 10 5 15 10 5A C C C C C C  \n \n2 1 2\n15 10 5 56875.C C C\n \nVậy xác suất cần tính \n  56875 625\n142506 1566\nAPA    ."
+  },
+  {
+    "id": 27,
+    "question": "Trong một kỳ thi vấn đáp thí sinh A phải đứng trước ban giám khảo chọn ngẫu nhiên 3 phiếu câu hỏi từ một thùng phiếu gồm 50 phiếu câu hỏi, trong đó có 4 cặp phiếu câu hỏi mà mỗi cặp phiếu có nội dung khác nhau từng đôi một và trong mỗi một cặp phiếu có nội dung giống nhau. Tính xác suất để thí sinh A chọn được 3 phiếu câu hỏi có nội dung khác nhau.",
+    "options": {
+      "A": "3 4",
+      "B": "12 1225 .",
+      "C": "4 7 .",
+      "D": "1213.1225"
+    },
+    "answer": "D",
+    "solution": "Không gian mẫu là số cách chọn tùy ý 3 phiếu câu hỏi từ 50 phiếu câu hỏi. \nSuy ra số phần tử của không gian mẫu là \n3\n50.A C  \nGọi \nX  là biến cố ” Thí \n sinh   \nA  chọn được 3 phiếu câu hỏi khác nhau” . \nĐể tìm số phần tử của \nX  ta tìm số phần tử của biến cố \nX  , lúc này cần chọn được 1 \ncặp trong 4 cặp phiếu có câu hỏi giống nhau và chọn 1 phiếu trong 48 phiếu còn lại. \nSuy ra số phần tử của biến cố \nX  là \n11\n4 48..X CC  \n \n \nVậy xác suất cần tính \n \nX XPX\n     \n3 1 1\n50 4 48\n3\n50\n. 1213\n1225\nC C C\nC\n"
+  },
+  {
+    "id": 28,
+    "question": "Trong kỳ thi THPT Quốc Gia năm 2016 có môn thi bắt buộc là môn Tiếng Anh. Môn thi này thi dưới hình thức trắc nghiệm với 4 phương án trả lời A, B, C , D. Mỗi câu trả lời đúng được cộng 0,2 điểm và mỗi câu trả lời sai bị trừ đi 0,1 điểm. Bạn Hoa vì học rất kém môn Tiếng Anh nên chọn ngẫu nhiên cả 50 câu trả lời. Tính xác xuất để bạn Hoa đạt được 4 điểm môn Tiếng Anh trong kỳ thi trên.",
+    "options": {
+      "A": "  2030 50 50 .3 4 C .",
+      "B": "  2030 50 50 .3 4 A .",
+      "C": "  2030 50 .3 50 C .",
+      "D": "  2030 50 .3 .50 A"
+    },
+    "answer": "A",
+    "solution": "Gọi \nx  là số câu trả lời đúng, suy ra \n50 x  là số câu trả lời sai. \nTa có số điểm của Hoa là 0, \n2. 0,1.x   \n50 x ) \n4 30.x    \nDo đó bạn Hoa trả lời đúng 30 câu và sai 20 câu. \nKhông gian mẫu là số phương án trả lời 50 câu hỏi mà bạn Hoa chọn ngẫu nhiên. \nMỗi câu có 4 phương án trả lời nên có \n504  khả năng. \nSuy ra số phần tử của không gian mẫu là \n504.  \nGọi \nX  là biến cố ” Bạn Hoa trả lời đúng 30 câu và sai 20 câu” . Vì mỗi câu đúng có \n1 phương án trả lời, mỗi câu sai có 3 phương án trả lời. Vì vậy có \n30\n50C  . ( 3) khả năng \nthuận lợi cho biến cố \nX  . \nSuy ra số phần tử của biến cố \nX  là \n30\n50X C  . ( 3) \nVậy xác suất cần tính \n   \n2030\n50\n50\n.3\n4\nX CPX   ."
+  },
+  {
+    "id": 29,
+    "question": "Có 6 học sinh lớp 11 và 3 học sinh lớp 12 được xếp ngẫu nhiên vào 9 ghế thành một dãy. Tính xác suất để xếp được 3 học sinh lớp 12 xen kẽ giữa 6 học sinh lớp 11 .",
+    "options": {
+      "A": "5 12 .",
+      "B": "7 12 .",
+      "C": "1 1728 .",
+      "D": "5 .72"
+    },
+    "answer": "A",
+    "solution": "Không gian mẫu là số cách sắp xếp tất cả 9 học sinh vào một ghế dài. \nSuy ra số phần tử của không gian mẫu là \n9!.  \nGọi \nA  là biến cố ” Xếp 3 học sinh lớp 12 xen kẽ giữa 6 học sinh lớp 11 ” . Ta mô tả \nkhả năng thuận lợi của biến cố \nA  như sau: \n● Đầu tiên xếp 6 học sinh lớp 11 thành một dãy, có 6! cách. \n● Sau đó xem 6 học sinh này như 6 vách ngăn nên có 7 vị trí để xếp 3 học sinh \nlớp 12 (gồm 5 vị trí giữa 6 học sinh và 2 vị trí hai đầu). Do đó có \n3\n7A  cách xếp 3 học sinh lớp 12 . \nSuy ra số phần tử của biến cố \nA  là \n3\n76!. .A A  \nVậy xác suất cần tính \n \n3\n76!. 5\n9! 12\nA APA    ."
+  },
+  {
+    "id": 30,
+    "question": "Đội tuyển học sinh giỏi của một trường THPT có 8 học sinh nam và 4 học sinh nữ. Trong buổi lễ trao phần thưởng, các học sinh trên được xếp thành một hàng ngang. Tính xác suất để khi xếp sao cho 2 học sinh nữ không đứng cạnh nhau.",
+    "options": {
+      "A": "653 660 .",
+      "B": "7 660 .",
+      "C": "41 55 .",
+      "D": "14 .55"
+    },
+    "answer": "D",
+    "solution": "Không gian mẫu là số cách sắp xếp tất cả 12 học sinh thành một hàng \nngang. Suy ra số phần tử của không gian mẫu là \n12!.  \nGọi \nA  là biến cố ” Xếp các học sinh trên thành một hàng ngang mà 2 học sinh nữ \nkhông đứng cạnh nhau” . Ta mô tả khả năng thuận lợi của biến cố \nA  như sau: \n● Đầu tiên xếp 8 học sinh nam thành một hàng ngang, có 8! cách. \n● Sau đó xem 8 học sinh này như 8 vách ngăn nên có 9 vị trí để xếp 4 học sinh \nnữ thỏa yêu cầu bài toán (gồm 7 vị trí giữa 8 học sinh và 2 vị trí hai đầu). Do đó có \n4\n9A\n cách xếp 4 học sinh nữ. \nSuy ra số phần tử của biến cố \nA  là \n4\n98!. .A A  \nVậy xác suất cần tính \n \n4\n98! 14\n12! 55\nA APA    ."
+  },
+  {
+    "id": 31,
+    "question": "Có 3 bì thư giố ng nhau lần lượt được đánh số thứ tự từ 1 đến 3 và 3 con tem giống nhau lần lượt đánh số thứ tự từ 1 đến 3 . Dán 3 con tem đó vào 3 bì thư sao cho không có bì thư nào không có tem. Tính xác suất để lấy ra được 2 bì thư trong 3 bì thư trên sao cho mỗi bì thư đều có số thứ tự giống với số thứ tự con tem đã dán vào nó.",
+    "options": {
+      "A": "5 6 .",
+      "B": "1 6 .",
+      "C": "2 3 .",
+      "D": "1 .2"
+    },
+    "answer": "B",
+    "solution": "Không gian mẫu là số cách dán 3 con tem trên 3 bì thư, tức là hoán vị của \n3 con tem trên 3 bì thư. Suy ra số phần tử của không gian mẫu là \n3! 6.    \nGọi \nA  là biến cố ” 2 bì thư lấy ra có số thứ tự giống với số thứ tự con tem đã dán vào \nnó ” . Thế thì bì thư còn lại cũng có số thứ tự giống với số thứ tự con tem đã dán vào \nnó. Trường hợp này có 1 cách duy nhất. \nSuy ra số phần tử của biến cố \nA  là \n1.A  \nVậy xác suất cần tính \n  1\n6\nAPA   ."
+  },
+  {
+    "id": 32,
+    "question": "Trong thư viện có 12 quyển sách gồm 3 quyển Toán giống nhau, 3 quyển Lý giống nhau, 3 quyển Hóa giống nhau và 3 quyển Sinh giống nhau. Có bao nhiêu cách xếp thành một dãy sao cho 3 quyển sách thuộc cung 1 môn không được xếp liền nhau?",
+    "options": {
+      "A": "16800.",
+      "B": "1680.",
+      "C": "140.",
+      "D": "4200."
+    },
+    "answer": "A",
+    "solution": "Xếp 3 cuốn sách Toán kề nhau. Xem 3 cuốn sách Toán là 3 vách ngăn, giữa \n3 cuốn sách Toán có 2 vị trí trống và thêm hai vị trí hai đầu, tổng cộng có 4 vị trí \ntrống. \nBước 1. Chọn 3 vị trí trống trong 4 vị trí để xếp 3 cuốn Lý, có \n3\n4C  cách. \nBước 2. Giữa 6 cuốn Lý và Toán có 5 vị trí trống và thêm 2 vị trí hai đầu, tổng cộng \ncó 7 vị trí trống. Chọn 3 vị trí trong 7 vị trí trống để xếp 3 cuốn Hóa, có \n3\n7C  cách. \nBước 3. Giữa 9 cuốn sách Toán, Lý và Hóa đã xếp có 8 vị trí trống và thêm 2 vị trí \nhai đầu, tổng cộng có 10 vị trí trống. Chọn 3 vị trí trong 10 vị trí trống để xếp 3 cuốn \nSinh, có \n3\n10C  cách. Vậy theo quy tắc nhân có \n333\n4 7 10. . 16800CCC   cách."
+  },
+  {
+    "id": 33,
+    "question": "Xếp 6 học sinh nam và 4 học sinh nữ vào một bàn tròn 10 ghế. Tính xác suất để không có hai học sinh nữ ngồi cạnh nhau.",
+    "options": {
+      "A": "37 42 .",
+      "B": "5 42 .",
+      "C": "5 1008 .",
+      "D": "1 .6"
+    },
+    "answer": "B",
+    "solution": "Cố định 1 vị trí cho một học sinh nam (hoặc nữ), đánh dấu các ghế còn lại \ntừ 1 đến 9. \nKhông gian mẫu là hoán vị 9 học sinh (còn lại không cố định) trên 9 ghế đánh dấu. \nSuy ra số phần tử của không gian mẫu là \n9!.  \nGọi \nA  là biến cố ” không có hai học sinh nữ ngồi cạnh nhau” . Ta mô tả khả năng \nthuận lợi của biến cố \nA  như sau: \n● Đầu tiên ta cố định 1 học sinh nam, 5 học sinh nam còn lại có 5! cách xếp. \n● Ta xem 6 học sinh nam như 6 vách ngăn trên vòng tròn, thế thì sẽ tạo ra 6 ô \ntrống để ta xếp 4 học sinh nữ vào (mỗi ô trống chỉ được xếp 1 học sinh nữ). Do đó có  \n4\n6A\n cách. \nSuy ra số phần tử của biến cố \nA  là \n4\n65!. .A A  \nVậy xác suất cần tính \n \n4\n65!. 5\n9! 42\nA APA    ."
+  },
+  {
+    "id": 34,
+    "question": "Có 4 hành khách bước lên một đoàn tàu gồm 4 toa. Mỗi hành khách độc lập với nhau và chọn ngẫu nhiên một toa. Tính xác suất để 1 toa có 3 người, 1 toa có 1 người, 2 toa còn lại không có ai.",
+    "options": {
+      "A": "3 4 .",
+      "B": "3 16 .",
+      "C": "13 16 .",
+      "D": "1 .4"
+    },
+    "answer": "B",
+    "solution": "Không gian mẫu là số cách sắp xếp 4 hành khách lên 4 toa tàu. Vì mỗi \nhành khách có 4 cách chọn toa nên có \n44  cách xếp. \nSuy ra số phần tử của không gian mẫu là \n44  \nGọi \nA  là biến cố ” 1 toa có 3 người, 1 toa có 1 người, 2 toa còn lại không có ai ” . Để tìm \nsố phần tử của \nA , ta chia làm hai giai đoạn như sau: \n● Giai đoạn thứ nhất. Chọn 3 hành khách trong 4 hành khách, chọn 1 toa trong 4 \ntoa và xếp lên toa đó 3 hành khách vừa chọn. Suy ra có \n31\n44.CC  cách. \n● Giai đoạn thứ hai. Chọn 1 toa trong 3 toa còn lại và xếp lên toa đó 1 một hành \nkhách còn lại. Suy ra có \n1\n3C  cách. \nSuy ra số phần tử của biến cố \nA  là \n3 1 1\n4 4 3. . .A C C C  \nVậy xác suất cần tính \n \n3 1 1\n4 4 3\n44\n.. 48 3\n4 4 16\nA C C CPA     ."
+  },
+  {
+    "id": 35,
+    "question": "Có 8 người khách bước ngẫu nhiên vào một cửa hàng có 3 quầy. Tính xác suất để 3 người cùng đến quầy thứ nhất.",
+    "options": {
+      "A": "10 13 .",
+      "B": "3 13 .",
+      "C": "4769 6561 .",
+      "D": "1792 .6561"
+    },
+    "answer": "D",
+    "solution": "Không gian mẫu là số cách sắp xếp 8 người khách vào 3 quầy. Vì mỗi \nngười khách có 3 cách chọn quầy nên có \n83  khả năng xảy ra. \nSuy ra số phần tử của không gian mẫu là \n83.  \nGọi \nA  là biến cố ” Có 3 người cùng đến quầy thứ nhất, 5 người còn lại đến quầy thứ \nhai hoặc ba” . Để tìm số phần tử của \nA  , ta chia làm hai giai đoạn như sau: \n● Giai đoạn thứ nhất. Chọn 3 người khách trong 8 người khách và cho đến quầy \n \n \nthứ nhất, có \n3\n8C  cách. \n● Giai đoạn thứ hai. Còn lại 5 người khách xếp vào 2 quầy. Mỗi người khách có \n2 cách chọn quầy. Suy ra có \n52  cách xếp. \nSuy ra số phần tử của biến cố \nA  là \n35\n8 .2 .A C  \nVậy xác suất cần tính \n \n35\n8\n8\n.2 1792\n3 6561\nA CPA    ."
+  },
+  {
+    "id": 36,
+    "question": "Trong một buổi liên hoan có 10 cặp nam nữ, trong đó có 4 cặp vợ chồng. Chọn ngẫu nhiên 3 người để biểu diễn một tiết mục văn nghệ. Tính xác suất để 3 người được chọn không có cặp vợ chồng nào.",
+    "options": {
+      "A": "94 95 .",
+      "B": "1 95 .",
+      "C": "6 95 .",
+      "D": "89 .95"
+    },
+    "answer": "D",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 3 người trong 20 người. \nSuy ra số phần tử không gian mẫu là \n3\n20 1140.C    \nGọi \nA  là biến cố ” 3 người được chọn không có cặp vợ chồng nào Để tìm số phần tử \ncủa \nA  , ta đi tìm số phần tử của biến cố \nA  , với biến cố \nA  là 3 người được chọn luôn \ncó 1 cặp vợ chồng. \n● Chọn 1 cặp vợ chồng trong 4 cặp vợ chồng, có \n1\n4C  cách. \n● Chọn thêm 1 người trong 18 người, có \n1\n18C  cách. \nSuy ra số phần tử của biến cố \nA  là \n11\n4 18. 72.A CC    \nSuy ra số phần tử của biến cố \nA  là \n1140 72 1068.A     \nVậy xác suất cần tính \n  1068 89\n1140 95\nAPA    ."
+  },
+  {
+    "id": 37,
+    "question": "Một lớp học có 40 học sinh trong đó có 4 cặp anh em sinh đôi. Trong buổi họp đầu năm thầy giáo chủ nhiệm lớp muốn chọn ra 3 học sinh để làm cán sự lớp gồm lớp trưởng, lớp phó và bí thư. Tính xác suất để chọn ra 3 học sinh làm cán sự lớp mà không có cặp anh em sinh đôi nào.",
+    "options": {
+      "A": "64 65 .",
+      "B": "1 65 .",
+      "C": "1 256 .",
+      "D": "255 .256"
+    },
+    "answer": "A",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 3 học sinh trong 40 học sinh. \nSuy ra số phần tử không gian mẫu là \n3\n40 9880.C    \nGọi \nA  là biến cố ” 3 học sinh được chọn không có cặp anh em sinh đôi nào Để tìm \nsố phần tử của \nA , ta đi tìm số phần tử của biến cố \nA  , với biến cố \nA  là 3 học sinh \nđược chọn luôn có 1 cặp anh em sinh đôi. \n● Chọn 1 cặp em sinh đôi trong 4 cặp em \n sinh   đôi, có \n1\n4C  cách. \n● Chọn thêm 1 học sinh trong 38 học sinh, có \n1\n38C  cách. \nSuy ra số phần tử của biến cố \nA  là \n11\n4 38. 152.A CC    \nSuy ra số phần tử của biến cố \nA  là \n9880 152 9728.A     \nVậy xác suất cần tính \n  9728 64\n9880 65\nAPA    ."
+  },
+  {
+    "id": 38,
+    "question": "Một người có 10 đôi giày khác nhau và trong lúc đi du lịch vội vã lấy ngẫu nhiên 4 chiếc. Tính xác suất để trong 4 chiếc giày lấy ra có ít nhất một đôi.",
+    "options": {
+      "A": "3 7 .",
+      "B": "13 64 .",
+      "C": "99 323 .",
+      "D": "224 .323"
+    },
+    "answer": "C",
+    "solution": "Không gian mẫu là số cách chọn ngẫu nhiên 4 chiếc giày từ 20 chiếc giày. \nSuy ra số phần tử của không gian mẫu là \n4\n20 4845.C    \nGọi \nA  là biến cố ” 4 chiếc giày lấy ra có ít nhất một đôi Để tìm số phần tử của biến \ncố \nA  , ta đi tìm số phần tử của biến cố \nA  , với biến cố \nA  là 4 chiếc giày được chọn \nkhông có đôi nào. \n● Số cách chọn 4 đôi giày từ 10 đôi giày là \n4\n10.C  \n● Mỗi đôi chọn ra 1 chiếc, thế thì mỗi chiếc có \n1\n2C  cách chọn. Suy ra 4 chiếc có \n \n41\n2C\n cách chọn. \nSuy ra số phần tử của biến cố \nA  là \n \n441\n10 2. 3360.A CC    \nSuy ra số phần tử của biến cố \nA  là \n4845 3360 1485.A     \nVậy xác suất cần tính \n  1485 99\n4845 323\nAPA    ."
+  },
+  {
+    "id": 39,
+    "question": "Một trường THPT có 10 lớp 12 , mỗi lớp cử 3 học sinh tham gia vẽ tranh cổ động. Các lớp tiến hành bắt tay giao lưu với nhau (các học sinh cùng lớp không bắt tay với nhau). Tính số lần bắt tay của các học sinh với nhau, biết rằng hai học sinh khác nhau ở hai lớp khác nhau chỉ bắt tay đúng 1 lần.",
+    "options": {
+      "A": "405.",
+      "B": "435.",
+      "C": "30.",
+      "D": "45."
+    },
+    "answer": "A",
+    "solution": "Mỗi lớp cử ra 3 học sinh nên 10 lớp cử ra 30 học sinh. \nSuy ra số lần bắt tay là \n2\n30C  (bao gồm các học sinh cùng lớp bắt tay với nhau). \nSố lần bắt tay của các học sinh học cùng một lớp là \n2\n310. .C  \nVậy số lần bắt tay của các học sinh với nhau là \n22\n30 3 10. 405CC  ."
+  },
+  {
+    "id": 40,
+    "question": "Có 5 đoạn thẳng có độ dài lần lượt là 2,cm 4,cm 6,cm 8cm và 10cm . Lấy ngẫu nhiên 3 đoạn thẳng trong 5 đoạn thẳng trên, tính xác suất để 3 đoạn thẳng lấy ra lập thành một tam giác.",
+    "options": {
+      "A": "3 10 .",
+      "B": "9 10 .",
+      "C": "7 10 .",
+      "D": "4 .5"
+    },
+    "answer": "A",
+    "solution": "Không gian mẫu là số cách lấy 3 đoạn thẳng từ 5 đoạn thẳng. \nSuy ra số phần tử của không gian mẫu là \n3\n5 10.C    \nGọi \nA  là biến cố ” 3 đoạn thẳng lấy ra lập thành một tam giác ” . Để ba đoạn thẳng \ntạo thành một tam giác chỉ có các trường hợp: \n 4 ,   6 ,   8cm cm cm  hoặc \n 6 ,   8 ,1   0cm cm cm  \nhoặc \n 4 ,   8 ,1   0cm cm cm  . \nSuy ra số phần tử của biến cố \nA  là \n3.A  \nVậy xác suất cần tìm \n  3\n10\nAPA   ."
+  },
+  {
+    "id": 41,
+    "question": "Trong mặt phẳng tọa độ Oxy . Ở góc phần tư thứ nhất ta lấy 2 điểm phân biệt; cứ thế ở các góc phần tư thứ hai, thứ ba, thứ tư ta lần lượt lấy 3, 4, 5 điểm p hân biệt (các điểm không nằm trên các trục tọa độ). Trong 14 điểm đó ta lấy 2 điểm bất kỳ. Tính xác suất để đoạn thẳng nối hai điểm đó cắt hai trục tọa độ.",
+    "options": {
+      "A": "68 91 .",
+      "B": "23 91 .",
+      "C": "8 91 .",
+      "D": "83 .91"
+    },
+    "answer": "B",
+    "solution": "Không gian mẫu là số cách chọn 2 điểm bất kỳ trong 14 điểm đã cho. \nSuy ra số phần tử của không gian mẫu là \n2\n14 91.C    \nGọi \nA  là biến cố ” Đoạn thẳng nối 2 điểm được chọn cắt hai trục tọa độ ” . Để xảy ra \nbiến cố \nA  thì hai đầu đoạn thẳng đó phải ở góc phần tư thứ nhất và thứ ba hoặc \nphần tư thứ hai và thứ tư. \n● Hai đầu đoạn thẳng ở góc phần tư thứ nhất và thứ ba, có \n11\n24CC  cách. \n● Hai đầu đoạn thẳng ở góc phần tư thứ hai và thứ tư, có \n11\n35CC  cách. \nSuy ra số phần tử của biến cố \nA  là \n1 1 1 1\n2 4 3 5 23.A C C C C     \nVậy xác suất cần tính \n  23\n91\nAPA   ."
+  },
+  {
+    "id": 42,
+    "question": "Một lớp học có 30 học sinh gồm có cả nam và nữ. Chọn ngẫu nhiên 3 học sinh để tham gia hoạt động của Đoàn trường. Xác suất chọn được 2 nam và 1 nữ là 12 .29 Tính số học sinh nữ của lớp.",
+    "options": {
+      "A": "16.",
+      "B": "14.",
+      "C": "13.",
+      "D": "17."
+    },
+    "answer": "B",
+    "solution": "Gọi số học sinh nữ của lớp là \nn  \n \n*, 28nn\n  . \nSuy ra số học sinh nam là \n30 . n  \nKhông gian mẫu là chọn bất kì 3 học sinh từ 30 học sinh. \nSuy ra số phần tử của không gian mẫu là \n3\n30.C  \nGọi \nA  là biến cố ” Chọn được 2 học sinh nam và 1 học sinh nữ” . \n● Chọn 2 nam trong \n30 n  nam, có \n2\n30 nC   cách. \n● Chọn 1 nữ trong \nn  nữ, có \n1\nnC  cách. \nSuy ra số phần tử của biến cố \nA  là \n21\n30 ..A n n CC ‐  \nDo đó xác suất của biến cố \nA  là \n \n21\n30\n3\n30\n. .A nnCCPA C\n \n‐  \nTheo giả thiết, ta có \n \n21\n30\n3\n30\n.12 12 14.29 29\nnnCCP A n C     ‐\n \nVậy số học sinh nữ của lớp là 14 học sinh."
+  },
+  {
+    "id": 43,
+    "question": "Một chi đoàn có 3 đoàn viên nữ và một số đoàn viên nam. Cần lập một đội thanh niên tình nguyện (TNTN) gồm 4 người. Biết xác suất để trong 4 người được chọn có 3nữ bằng 2 5 lần xác suất 4 người được chọn toàn nam. Hỏi chi đoàn đó có bao nhiêu đoàn viên.",
+    "options": {
+      "A": "9.",
+      "B": "10.",
+      "C": "11.",
+      "D": "12."
+    },
+    "answer": "A",
+    "solution": "Gọi số đoàn viên trong chi đoàn đó là \nn  \n \n*7,nn\n  . \nSuy ra số đoàn viên nam trong chi đoàn là \n3.n   \nXác suất để lập đội TNTN trong đó có 3 nữ là \n31\n33\n4\n. n\nn\nCC\nC\n‐  . \nXác suất để lập đội TNTN có toàn nam là \n4\n3\n4 .n\nn\nC\nC\n‐  \nTheo giả thiết, ta có \n3 1 4\n143 3 3\n3344\n. 22. . 9.55\nnn\nnn\nnn\nC C C C C nCC\n    ‐‐\n‐  \nVậy cho đoàn có 9 đoàn viên."
+  },
+  {
+    "id": 44,
+    "question": "Một hộp có 10 phiếu, trong đó có 2 phiếu trúng thưởng. Có 10 người lần lượt lấy ngẫu nhiên mỗi người 1 phiếu. Tính xác suất người thứ ba lấy được phiếu trúng thưởng.",
+    "options": {
+      "A": "4 5 .",
+      "B": "3 5 .",
+      "C": "1 5 .",
+      "D": "2 .5"
+    },
+    "answer": "C",
+    "solution": "Không gian mẫu là mỗi người lấy ngẫu nhiên 1 phiếu. \nSuy ra số phần tử của không gian mẫu là \n10!.  \nGọi \nA  là biến cố ” Người thứ ba lấy được phiếu trúng thưởng ” . Ta mô tả khả năng \nthuận lợi của biến cố \nA  như sau: \n● Người thứ ba có \n1\n2 2C   khả năng lấy được phiếu trúng thưởng. \n● 9 người còn lại có số cách lấy phiếu là 9! . \nSuy ra số phần tử của biến cố \nA  là \n2.9!.A  \nVậy xác suất cần tính \n  2.9! 1\n10! 5\nAPA    ."
+  },
+  {
+    "id": 45,
+    "question": "Trong kỳ thi THPT Quốc Gia, mỗi lớp thi gồm 24 thí sinh được sắp xếp vào 24 bàn khác nhau. Bạn Nam là một thí sinh dự thi, bạn đă ng ký 4 môn thi và cả 4 lần thi đều thi tại một phòng duy nhất. Giả sử giám thị xếp thí sinh vào vị trí một cách ngẫu nhiên, tính xác xuất để trong 4 lần thi thì bạn Nam có đúng 2 lần ngồi cùng vào một vị trí.",
+    "options": {
+      "A": "253 1152 .",
+      "B": "899 1152 .",
+      "C": "4 7 .",
+      "D": "26 .35"
+    },
+    "answer": "A",
+    "solution": "Không gian mẫu là số cách ngẫu nhiên chỗ ngồi trong 4 lần thi của Nam. \nSuy ra số phần tử của không gian mẫu là \n424  \nGọi \nA  là biến cố ” 4 lần thi thì bạn Nam có đúng 2 lần ngồi cùng vào một vị trí ” . Ta \nmô tả không gian của biến cố \nA  như sau: \n● Trong 4 lần có 2 lần trùng vị trí, có \n2\n4C  cách. \n● Giả sử lần thứ nhất có 24 cách chọn chỗ ngồi, lần thứ hai trùng với lần thứ nhất \ncó 1 cách chọn chỗ ngồi. Hai lần còn lại thứ ba và thứ tư không trùng với các lần \ntrước và cũng không trùng nhau nên có 23.22 cách. \nSuy ra số phần tử của biến cố \nA  là \n2\n4A C  .24.23.22. \nVậy xác suất cần tính \n \n2\n4\n4\n.24.23.22\n24\nA CPA    \n2\n4\n3\n.23.22 253\n24 1152\nC"
+  }
+]

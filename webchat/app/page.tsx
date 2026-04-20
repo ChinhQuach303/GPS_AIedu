@@ -57,6 +57,21 @@ export default function HomePage() {
     }
   }, [session, messages]);
 
+  async function fetchStudentInfo(id: string) {
+    if (id.length < 3) return;
+    try {
+      const res = await fetch(`/api/student/${id}`);
+      const data = await res.json();
+      if (data.ok) {
+        setSession(data.student);
+        if (data.history) setMessages(data.history);
+        setStatus("Đã nạp hồ sơ học tập.");
+      }
+    } catch (err) {
+      console.error("Failed to fetch student info", err);
+    }
+  }
+
   async function sendMessage() {
     if (!canChat || busy) return;
     const text = input.trim();
@@ -210,8 +225,12 @@ export default function HomePage() {
             <span style={{ color: "var(--muted)" }}>Student ID</span>
             <input
               value={session.studentId}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSession({ ...session, studentId: e.target.value })}
-              placeholder="HS0001"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                const id = e.target.value;
+                setSession({ ...session, studentId: id });
+                if (id.length >= 4) fetchStudentInfo(id);
+              }}
+              placeholder="HS01"
               style={inputStyle}
             />
           </label>
@@ -260,31 +279,23 @@ export default function HomePage() {
 
       {canChat && (
         <div style={{
-          marginTop: 16, display: "flex", gap: 12, alignItems: "center",
-          background: "#1f3b7430", border: "1px solid #1f3b74", borderRadius: 8, padding: "8px 16px"
+          marginTop: 16, display: "flex", flexDirection: "column", gap: 8,
+          background: "#1f3b7430", border: "1px solid #1f3b74", borderRadius: 8, padding: "12px 16px"
         }}>
-          <span style={{ fontSize: 18 }}>🏆</span>
-          <div style={{ flex: 1, display: "flex", gap: 20 }}>
-            <div>
-              <div style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase" }}>Khởi động (G)</div>
-              <div style={{ fontWeight: "bold", color: progressStats.G > 0 ? "#ffd48a" : "var(--text)" }}>
-                {progressStats.G} lượt
-              </div>
-            </div>
-            <div>
-              <div style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase" }}>Luyện tập (P)</div>
-              <div style={{ fontWeight: "bold", color: progressStats.P > 0 ? "#8effa8" : "var(--text)" }}>
-                {progressStats.P} thử thách
-              </div>
-            </div>
-            <div>
-              <div style={{ fontSize: 11, color: "var(--muted)", textTransform: "uppercase" }}>Giải quyết (S)</div>
-              <div style={{ fontWeight: "bold", color: progressStats.S > 0 ? "#8ac8ff" : "var(--text)" }}>
-                {progressStats.S} hoàn thành
-              </div>
-            </div>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontWeight: "bold", fontSize: 13 }}>TIẾN TRÌNH G.P.S</span>
+            <span style={{ fontSize: 12, color: "var(--muted)" }}>{progressStats.G + progressStats.P + progressStats.S} lượt hội thoại</span>
           </div>
-          {progressStats.S > 0 && <span style={{ color: "#8ac8ff", fontSize: 13, fontWeight: "bold" }}>Tuyệt vời! 🎉</span>}
+          <div style={{ display: "flex", height: 8, gap: 4 }}>
+            <div style={{ flex: progressStats.G || 1, background: "#ffd48a", borderRadius: 4, transition: "flex 0.5s ease" }} title="Guide" />
+            <div style={{ flex: progressStats.P || 1, background: "#8effa8", borderRadius: 4, transition: "flex 0.5s ease" }} title="Practice" />
+            <div style={{ flex: progressStats.S || 1, background: "#8ac8ff", borderRadius: 4, transition: "flex 0.5s ease" }} title="Solve" />
+          </div>
+          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "var(--muted)" }}>
+            <span>HƯỚNG DẪN (G)</span>
+            <span>LUYỆN TẬP (P)</span>
+            <span>HOÀN THÀNH (S)</span>
+          </div>
         </div>
       )}
 

@@ -14,6 +14,20 @@ export async function generateReply(params: {
     return { provider, reply };
   }
 
+  if (provider === "langgraph") {
+    const res = await fetch("http://127.0.0.1:8001/chat", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+            message: params.message,
+            qid: "1", // Trong thực tế lấy từ context/session
+            history: params.history
+        })
+    });
+    const data = await res.json();
+    return { provider, reply: data.reply || "Error calling LangGraph" };
+  }
+
   if (provider === "vllm" || provider === "openai") {
     const reply = await generateWithOpenAI(params);
     return { provider: provider, reply };

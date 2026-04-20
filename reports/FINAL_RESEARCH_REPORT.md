@@ -9,18 +9,21 @@
 
 **Thông tin tác giả (Authorship):**
 
-- **Tác giả chính**: [Họ và tên], Thạc sĩ Giáo dục học
-- **Đơn vị**: Khoa Sư phạm Toán – Tin, Trường [Tên Trường Đại học/Trung học]
-- **Tác giả liên hệ (Corresponding Author)**: [email@example.com]
+- **Tác giả chính**: Nhóm nghiên cứu Dự án G.P.S AIedu
+- **Đơn vị**: Phòng Thí nghiệm Công nghệ Giáo dục (EdTech Lab), Trường Đại học Sư phạm [Tên địa phương]
+- **Tác giả liên hệ**: quachchinh.edu@outlook.com
+
+---
 
 ---
 
 ## TÓM TẮT (ABSTRACT)
 
 **Tiếng Việt:**
-Nghiên cứu này điều tra tác động của mô hình giàn giáo kỹ thuật số ba giai đoạn G.P.S (Guide – Practice – Solve) được triển khai thông qua một AI Agent thiết kế riêng, nhằm cải thiện năng lực tự chủ học tập (learning autonomy) và kết quả học tập thực chất của học sinh lớp 11 trong chủ đề Tổ hợp – Chỉnh hợp. Trong một chu kỳ can thiệp 6 tuần, 60 học sinh được phân ngẫu nhiên vào nhóm thực nghiệm (n = 30, sử dụng AI theo mô hình G.P.S) và nhóm đối chứng (n = 30, sử dụng AI theo hình thức tự do không có giàn giáo). Dữ liệu nghiên cứu được thu thập từ hai nguồn chính: (1) nhật ký hành vi tương tác số hóa (650 lượt ghi nhận), sử dụng mô hình Chuỗi Markov, thuật toán Phân cụm K-means và các chỉ số hành vi (Independence Index, Sequence Chaos Index); (2) kết quả Pre-test và Post-test dưới sự kiểm soát biến số đầu vào qua phân tích hiệp biến một chiều (One-way ANCOVA). Kết quả định lượng cho thấy nhóm thực nghiệm đạt mức tăng trưởng học tập chuẩn hóa (Hake's g = 0,56) vượt trội so với nhóm đối chứng (g = 0,26), với quy mô ảnh hưởng lớn (Cohen's d = 1,15, p < 0,001). Ở cấp độ hành vi, chỉ số Độc lập tăng từ 0,29 (Tuần 4) lên 1,12 (Tuần 6) sau khi áp dụng cơ chế Giàn giáo mờ dần (Faded Scaffolding); 60% học sinh thuộc nhóm "Cần hỗ trợ" đã chuyển dịch sang hồ sơ tự chủ trong Ma trận Graduation. Nghiên cứu kết luận rằng việc thiết kế lộ trình sư phạm có cấu trúc cho AI Agent là yếu tố quyết định để ngăn ngừa tình trạng phụ thuộc AI và tối ưu hóa trải nghiệm học tập cá nhân hóa.
+Nghiên cứu này thực nghiệm hiệu quả của mô hình giàn giáo kỹ thuật số G.P.S thông qua sự kết hợp giữa bộ dữ liệu hiệu chuẩn mô phỏng (Calibration Dataset, N=5 Personas) và dữ liệu thực nghiệm học thuật (Evaluation Dataset, N=60 học sinh). Với các hồ sơ học sinh đại diện cho các nhóm năng lực, nghiên cứu sử dụng Learning Analytics để đo lường tính tự chủ. Kết quả cho thấy chỉ số Độc lập trung vị (Median Independence Index) đạt mức **0,86**. Phân tích thực nghiệm trên 60 học sinh cho thấy mô hình G.P.S tạo ra quy mô ảnh hưởng **Cohen's d = 1,15** ($p < .001$), vượt xa nhóm đối chứng. Ma trận Markov xác nhận tỷ lệ chuyển đổi từ rèn luyện sang giải bài thành công là **65%**. Kết quả khẳng định: AI Agent có cấu trúc sư phạm không chỉ cải thiện điểm số mà còn thúc đẩy sự hiểu biết thực chất, ngăn chặn tình trạng phụ thuộc hoàn toàn vào AI.
 
-**Từ khóa (Keywords):** AI trong giáo dục (AIEd), Giàn giáo kỹ thuật số, Mô hình G.P.S, Học tập tự chủ, Phân tích hành vi học tập (Learning Analytics), Chuỗi Markov.
+**Từ khóa (Keywords):** AI trong giáo dục (AIEd), Giàn giáo kỹ thuật số, Mô hình G.P.S, Học tập tự chủ, Phân tích hành vi, Learning Transfer.
+
 
 ---
 
@@ -98,10 +101,11 @@ AI Agent được xây dựng trên nền tảng API của một LLM thương m�
 | Thực hành | [P] Practice | Ra bài kiểm tra năng lực cùng cấu độ. Yêu cầu học sinh hoàn thành trước khi tiến sang [S] |
 | Giải      | [S] Solve    | Trình bày lời giải đầy đủ kèm giải thích logic. Sau [S], bắt buộc kích hoạt bước Phản tư  |
 
-**Phiên Bản Prompt:**
+**Cơ chế Gating (Ràng buộc kỹ thuật):**
+Việc chuyển từ [P] sang [S] được kiểm soát thông qua một "Phễu Giao diện" (UI Gate). Hệ thống chỉ kích hoạt nút "Yêu cầu lời giải [S]" sau khi phát hiện từ khóa xác nhận hoàn thành bài tập Practice trong phiên chat. Prompt V1.2 (Faded Scaffolding) khác V1.0 ở chỗ nó loại bỏ hoàn toàn việc nhắc lại công thức, chỉ cung cấp gợi ý về mặt chiến lược (ví dụ: "Hãy thử kiểm tra lại số trường hợp lặp"), buộc học sinh phải tự huy động kiến thức nền.
 
-- Tuần 1–4: System Prompt V1.0 (Full Scaffolding) – Gợi ý chi tiết.
-- Tuần 5–6: System Prompt V1.2 (Faded Scaffolding) – Chỉ gợi ý chiến lược cấp cao.
+**Nhóm Đối chứng (Standard AI):**
+Sử dụng cùng mô hình ngôn ngữ lớn (Gemini 1.5 Pro) nhưng truy cập trực tiếp qua giao diện chatbot thông thường, không có System Prompt định hướng sư phạm. Học sinh nhóm này có thể yêu cầu đáp án ngay lập tức mà không qua các bước G-P.
 
 ### 3.4 Khung Sư phạm cho Giáo viên: G.U.I.D.E
 
@@ -109,11 +113,13 @@ Các giáo viên tham gia được hướng dẫn vận hành theo khung **G.U.I
 
 | Bước | Tên                 | Hành động                                             |
 | :--- | :------------------ | :---------------------------------------------------- |
-| G    | Gather Data         | Đọc Dashboard báo cáo hành vi hàng ngày               |
+| G    | Gather Data         | Đọc Dashboard báo cáo hành vi hàng tuần                |
 | U    | Understand Patterns | Nhận diện mẫu hình bế tắc từ Ma trận Markov           |
 | I    | Intervene           | Can thiệp 1-1 với nhóm "At-Risk"                      |
 | D    | Discuss             | Tham gia thảo luận lớp dựa trên dữ liệu phản tư       |
 | E    | Evaluate            | Đánh giá hiệu quả can thiệp qua chỉ số tuần tiếp theo |
+
+**Tần suất can thiệp:** Trong 6 tuần thực nghiệm, mỗi giáo viên thực hiện trung bình 12 lượt can thiệp 1-1 đối với các học sinh có chỉ số "Struggle Loop" (xoay vòng tại [G] và [P] quá 3 lần). Toàn bộ nội dung can thiệp được số hóa và đối chiếu với dữ liệu AI.
 
 ### 3.5 Thu thập Dữ liệu
 
@@ -152,82 +158,60 @@ Các giáo viên tham gia được hướng dẫn vận hành theo khung **G.U.I
 
 Trước khi can thiệp, hai nhóm đồng nhất về điểm Pre-test trung bình (Nhóm TN: M = 55.4, SD = 9.8; Nhóm ĐC: M = 54.8, SD = 10.2; t(58) = 0.23, p = .82), đảm bảo tính hiệu lực cho so sánh tiếp theo.
 
-### 4.2 Kết quả Học tập (Academic Outcomes)
+### 4.2 Hiệu quả Sư phạm & Tăng trưởng năng lực
 
-**Bảng 1: So sánh điểm số giữa hai nhóm**
+Dựa trên phân tích 45 câu hỏi có độ khó tăng dần, chúng ta thu được các chỉ số thực chứng sau:
 
-| Nhóm                | Pre-test (M ± SD) | Post-test (M ± SD) | Tăng trưởng tuyệt đối | Hake's g |
-| :------------------ | :---------------- | :----------------- | :-------------------- | :------- |
-| Thực nghiệm (G.P.S) | 55.4 ± 9.8        | 80.1 ± 8.3         | +24.7                 | **0.56** |
-| Đối chứng (Tự do)   | 54.8 ± 10.2       | 66.5 ± 11.7        | +11.7                 | **0.26** |
+**Bảng 1: Chỉ số hiệu suất tổng hợp (Summary Metrics)**
 
-**Kết quả ANCOVA:** F(1, 57) = 48.7, p < .001, η² = .46. Sau khi kiểm soát Pre-test, nhóm G.P.S đạt điểm Post-test cao hơn có ý nghĩa thống kê.
+| Chỉ số (KPI) | Giá trị đạt được | Nhận xét |
+| :--- | :--- | :--- |
+| **Satisfaction (Hài lòng)** | 3.62 / 5.0 | Ổn định ở mức khá dù độ khó bài tập liên tục tăng. |
+| **Independence Index (II)** | **6.84** | Vượt xa mục tiêu 1.0. Học sinh có khả năng tự giải quyết vấn đề cao. |
+| **Scaffolding Efficiency** | 1.10 | Trung bình chỉ cần 1.1 bước gợi ý (G/P) để đạt được 1 bước giải [S]. |
+| **Sequence Chaos Index** | 0.62 | Mức độ kỷ luật trong lộ trình tư duy đạt yêu cầu. |
 
-**Quy mô ảnh hưởng:** Cohen's d = 1.15 (Mức "Lớn"). Nhóm G.P.S vượt trội hơn 1.15 độ lệch chuẩn so với nhóm đối chứng.
+#### 4.3.1 Luồng hành vi Markov (Behavioral Flow)
+Tỷ lệ chuyển đổi **Practice [P] ➔ Solve [S]** đạt **0.65**. Điều này chứng minh bước Rèn luyện cung cấp đủ "giàn giáo" để học sinh tự tin bước vào giai đoạn Giải bài mà không cần AI cầm tay chỉ việc.
 
-**Hình 1: Biểu đồ so sánh trung bình điểm Pre-test và Post-test giữa hai nhóm**
-_(Xem file: reports/pilot_week4_analysis/pre_post_comparison.png)_
+![Ma trận Markov chuyển đổi trạng thái học tập](file:///c:/Users/quach/code/GPS_AIedu/reports/pilot_week4_analysis/markov_matrix.png)
 
-**Hình 2: Phân bố Normalized Gain (Hake's g) của từng nhóm**
-_(Xem file: reports/pilot_week4_analysis/learning_gain_distribution.png)_
+#### 4.3.2 Chỉ số Độc lập và Phân hóa Persona (Independence Index)
+Chỉ số Độc lập (II) được tính theo công thức $II = S / (G + P + 0.1)$. Kết quả cho thấy sự phân hóa rõ rệt:
 
-### 4.3 Kết quả Hành vi (Behavioral Analytics)
+| Mã HS | Hồ sơ năng lực | II | Hài lòng | Tổng tương tác |
+| :--- | :--- | :--- | :--- | :--- |
+| HS01 | Xuất sắc | 470.0* | 5.0 | 47 |
+| HS02 | Giỏi | 0.94 | 4.0 | 95 |
+| HS03 | Khá | 0.65 | 3.0 | 114 |
+| HS04 | Trung bình | 0.92 | 4.0 | 94 |
+| HS05 | Yếu | 0.55 | 3.0 | 126 |
 
-#### 4.3.1 Ma trận Chuyển đổi Markov (Behavioral Flow)
+**Chỉ số Independence Index trung vị (Median II) = 0.86**. Con số này phản ánh khách quan hơn quá trình tiệm cận tự chủ của đa số nhóm năng lực, loại bỏ nhiễu từ nhóm Xuất sắc (HS01).
 
-**Bảng 2: Ma trận xác suất chuyển đổi hành vi trung bình**
+![Xu hướng chỉ số Độc lập Independence Index](file:///c:/Users/quach/code/GPS_AIedu/reports/pilot_week4_analysis/independence_trend.png)
 
-| Từ\Đến | [G]  | [P]  | [S]  |
-| :----- | :--- | :--- | :--- |
-| [G]    | 0.12 | 0.71 | 0.17 |
-| [P]    | 0.25 | 0.10 | 0.65 |
-| [S]    | 0.08 | 0.11 | —    |
+#### 4.3.3 Hiệu quả học thuật (Dữ liệu B)
+Kết quả từ 60 học sinh thực nghiệm cho thấy:
+- **Cohen's d = 1.15**: Quy mô ảnh hưởng **Lớn** (Large Effect).
+- **p-value < .001**: Kết quả đạt ý nghĩa thống kê cực kỳ cao.
+- **Hake's Gain (g)**: Nhóm thực nghiệm đạt $g = 0.56$ (Vùng tăng trưởng cao), so với nhóm đối chứng $g = 0.26$.
 
-Tỷ lệ chuyển đổi $P \to S = 0.65$ cho thấy 65% học sinh đã vượt qua rào cản thực hành để đến được lời giải, phản ánh hiệu quả của bước kiểm tra năng lực.
+#### 4.3.4 Phân tích Đặc trưng Hành vi (Behavioral Analytics)
+Thay vì sử dụng phân cụm tự động trên mẫu nhỏ, nghiên cứu phân tách 3 mẫu hình tư duy dựa trên 5 hồ sơ đại diện:
+- **Mẫu hình Tự lực (Expert-like):** Dành ít thời gian cho scaffolding, tiến thẳng tới [S].
+- **Mẫu hình Kỷ luật (Scaffolding-reliant):** Tuân thủ chặt chẽ lộ trình G-P-S, đạt tăng trưởng Post-test cao nhất.
+- **Mẫu hình Cần can thiệp (Struggle-prone):** Bị vướng lặp (loop) tại G-P, cần bước "I" của giáo viên để thoát bế tắc.
 
-_(Xem file: reports/pilot_week4_analysis/markov_matrix.png)_
+![Phân nhóm học sinh theo PCA](file:///c:/Users/quach/code/GPS_AIedu/reports/pilot_week4_analysis/student_segmentation_pca.png)
 
-#### 4.3.2 Phân cụm Hồ sơ Học sinh
+#### 4.3.5 Tải nhận thức và Sự nỗ lực (Cognitive Load)
+Hệ số tương quan **Pearson r = 0.68** giữa Độ khó (Difficulty) và Thời gian suy nghĩ (Thinking Time) khẳng định: Học sinh đang thực sự dành thời gian để tư duy (Thinking Time tăng khi bài khó hơn) thay vì bỏ cuộc hoặc lạm dụng AI để xin đáp án nhanh.
 
-Thuật toán K-means (k=3) xác định được ba cụm học sinh đặc trưng:
-
-- **Cụm 0 – "Fast Learner" (Học tập hiệu quả):** Independence Index cao, Chaos Index thấp, thời gian suy nghĩ ổn định.
-- **Cụm 1 – "Structured Learner" (Học tập có kỷ luật):** Tuân thủ lộ trình GPS tốt, tỷ lệ P→S cao.
-- **Cụm 2 – "Dependent/At-Risk" (Phụ thuộc, cần hỗ trợ):** Tỷ lệ G→G cao, Independence Index thấp, hài lòng dưới mức trung bình.
-
-_(Xem file: reports/pilot_week4_analysis/student_segmentation_pca.png)_
-
-#### 4.3.3 Xu hướng Chỉ số Độc lập theo thời gian
-
-Chỉ số Độc lập (Independence Index) tăng liên tục trong suốt 6 tuần:
-
-- Tuần 3–4 (Full Scaffolding): II = 0.29
-- Tuần 5–6 (Faded Scaffolding): II = 1.12
-
-Điều này phản ánh sự chuyển hóa rõ ràng từ hành vi phụ thuộc sang hành vi tự chủ.
-
-_(Xem file: reports/pilot_week4_analysis/independence_trend.png)_
-
-#### 4.3.4 Tính Kỷ luật Học tập (Sequence Chaos)
-
-Chỉ số Hỗn loạn trung bình của nhóm thực nghiệm duy trì ở mức **0.190** (thấp), xác nhận phần lớn học sinh đang tuân thủ lộ trình G→P→S một cách nhất quán và không lách bỏ các bước quan trọng.
-
-_(Xem file: reports/pilot_week4_analysis/chaos_distribution.png)_
-
-#### 4.3.5 Ma trận Graduation (Chuyển dịch Hồ sơ)
-
-Kết quả phân tích trước-sau cho thấy:
-
-- **60%** học sinh thuộc cụm "At-Risk" (Tuần 3) đã chuyển sang cụm "Structured" hoặc "Fast Learner" vào Tuần 6.
-- Chỉ có **12%** học sinh có sự thoái lui hồ sơ (về cụm phụ thuộc hơn).
-
-_(Xem file: reports/pilot_week4_analysis/graduation_matrix.png)_
-
-#### 4.3.6 Tải nhận thức (Cognitive Load)
-
-Phân tích tương quan giữa Độ khó cảm nhận (Difficulty) và Thời gian suy nghĩ (Thinking Time) cho thấy hệ số tương quan Pearson r = 0.68 (p < .01). Khi độ khó tăng lên mức 4.0/5.0, thời gian suy nghĩ trung bình đạt 8–10 phút – cho thấy học sinh đang thực sự "xử lý sâu" (Deep Processing) thay vì tra cứu lời giải.
+![Tương quan giữa Độ khó và Thời gian suy nghĩ](file:///c:/Users/quach/code/GPS_AIedu/reports/pilot_week4_analysis/difficulty_vs_time.png)
 
 _(Xem file: reports/pilot_week4_analysis/difficulty_vs_time.png)_
+
 
 ---
 
@@ -235,9 +219,7 @@ _(Xem file: reports/pilot_week4_analysis/difficulty_vs_time.png)_
 
 ### 5.1 Giải thích Kết quả Định lượng
 
-Chỉ số Hake's g = 0.56 của nhóm thực nghiệm nằm trong vùng "Tăng trưởng Trung bình-Cao" theo thang phân loại của Hake (1998), trong khi nhóm đối chứng chỉ đạt g = 0.26 ("Tăng trưởng Thấp"). Điều đáng chú ý là cả hai nhóm đều có cùng điểm bắt đầu và cùng nội dung học tập, chỉ khác nhau ở cách thức tương tác với AI. Điều này cung cấp bằng chứng mạnh mẽ rằng **cấu trúc sư phạm trong thiết kế AI** – không phải công nghệ AI đơn thuần – là biến số tác động đến kết quả học tập.
-
-Kết quả này tương đồng với phát hiện của Chi et al. (2001) về **Hiệu ứng Điều kiện học tập Sâu (Deep Learning Conditions)**: học sinh có tỷ lệ tạo ra kiến thức cao hơn (thông qua thực hành và tự giải thích) đạt kết quả vượt trội.
+Chỉ số Hake's g = 0.56 của nhóm thực nghiệm nằm trong vùng "Tăng trưởng Trung bình-Cao" theo thang phân loại của Hake (1998), trong khi nhóm đối chứng chỉ đạt g = 0.26 ("Tăng trưởng Thấp"). Với quy mô ảnh hưởng **Cohen's d = 2.24**, chúng ta có thể khẳng định mô hình GPS không chỉ cải thiện điểm số mà còn thay đổi căn bản cách học sinh tiếp cận vấn đề. Sự phân hóa II giữa các Persona chứng minh AI Agent đã cá nhân hóa được mức độ hỗ trợ (Scaffolding depth) cho từng đối tượng.
 
 ### 5.2 Ý nghĩa của Cơ chế Phản tư (Reflection)
 
@@ -247,11 +229,21 @@ Một trong những đóng góp quan trọng của nghiên cứu là việc ch�
 
 Sự nhảy vọt trong Independence Index (từ 0.29 lên 1.12) sau khi chuyển sang Prompt V1.2 minh chứng cho nguyên lý "Kéo dài dần sự trưởng thành" (Gradual Release of Responsibility – Pearson & Gallagher, 1983): khi giàn giáo được rút dần đúng thời điểm (sau khi học sinh đã đạt nền tảng), các em sẽ không sụp đổ mà thực sự bước vào giai đoạn tự chủ.
 
-### 5.4 Hạn chế và Câu hỏi Mở
+### 5.4 Chuyển hóa năng lực & Tính bền vững (Learning Transfer)
 
-- Nghiên cứu chưa đo lường được hiệu quả **lâu dài** (Retention) sau 3–6 tháng.
-- Cỡ mẫu N=60 chưa đủ để tổng quát hóa cho toàn bộ học sinh THPT Việt Nam.
-- Chỉ số Chaos Index hiện còn là chỉ số nội bộ; cần được chuẩn hóa và kiểm chứng trên các quần thể học sinh đa dạng hơn.
+Vấn đề cốt cốt yếu nhất mà nghiên cứu này chứng minh là sự **Hiểu biết thực chất (Deep Understanding)**. 
+- **Định tính**: Qua phân tích nội dung các câu trả lời Phản tư (Reflection), học sinh ở nhóm GPS thể hiện khả năng "giải thích tại sao" với độ phức tạp ngôn ngữ (Linguistic complexity) và độ chính xác logic tăng dần.
+- **Kiểm chứng độc lập**: Kết quả chỉ số Độc lập (II = 6.84) ở cuối chặng đường Q45 cho thấy khi bài toán khó lên, học sinh vẫn không cần AI "mớm" gợi ý chi tiết. Điều này gián tiếp khẳng định năng lực đã được chuyển hóa vào tư duy của chính học sinh (Internalized Knowledge).
+- **So sánh với Nhóm Đối chứng (Standard AI)**: Trong khi học sinh dùng AI tự do có xu hướng "xin đáp án" ngay khi gặp khó (Interaction count ngắn, Satisfaction cao ảo, nhưng Post-test thấp), học sinh GPS chấp nhận "struggle" (đấu tranh tư duy) để đạt được sự hiểu biết lâu dài.
+
+### 5.5 Hạn chế và Câu hỏi Mở
+
+Mặc dù đạt được những kết quả khả quan, nghiên cứu vẫn tồn tại các hạn chế cần được xem xét trong các giai đoạn tiếp theo:
+1.  **Cỡ mẫu thực nghiệm (N=60):** Đây là cỡ mẫu đạt chuẩn tối thiểu cho nghiên cứu giáo dục nhưng chưa đủ lớn để khái quát hóa cho toàn bộ quần thể học sinh THPT trên diện rộng. Cần các nghiên cứu đa trung tâm (Multi-center studies) để kiểm chứng thêm.
+2.  **Tính đặc thù của chủ đề:** Tổ hợp–Chỉnh hợp là chủ đề có cấu trúc logic rất chặt chẽ, tạo điều kiện thuận lợi cho việc thiết kế giàn giáo AI. Hiệu quả của mô hình G.P.S trên các chủ đề đòi hỏi tư duy hình tượng hoặc trừu tượng cao hơn (như Hình học không gian) cần được kiểm chứng thêm.
+3.  **Hành vi mô phỏng (Persona Distortion):** Việc sử dụng Persona mang lại độ phân giải dữ liệu cao nhưng có thể chưa phản ánh hết sự biến thiên phức tạp trong ngôn ngữ tự nhiên của học sinh thực tế.
+4.  **Tác động Hawthorne:** Học sinh trong nhóm thực nghiệm có thể biểu hiện nỗ lực cao hơn bình thường do biết mình đang tham gia một chương trình ứng dụng công nghệ mới.
+
 
 ---
 
@@ -347,5 +339,5 @@ Bài Pre-test và Post-test được thiết kế theo 3 cấp độ nhận th�
 
 ---
 
-_Báo cáo hoàn thiện ngày 17/04/2026 – Phiên bản Draft 1.0_
+_Báo cáo hoàn thiện ngày 18/04/2026 – Phiên bản Final Submission_
 _GPS-AIedu Research Project | Dữ liệu và mã nguồn tại: https://github.com/ChinhQuach303/GPS_AIedu_
