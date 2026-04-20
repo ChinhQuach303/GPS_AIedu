@@ -30,7 +30,7 @@ import hashlib
 llm = ChatOpenAI(
     base_url="http://localhost:11434/v1",
     api_key="ollama",
-    model="gemma2:9b", 
+    model="qwen2-math:1.5b-instruct-q5_K_M", 
     temperature=0.3,
     timeout=60
 )
