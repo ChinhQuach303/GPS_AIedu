@@ -130,17 +130,66 @@ class GPSBehaviorAnalysis:
             
         return final_features
 
-    def calculate_learning_gain(self, pre_test_df, post_test_df):
+    def calculate_learning_gain(self, pre_post_df):
         """
-        Calculates normalized learning gain: (Post - Pre) / (Max - Pre)
+        Calculates normalized learning gain (Hake's g) and Cohen's d effect size.
+        Expects a DataFrame with ['Pre_Score', 'Post_Score', 'Group']
         """
-        # Merging based on common ID/Hash
-        merged = pd.merge(pre_test_df, post_test_df, on='Student Hash', suffixes=('_pre', '_post'))
-        merged['absolute_gain'] = merged['Score_post'] - merged['Score_pre']
-        # Normalized gain (Hake's g)
-        max_score = 100 # Assuming 100
-        merged['norm_gain'] = (merged['Score_post'] - merged['Score_pre']) / (max_score - merged['Score_pre'])
-        return merged
+        if pre_post_df.empty:
+            return pd.DataFrame(), {}
+            
+        merged = pre_post_df.copy()
+        max_score = 100 
+        
+        # Hake's g: (Post - Pre) / (Max - Pre)
+        merged['norm_gain'] = (merged['Post_Score'] - merged['Pre_Score']) / (max_score - merged['Pre_Score'].replace(max_score, max_score-0.1))
+        
+        # Statistics per group
+        stats = {}
+        for group, data in merged.groupby('Group'):
+            stats[group] = {
+                'avg_pre': data['Pre_Score'].mean(),
+                'avg_post': data['Post_Score'].mean(),
+                'avg_gain': data['norm_gain'].mean(),
+                'count': len(data)
+            }
+            
+        # Cohen's d (if we have Experimental and Control)
+        if 'Experimental' in stats and 'Control' in stats:
+            exp = merged[merged['Group'] == 'Experimental']['Post_Score']
+            ctrl = merged[merged['Group'] == 'Control']['Post_Score']
+            
+            n1, n2 = len(exp), len(ctrl)
+            var1, var2 = exp.var(), ctrl.var()
+            pooled_std = np.sqrt(((n1 - 1) * var1 + (n2 - 1) * var2) / (n1 + n2 - 2))
+            
+            if pooled_std != 0:
+                stats['cohen_d'] = (exp.mean() - ctrl.mean()) / pooled_std
+            else:
+                stats['cohen_d'] = 0.0
+                
+        return merged, stats
+
+    def generate_pre_post_template(self, output_path='data/processed/pre_post_comparison_template.csv'):
+        """
+        Generates a template for teacher to fill in Pre and Post scores.
+        """
+        students = self.df['Student Hash'].unique()
+        template = pd.DataFrame({
+            'Student Hash': students,
+            'Pre_Score': 0.0,
+            'Post_Score': 0.0,
+            'Group': 'Experimental'
+        })
+        # Add some mock control students for structure
+        control_mock = pd.DataFrame([
+            {'Student Hash': f'control_{i}', 'Pre_Score': 0.0, 'Post_Score': 0.0, 'Group': 'Control'}
+            for i in range(5)
+        ])
+        template = pd.concat([template, control_mock], ignore_index=True)
+        template.to_csv(output_path, index=False)
+        print(f"Template created at {output_path}")
+        return template
 
     def perform_clustering(self, n_clusters=3):
         """
@@ -472,7 +521,43 @@ The data suggests that the G.P.S. scaffolding approach is **{'improving' if sat_
                 plt.savefig(f'{output_dir}/difficulty_vs_time.png')
                 plt.close()
             
-            # 9. Summary Text Report
+            # 9. Pre/Post Comparison (if score data exists)
+            score_path = 'data/processed/mock_final_scores.csv'
+            if os.path.exists(score_path):
+                scores_df = pd.read_csv(score_path)
+                final_df, stats = self.calculate_learning_gain(scores_df)
+                
+                # Plot 1: Pre vs Post Mean Comparison
+                plt.figure(figsize=(10, 6))
+                comparison_data = final_df.groupby('Group')[['Pre_Score', 'Post_Score']].mean()
+                comparison_data.plot(kind='bar', color=['#34495e', '#3498db'])
+                plt.title('Comparison of Pre-test vs Post-test Scores', fontsize=15)
+                plt.ylabel('Average Score')
+                plt.xticks(rotation=0)
+                plt.grid(axis='y', linestyle='--', alpha=0.7)
+                plt.savefig(f'{output_dir}/pre_post_comparison.png')
+                plt.close()
+                
+                # Plot 2: Normalized Gain Distribution
+                plt.figure(figsize=(10, 6))
+                sns.boxplot(data=final_df, x='Group', y='norm_gain', palette='Set2')
+                plt.title("Distribution of Normalized Learning Gain (Hake's g)", fontsize=15)
+                plt.ylabel('Normalized Gain')
+                plt.savefig(f'{output_dir}/learning_gain_distribution.png')
+                plt.close()
+                
+                # Save stats to report
+                with open(f'{output_dir}/statistical_summary.md', 'w') as f:
+                    f.write(f"# Statistical Benchmarking Summary\n\n")
+                    f.write(f"- **Cohen's d (Effect Size)**: {stats.get('cohen_d', 0):.3f}\n")
+                    for group, s in stats.items():
+                        if isinstance(s, dict):
+                            f.write(f"### Group: {group}\n")
+                            f.write(f"- Avg Pre: {s['avg_pre']:.2f}\n")
+                            f.write(f"- Avg Post: {s['avg_post']:.2f}\n")
+                            f.write(f"- Avg Normalized Gain: {s['avg_gain']:.2f}\n\n")
+
+            # 10. Summary Text Report
             summary = self.prove_improvement()
             with open(f'{output_dir}/impact_report.md', 'w', encoding='utf-8') as f:
                 f.write(summary)
