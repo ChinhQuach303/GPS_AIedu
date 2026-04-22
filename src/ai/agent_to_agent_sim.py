@@ -7,7 +7,7 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
 
 # --- CONFIGURATION ---
-OLLAMA_URL = "http://localhost:11435/v1"
+OLLAMA_URL = "http://localhost:11434/v1"
 GPS_MODEL = "qwen2.5:7b"
 STUDENT_MODEL = "qwen2.5:1.5b"
 DATA_PATH = "data/processed/probabilities_questions.json"
