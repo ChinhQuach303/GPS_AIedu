@@ -1,0 +1,678 @@
+TRẮC NGHIỆM XÁC SUẤT CÓ ĐÁP ÁN VÀ LỜI GIẢI
+A. KIẾN THỨC
+I – Biến cố
+1. Phép thử và không gian mẫu
+Phép thử ngẫu nhiên (gọi tắt là phép thử ) là một thí nghiệm hay một hành động mà:
+ Kết quả của nó không đoán trước được.
+ Có thể xác định được tập hợp tất cả các kết quả có thể xảy ra của phép thử đó.
+Tập hợp mọi kết quả của một phép thử  được gọi là không gian mẫu của  và được kí
+hiệu là  Số phần tử của không gian mẫu được kí hiệu là  hay 
+2. Biến cố
+Biến cố A liên quan đến phép thử  là biến cố mà việc xảy ra hay không xảy ra của 
+tùy thuộc vào kết quả của T.
+Mỗi kết quả của phép thử  làm cho A xảy ra được gọi là một kết quả thuận lợi cho A.
+Tập hợp các kết quả thuận lợi cho A được kí hiệu là 
+II – Xác suất
+Giả sử phép thử  có không gian mẫu  là một tập hữu hạn và các kết quả của  là
+đồng khả năng. Nếu A là một biến cố liên quan với phép thử  và  là một tập hợp
+các kết quả thuận lợi cho A thì xác suất của A là một số , kí hiệu là  , được xác
+định bởi công thức
+
+Từ định nghĩa, suy ra   
+Chú ý
++ Sách giáo khoa cơ bản, ký hiệu số phần tử của biến cố A là 
++ Sách giáo khoa nâng cao, ký hiệu số phần tử của biến cố A là 
+
+B. TRẮC NGHIỆM
+
+Câu 1: Gieo một đồng tiền cân đối và đồng chất bốn lần. Xác suất để cả bốn lần xuất hiện mặt sấp là?
+A. .	B. .	C. .	D. 
+Câu 2: Gieo một con súc sắc hai lần. Xác suất để ít nhất một lần xuất hiện mặt sáu chấm là?
+A. .	B. .	C. .	D. 
+Câu 3: Gieo một con xúc xắc cân đối đồng chất 2 lần. Tính xác suất để biến cố có tổng hai mặt bằng 8.
+A. .	B.  .	C. .	D. 
+Câu 4: Gieo một con xúc xắc cân đối đồng chất 2 lần, tính xác suất để biến cố có tích 2 lần số chấm khi gieo xúc xắc là một số chẵn.
+A. 0,25.	B. 0,5.	C. 0,75.	D. 0,85.
+Câu 5: Gieo ba con súc sắc. Xác suất để số chấm xuất hiện trên ba con súc sắc như nhau là?
+A. .	B. .	C. .	D. 
+Câu 6: Một đội gồm 5 nam và 8 nữ. Lập một nhóm gồm 4 người hát tốp ca, tính xác suất để trong 4 người được chọn có ít nhất 3 nữ.
+A. .	B. .	C. .	D. 
+Câu 7: Một hộp có 5 viên bi xanh, 6 viên bi đỏ và 7 viên bi vàng. Chọn ngẫu nhiên 5 viên bi trong hộp, tính xác suất để 5 viên bi được chọn có đủ màu và số bi đỏ bằng số bi vàng.
+A. .	B. .	C. .	D. 
+Câu 8: Một hộp có 5 viên bi đỏ, 3 viên bi vàng và 4 viên bi xanh. Chọn ngẫu nhiên từ hộp 4 viên bị, tính xác suất để 4 viên bi được chọn có số bi đỏ lớn hơn số bi vàng và nhất thiết phải có mặt bi xanh.
+A. .	B. .	C. .	D. 
+Câu 9: Có 3 bó hoa. Bó thứ nhất có 8 hoa hồng, bó thứ hai có 7 bông hoa ly, bó thứ ba có 6 bông hoa huệ. Chọn ngẫu nhiên 7 hoa từ ba bó hoa trên để cắm vào lọ hoa, tính xác suất để trong 7 hoa được chọn có số hoa hồng bằng số hoa ly.
+A. .	B.  .	C. .	D.  .
+Câu 10: Có 13 học sinh của một trường THPT đạt danh hiệu học sinh xuất sắc trongđó khối 12 có 8 học sinh nam và 3 học sinh nữ, khối 11 có 2 học sinh nam. Chọn ngẫu nhiên 3 học sinh bất kỳ để trao thưởng, tính xác suất để 3 học sinh được chọn có cả nam và nữ đồng thời có cả khối 11 và khối 12 .
+A. .	B. .	C. .	D. 
+Câu 11: Một chiếc hộp đựng 7 viên bi màu xanh, 6 viên bi màu đen, 5 viên bi màu đỏ, 4 viên bi màu trắng. Chọn ngẫu nhiên ra 4 viên bi, tính xác suất để lấy được ít nhất 2 viên bi cùng màu.
+A. .	B. .	C.  .	D. 
+Câu 12: Một hộp đựng 8 quả cầu trắng, 12 quả cầu đen. Lần thứ nhất lấy ngẫu nhiên 1 quả cầu trong hộp, lần thứ hai lấy ngẫu nhiên 1 quả cầu trong các quả cầu còn lại. Tính xác suất để kết quả của hai lần lấy được 2 quả cầu cùng màu.
+A. .	B. .	C. .	D. 
+Câu 13: Một hộp chứa 12 viên bi kích thước như nhau, trong đó có 5 viên bi màu xanh được đánh số từ 1 đến 5; có 4 viên bi màu đỏ được đánh số từ 1 đến 4 và 3 viên
+bi màu vàng được đánh số từ 1 đến 3. Lấy ngẫu nhiên 2 viên bi từ hộp, tính xác suất để 2 viên bi được lấy vừa khác màu vừa khác số.
+A. .	B. .	C. .	D. 
+Câu 14: Một hộp chứa 3 viên bi xanh, 5 viên bi đỏ và 6 viên bi vàng. Lấy ngẫu nhiên 6 viên bi từ hộp, tính xác suất để 6 viên bi được lấy ra có đủ cả ba màu.
+A. 	B. 	C. 	D. 
+Câu 15: Trong một hộp có 50 viên bi được đánh số từ 1 đến 50. Chọn ngẫu nhiên 3 viên bi trong hộp, tính xác suất để tổng ba số trên 3 viên bi được chọn là một số chia hết cho 3.
+A. .	B. .	C. .	D. 
+Câu 16: Cho tập hợp ; 1; 2; 3; 4; 5. Gọi  là tập hợp các số có 3 chữ số khác nhau được lập thành từ các chữ số của tập . Chọn ngẫu nhiên một số từ  ,tính xác suất để số được chọn có chữ số cuối gấp đôi chữ số đầu.
+A. .	B. .	C.  .	D. 
+Câu 17: Cho tập hợp . Gọi  là tập hợp các số tự nhiên có 4 chữ số đôi một khác nhau được lập thành từ các chữ số của tập . Chọn ngẫu nhiên một số từ , tính xác suất để số được chọn mà trong mỗi số luôn luôn có mặt hai chữ số chẵn và hai chữ số lẻ.
+A. .	B.  .	C. .	D. 
+Câu 18: Gọi  là tập hợp các số tự nhiên có 3 chữ số đôi một khác nhau được lập thành từ các chữ số 1; 2; 3; 4; 6 . Chọn ngẫu nhiên một số từ , tính xác xuất để số được chọn chia hết cho 3 .
+A. .	B. .	C. .	D.  .
+Câu 19: Cho tập hợp ; 2; 3; 4; 5. Gọi  là tập hợp tất cả các số tự nhiên có ít nhất 3 chữ số, các chữ số đôi một khác nhau được lập thành từ các chữ số thuộc tập  . Chọn ngẫu nhiên một số từ , tính xác xuất để số được chọn có tổng các chữ số bằng 10 .
+A. .	B. .	C. .	D.  .
+Câu 20: Một hộp đựng 10 chiếc thẻ được đánh số từ  đến 9 . Lấy ngẫu nhiên ra 3 chiếc thẻ, tính xác suất để 3 chữ số trên 3 chiếc thẻ được lấy ra có thể ghép thành một số chia hết cho 5 .
+A. .	B. .	C. .	D. 
+Câu 21: Có 20 tấm thẻ được đánh số từ 1 đến 20 . Chọn ngẫu nhiên ra 8 tấm thẻ, tính xác suất để có 3 tấm thẻ mang số lẻ, 5 tấm thẻ mang số chẵn trong đó chỉ có đúng 1 tấm thẻ mang số chia hết cho 10 .
+A. .	B. .	C. .	D. 
+Câu 22: Gọi  là tập hợp các số tự nhiên có hai chữ số. Chọn ngẫu nhiên đồng thời hai số từ tập hợp . Tính xác suất để hai số được chọn có chữ số hàng đơn vị giống nhau.
+A. .	B. .	C. .	D. 
+Câu 23: Gọi  là tập hợp các số tự nhiên gồm 9 chữ số khác nhau. Chọn ngẫu nhiên một số từ, tính xác suất để chọn được một số gồm 4 chữ số lẻ và chữ số  luôn đứng giữa hai chữ số lẻ (hai số hai bên chữ số  là số lẻ).
+A. .	B.  .	C. .	D. 
+Câu 24: Giải bóng chuyền VTV Cup gồm 9 đội bóng tham dự, trong đó có 6 đội nước ngoài và 3 đội của Việt Nam. Ban tổ chức cho bốc thăm ngẫu nhiên để chia thành 3 bảng  và mỗi bảng có 3đội. Tính xác suất để 3 đội bóng của Việt Nam ở 3 bảng khác nhau.
+A. .	B. .	C.  .	D. 
+Câu 25: Trong giải cầu lông kỷ niệm ngày truyền thống học sinh sinh viên có 8 người tham gia trong đó có hai bạn Việt và Nam. Các vận động viên được chia làm hai bảng  và , mỗi bảng gồm 4 người. Giả sử việc chia bảng thực hiện bằng cách bốc thăm ngẫu nhiên, tính xác suất để cả 2 bạn Việt và Nam nằm chung 1 bảng đấu.
+A. .	B. .	C. .	D. 
+Câu 26: Một bộ đề thi toán học sinh giỏi lớp 12 mà mỗi đề gồm 5 câu được chọn từ 15 câu dễ, 10 câu trung bình và 5 câu khó. Một đề thi được gọi là” Tốt ” nếu trong đề thi có cả ba câu dễ, trung bình và khó, đồng thời số câu dễ không ít hơn 2 . Lấy ngẫu nhiên một đề thi trong bộ đề trên. Tìm xác suất để đề thi lấy ra là một đề thi ” Tốt ” .
+A. .	B. .	C. .	D. 
+Câu 27: Trong một kỳ thi vấn đáp thí sinh  phải đứng trước ban giám khảo chọn ngẫu nhiên 3 phiếu câu hỏi từ một thùng phiếu gồm 50 phiếu câu hỏi, trong đó có 4 cặp phiếu câu hỏi mà mỗi cặp phiếu có nội dung khác nhau từng đôi một và trong mỗi một cặp phiếu có nội dung giống nhau. Tính xác suất để thí sinh chọn được 3 phiếu câu hỏi có nội dung khác nhau.
+A. 	B. .	C. .	D. 
+Câu 28: Trong kỳ thi THPT Quốc Gia năm 2016 có môn thi bắt buộc là môn Tiếng Anh. Môn thi này thi dưới hình thức trắc nghiệm với 4 phương án trả lời , D. Mỗi câu trả lời đúng được cộng 0,2 điểm và mỗi câu trả lời sai bị trừ đi 0,1 điểm.
+Bạn Hoa vì học rất kém môn Tiếng Anh nên chọn ngẫu nhiên cả 50 câu trả lời. Tính xác xuất để bạn Hoa đạt được 4 điểm môn Tiếng Anh trong kỳ thi trên.
+A. .	B. .	C. .	D. 
+Câu 29: Có 6 học sinh lớp 11 và 3 học sinh lớp 12 được xếp ngẫu nhiên vào 9 ghế thành một dãy. Tính xác suất để xếp được 3 học sinh lớp 12 xen kẽ giữa 6 học sinh lớp 11 .
+A. .	B. .	C. .	D. 
+Câu 30: Đội tuyển học sinh giỏi của một trường THPT có 8 học sinh nam và 4 học sinh nữ. Trong buổi lễ trao phần thưởng, các học sinh trên được xếp thành một hàng ngang. Tính xác suất để khi xếp sao cho 2 học sinh nữ không đứng cạnh nhau.
+A. .	B. .	C. .	D. 
+Câu 31: Có 3 bì thư giống nhau lần lượt được đánh số thứ tự từ 1 đến 3 và 3 con tem giống nhau lần lượt đánh số thứ tự từ 1 đến 3 . Dán 3 con tem đó vào 3 bì thư sao cho không có bì thư nào không có tem. Tính xác suất để lấy ra được 2 bì thư trong 3 bì thư trên sao cho mỗi bì thư đều có số thứ tự giống với số thứ tự con tem đã
+dán vào nó.
+A. .	B. .	C. .	D. 
+Câu 32: Trong thư viện có 12 quyển sách gồm 3 quyển Toán giống nhau, 3 quyển Lý giống nhau, 3 quyển Hóa giống nhau và 3 quyển Sinh giống nhau. Có bao nhiêu cách xếp thành một dãy sao cho 3 quyển sách thuộc cung 1 môn không được xếp liền nhau?
+A. 16800.	B. 1680.	C. 140.	D. 4200.
+Câu 33: Xếp 6 học sinh nam và 4 học sinh nữ vào một bàn tròn 10 ghế. Tính xác suất để không có hai học sinh nữ ngồi cạnh nhau.
+A. .	B.  .	C. .	D. 
+Câu 34: Có 4 hành khách bước lên một đoàn tàu gồm 4 toa. Mỗi hành khách độc lập với nhau và chọn ngẫu nhiên một toa. Tính xác suất để 1 toa có 3 người, 1 toa có 1 người, 2 toa còn lại không có ai.
+A. .	B. .	C. .	D. 
+Câu 35: Có 8 người khách bước ngẫu nhiên vào một cửa hàng có 3 quầy. Tính xác suất để 3 người cùng đến quầy thứ nhất.
+A. .	B. .	C. .	D. 
+Câu 36: Trong một buổi liên hoan có 10 cặp nam nữ, trong đó có 4 cặp vợ chồng. Chọn ngẫu nhiên 3 người để biểu diễn một tiết mục văn nghệ. Tính xác suất để 3 người được chọn không có cặp vợ chồng nào.
+A. .	B. .	C. .	D. 
+Câu 37: Một lớp học có 40 học sinh trong đó có 4 cặp anh em sinh đôi. Trong buổi họp đầu năm thầy giáo chủ nhiệm lớp muốn chọn ra 3 học sinh để làm cán sự lớp gồm lớp trưởng, lớp phó và bí thư. Tính xác suất để chọn ra 3 học sinh làm cán sự lớp mà không có cặp anh em sinh đôi nào.
+A. .	B.  .	C. .	D. 
+Câu 38: Một người có 10 đôi giày khác nhau và trong lúc đi du lịch vội vã lấy ngẫu nhiên 4 chiếc. Tính xác suất để trong 4 chiếc giày lấy ra có ít nhất một đôi.
+A. .	B. .	C. .	D. 
+Câu 39: Một trường THPT có 10 lớp 12 , mỗi lớp cử 3 học sinh tham gia vẽ tranh cổ động. Các lớp tiến hành bắt tay giao lưu với nhau (các học sinh cùng lớp không bắt tay với nhau). Tính số lần bắt tay của các học sinh với nhau, biết rằng hai học sinh khác nhau ở hai lớp khác nhau chỉ bắt tay đúng 1 lần.
+A. 405.	B. 435.	C. 30.	D. 45.
+Câu 40: Có 5 đoạn thẳng có độ dài lần lượt là     và . Lấy ngẫu nhiên 3 đoạn thẳng trong 5 đoạn thẳng trên, tính xác suất để 3 đoạn thẳng lấy ra lập thành một tam giác.
+A. .	B. .	C. .	D. 
+Câu 41: Trong mặt phẳng tọa độ Oxy . Ở góc phần tư thứ nhất ta lấy 2 điểm phân biệt; cứ thế ở các góc phần tư thứ hai, thứ ba, thứ tư ta lần lượt lấy 3, 4, 5 điểm phân biệt (các điểm không nằm trên các trục tọa độ). Trong 14 điểm đó ta lấy 2 điểm bất kỳ. Tính xác suất để đoạn thẳng nối hai điểm đó cắt hai trục tọa độ.
+A. .	B. .	C.  .	D. 
+Câu 42: Một lớp học có 30 học sinh gồm có cả nam và nữ. Chọn ngẫu nhiên 3 học sinh để tham gia hoạt động của Đoàn trường. Xác suất chọn được 2 nam và 1 nữ là Tính số học sinh nữ của lớp.
+A. 16.	B. 14.	C. 13.	D. 17.
+Câu 43: Một chi đoàn có 3 đoàn viên nữ và một số đoàn viên nam. Cần lập một đội thanh niên tình nguyện (TNTN) gồm 4 người. Biết xác suất để trong 4 người được chọn có 3nữ bằng  lần xác suất 4 người được chọn toàn nam. Hỏi chi đoàn đó có bao nhiêu đoàn viên.
+A. 9.	B. 10.	C. 11.	D. 12.
+Câu 44: Một hộp có 10 phiếu, trong đó có 2 phiếu trúng thưởng. Có 10 người lần lượt lấy ngẫu nhiên mỗi người 1 phiếu. Tính xác suất người thứ ba lấy được phiếu trúng thưởng.
+A. .	B. .	C. .	D. 
+Câu 45: Trong kỳ thi THPT Quốc Gia, mỗi lớp thi gồm 24 thí sinh được sắp xếp vào 24 bàn khác nhau. Bạn Nam là một thí sinh dự thi, bạn đăng ký 4 môn thi và cả 4 lần thi đều thi tại một phòng duy nhất. Giả sử giám thị xếp thí sinh vào vị trí một cách ngẫu nhiên, tính xác xuất để trong 4 lần thi thì bạn Nam có đúng 2 lần ngồi cùng vào một vị trí.
+A. .	B. .	C. .	D. 
+
+-----------------------------------------------
+ĐÁP ÁN
+
+
+LỜI GIẢI
+Câu 1: Gieo một đồng tiền cân đối và đồng chất bốn lần. Xác suất để cả bốn lần xuất hiện mặt sấp là?
+A. .	B. .	C. .	D. 
+Lời giải. Số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Cả bốn lần gieo xuất hiện mặt sấp” 
+Vậy xác suất cần tính . Chọn C.
+
+Câu 2: Gieo một con súc sắc hai lần. Xác suất để ít nhất một lần xuất hiện mặt sáu chấm là?
+A. .	B. .	C. .	D. 
+Lời giải. Số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Ít nhất một lần xuất hiện mặt sáu chấm” . Để tìm số phần tử của
+biến cố  , ta đi tìm số phần tử của biến cố đối  là ” Không xuất hiện mặt sáu
+chấm” 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 3: Gieo một con xúc xắc cân đối đồng chất 2 lần. Tính xác suất để biến cố có tổng hai mặt bằng 8.
+A. .	B.  .	C. .	D. 
+Lời giải. Số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Số chấm trên mặt hai lần gieo có tổng bằng 8 ” .
+Gọi số chấm trên mặt khi gieo lần một là , số chấm trên mặt khi gieo lần hai là 
+Theo bài ra, ta có , (3;5), (4;4), 6;2 , (5;3 , (4;4)}.
+Khi đó số kết quả thuận lợi của biến cố là 
+Vậy xác suất cần tính . Chọn A.
+
+Câu 4: Gieo một con xúc xắc cân đối đồng chất 2 lần, tính xác suất để biến cố có tích 2 lần số chấm khi gieo xúc xắc là một số chẵn.
+A. 0,25.	B. 0,5.	C. 0,75.	D. 0,85.
+Lời giải. Số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Tích hai lần số chấm khi gieo xúc xắc là một số chẵn” . Ta xét các
+trường hợp:
+TH1. Gieo lần một, số chấm xuất hiện trên mặt là số lẻ thì khi gieo lần hai, số chấm
+xuất hiện phải là số chẵn. Khi đó có  cách gieo.
+TH2. Gieo lần một, số chấm xuất hiện trên mặt là số chẵn thì có hai trường hợp xảy
+ra là số chấm xuất hiện trên mặt khi gieo lần hai là số lẻ hoặc số chẵn. Khi đó có
+ cách gieo.
+Suy ra số kết quả thuận lợi cho biến cố là 
+Vậy xác suất cần tìm tính . ChọnC.
+
+Câu 5: Gieo ba con súc sắc. Xác suất để số chấm xuất hiện trên ba con súc sắc như nhau là?
+A. .	B. .	C. .	D. 
+Lời giải. Số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Số chấm xuất hiện trên ba con súc sắc như nhau” . Ta có các
+trường hợp thuận lợi cho biến cố  là (1;1;1), (2;2;2), (3;3;3),   .
+Suy ra 
+Vậy xác suất cần tính . Chọn C.
+
+Câu 6: Một đội gồm 5 nam và 8 nữ. Lập một nhóm gồm 4 người hát tốp ca, tính xác suất để trong 4 người được chọn có ít nhất 3 nữ.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là chọn tùy ý 4 người từ 13 người.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 4 người được chọn có ít nhất 3 nữ” . Ta có hai trường hợp thuận lợi
+cho biến cố  như sau:
+● TH1: Chọn 3 nữ và 1 nam, có  cách.
+● TH2: Chọn cả 4 nữ, có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnA.
+
+Câu 7: Một hộp có 5 viên bi xanh, 6 viên bi đỏ và 7 viên bi vàng. Chọn ngẫu nhiên 5 viên bi trong hộp, tính xác suất để 5 viên bi được chọn có đủ màu và số bi đỏ bằng số bi vàng.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 5 viên bi từ hộp chứa 18 viên
+bi. Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 5 viên bi được chọn có đủ màu và số bi đỏ bằng số bi vàng” . Ta có
+các trường hợp thuận lợi cho biến cố  là:
+● TH1: Chọn 1 bi đỏ, 1 bi vàng và 3 bi xanh nên có  cách.
+● TH2: Chọn 2 bi đỏ, 2 bi vàng và 1 bi xanh nên có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 8: Một hộp có 5 viên bi đỏ, 3 viên bi vàng và 4 viên bi xanh. Chọn ngẫu nhiên từ hộp 4 viên bị, tính xác suất để 4 viên bi được chọn có số bi đỏ lớn hơn số bi vàng và nhất thiết phải có mặt bi xanh.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 4 viên bi từ hộp chứa 12 viên
+bi. Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 4 viên bi được chọn có số bi đỏ lớn hơn số bi vàng và nhất thiết
+phải có mặt bi xanh” . Ta có các trường hợp thuận lợi cho biến cố  là:
+● TH1: Chọn 1 bi đỏ và 3 bi xanh nên có  cách.
+● TH2: Chọn 2 bi đỏ và 2 bi xanh nên có  cách.
+● TH3: Chọn 3 bi đỏ và 1 bi xanh nên có  cách.
+● TH4: Chọn 2 bi đỏ, 1 bi vàng và 1 bi xanh nên có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn C.
+
+Câu 9: Có 3 bó hoa. Bó thứ nhất có 8 hoa hồng, bó thứ hai có 7 bông hoa ly, bó thứ ba có 6 bông hoa huệ. Chọn ngẫu nhiên 7 hoa từ ba bó hoa trên để cắm vào lọ hoa, tính xác suất để trong 7 hoa được chọn có số hoa hồng bằng số hoa ly.
+A. .	B.  .	C. .	D.  .
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 7 hoa từ ba bó hoa gồm 21 hoa.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 7 hoa được chọn có số hoa hồng bằng số hoa ly” . Ta có các trường
+hợp thuận lợi cho biến cố  là:
+● TH1: Chọn 1 hoa hồng, 1 hoa ly và 5 hoa huệ nên có  cách.
+● TH2: Chọn 2 hoa hồng, 2 hoa ly và 3 hoa huệ nên có  cách.
+● TH3: Chọn 3 hoa hồng, 3 hoa ly và 1 hoa huệ nên có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnD.
+
+Câu 10: Có 13 học sinh của một trường THPT đạt danh hiệu học sinh xuất sắc trongđó khối 12 có 8 học sinh nam và 3 học sinh nữ, khối 11 có 2 học sinh nam. Chọn ngẫu nhiên 3 học sinh bất kỳ để trao thưởng, tính xác suất để 3 học sinh được chọn có cả nam và nữ đồng thời có cả khối 11 và khối 12 .
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 3 học sinh từ 13 học sinh.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 3 học sinh được chọn có cả nam và nữ đồng thời có cả khối 11 và
+khối 12 ” . Ta có các trường hợp thuận lợi cho biến cố  là:
+● TH1: Chọn 1 học sinh khối 11; 1 học sinh nam khối 12 và 1 học sinh nữ khối 12 nên
+có  cách.
+● TH2: Chọn 1 học sinh khối 11; 2 học sinh nữ khối 12 có  cách.
+● TH3: Chọn 2 học sinh khối 11; 1 học sinh nữ khối 12 có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnA.
+
+Câu 11: Một chiếc hộp đựng 7 viên bi màu xanh, 6 viên bi màu đen, 5 viên bi màu đỏ, 4 viên bi màu trắng. Chọn ngẫu nhiên ra 4 viên bi, tính xác suất để lấy được ít nhất 2 viên bi cùng màu.
+A. .	B. .	C.  .	D. 
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 4 viên bi từ 22 viên bi đã cho.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Lấy được 4 viên bi trong đó có ít nhất hai viên bi cùng màu” . Để
+tìm số phần tử của , ta đi tìm số phần tử của biến cố  , với biến cố  là lấy được 4
+viên bi trong đó không có hai viên bi nào cùng màu.
+Suy ra số phần tử của biến cố  là 
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 12: Một hộp đựng 8 quả cầu trắng, 12 quả cầu đen. Lần thứ nhất lấy ngẫu nhiên 1 quả cầu trong hộp, lần thứ hai lấy ngẫu nhiên 1 quả cầu trong các quả cầu còn lại. Tính xác suất để kết quả của hai lần lấy được 2 quả cầu cùng màu.
+A. .	B. .	C. .	D. 
+Lời giải. 
+Không gian mẫu là lấy 2 quả cầu trong hộp một cách lần lượt ngẫu nhiên.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  biến cố ” 2 quả cầu được lấy cùng màu” . Ta có các trường hợp thuận lợi cho
+biến cố  như sau:
+● TH1: Lần thứ nhất lấy quả màu trắng và lần thứ hai cũng màu trắng.
+Do đó trường hợp này có  cách.
+● TH2: Lần thứ nhất lấy quả màu đen và lần thứ hai cũng màu đen.
+Do đó trường hợp này có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn C.
+
+Câu 13: Một hộp chứa 12 viên bi kích thước như nhau, trong đó có 5 viên bi màu xanh được đánh số từ 1 đến 5; có 4 viên bi màu đỏ được đánh số từ 1 đến 4 và 3 viên
+bi màu vàng được đánh số từ 1 đến 3. Lấy ngẫu nhiên 2 viên bi từ hộp, tính xác suất để 2 viên bi được lấy vừa khác màu vừa khác số.
+A. .	B. .	C. .	D. 
+Lời giải.
+ Không gian mẫu là số sách lấy tùy ý 2 viên từ hộp chứa 12 viên bi.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 2 viên bi được lấy vừa khác màu vừa khác số ” .
+● Số cách lấy 2 viên bi gồm: 1 bi xanh và 1 bi đỏ là  cách (do số bi đỏ ít hơn
+nên ta lấy trước, có 4 cách lấy bi đỏ. Tiếp tục lấy bi xanh nhưng không lấy viên trùng
+với số của bi đỏ nên có 4 cách lấy bi xanh).
+● Số cách lấy 2 viên bi gồm: 1 bi xanh và 1 bi vàng là  cách.
+● Số cách lấy 2 viên bi gồm: 1 bi đỏ và 1 bi vàng là  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn D.
+
+Câu 14: Một hộp chứa 3 viên bi xanh, 5 viên bi đỏ và 6 viên bi vàng. Lấy ngẫu nhiên 6 viên bi từ hộp, tính xác suất để 6 viên bi được lấy ra có đủ cả ba màu.
+A. 	B. 	C. 	D. 
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 6 viên bi từ hộp chứa 14 viên
+bi. Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 6 viên bi được lấy ra có đủ cả ba màu” . Để tìm số phần tử của biến
+cố  ta đi tìm số phần tử của biến cố  tức là 6 viên bi lấy ra không có đủ ba màu
+như sau:
+● TH1: Chọn 6 viên bi chỉ có một màu (chỉ chọn được màu vàng).
+Do đó trường hợp này có  cách.
+● TH2: Chọn 6 viên bi có đúng hai màu xanh và đỏ, có  cách.
+Chọn 6 viên bi có đúng hai màu đỏ và vàng, có  cách.
+Chọn 6 viên bi có đúng hai màu xanh và vàng, có  cách.
+Do đó trường hợp này có  cách.
+Suy ra số phần tử của biến cố  là 
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn A.
+
+Câu 15: Trong một hộp có 50 viên bi được đánh số từ 1 đến 50. Chọn ngẫu nhiên 3 viên bi trong hộp, tính xác suất để tổng ba số trên 3 viên bi được chọn là một số chia hết cho 3.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 3 viên bi từ hộp chứa 50 viên
+bi. Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 3 viên bi được chọn là một số chia hết cho 3” . Trong 50 viên bi
+được chia thành ba loại gồm: 16 viên bi có số chia hết cho 3; 17 viên bi có số chia cho 3
+dư 1 và 17 viên bi còn lại có số chia cho 3 dư 2. Để tìm số kết quả thuận lợi cho biến
+cố  , ta xét các trường hợp
+● TH1: 3 viên bi được chọn cùng một loại, có  cách.
+● TH2: 3 viên bi được chọn có mỗi viên mỗi loại, có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 16: Cho tập hợp ; 1; 2; 3; 4; 5. Gọi  là tập hợp các số có 3 chữ số khác nhau được lập thành từ các chữ số của tập . Chọn ngẫu nhiên một số từ  ,tính xác suất để số được chọn có chữ số cuối gấp đôi chữ số đầu.
+A. .	B. .	C.  .	D. 
+Lời giải. Gọi số cần tìm của tập  có dạng  . Trong đó 
+Khi đó
+● Số cách chọn chữ số  có 5 cách chọn vì 
+● Số cách chọn chữ số  có 5 cách chọn vì 
+● Số cách chọn chữ số  có 4 cách chọn vì  và 
+Do đó tập  có  phần tử.
+Không gian mẫu là chọn ngẫu nhiên 1 số từ tập  .
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Số được chọn có chữ số cuối gấp đôi chữ số đầu” . Khi đó ta có các
+bộ số là  hoặc  thỏa mãn biến cố  và cứ mỗi bộ thì  có 4 cách chọn nên có
+tất cả 8 số thỏa yêu cầu.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn C.
+
+Câu 17: Cho tập hợp . Gọi  là tập hợp các số tự nhiên có 4 chữ số đôi một khác nhau được lập thành từ các chữ số của tập . Chọn ngẫu nhiên một số từ , tính xác suất để số được chọn mà trong mỗi số luôn luôn có mặt hai chữ số chẵn và hai chữ số lẻ.
+A. .	B.  .	C. .	D. 
+Lời giải. Số phần tử của tập  là 
+Không gian mẫu là chọn ngẫu nhiên 1 số từ tập  .
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Số được chọn luôn luôn có mặt hai chữ số chẵn và hai chữ số lẻ ” .
+● Số cách chọn hai chữ số chẵn từ bốn chữ số 2; 4; 6; 8 là  cách.
+● Số cách chọn hai chữ số lẻ từ ba chữ số 3; 5; 7 là  cách.
+● Từ bốn chữ số được chọn ta lập số có bốn chữ số khác nhau, số cách lập tương ứng
+với một hoán vị của 4 phần tử nên có 4! cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn D.
+
+Câu 18: Gọi  là tập hợp các số tự nhiên có 3 chữ số đôi một khác nhau được lập thành từ các chữ số 1; 2; 3; 4; 6 . Chọn ngẫu nhiên một số từ , tính xác xuất để số được chọn chia hết cho 3 .
+A. .	B. .	C. .	D.  .
+Lời giải. Số phần tử của  là 
+Không gian mẫu là chọn ngẫu nhiên 1 số từ tập  .
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Số được chọn chia hết cho 3 ” . Từ 5 chữ số đã cho ta có 4 bộ gồm
+ba chữ số có tổng chia hết cho 3 là (1; 2; 3), (1; 2; 6), (2; 3; 4) và (2; 4; 6). Mỗi bộ ba
+chữ số này ta lập được  số thuộc tập hợp  .
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn C.
+
+Câu 19: Cho tập hợp ; 2; 3; 4; 5. Gọi  là tập hợp tất cả các số tự nhiên có ít nhất 3 chữ số, các chữ số đôi một khác nhau được lập thành từ các chữ số thuộc tập  . Chọn ngẫu nhiên một số từ , tính xác xuất để số được chọn có tổng các chữ số bằng 10 .
+A. .	B. .	C. .	D.  .
+Lời giải. Ta tính số phần tử thuộc tập  như sau:
+● Số các số thuộc  có 3 chữ số là 
+● Số các số thuộc  có 4 chữ số là 
+● Số các số thuộc  có 5 chữ số là 
+Suy ra số phần tử của tập  là 
+Không gian mẫu là chọn ngẫu nhiên 1 số từ tập  .
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Số được chọn có tổng các chữ số bằng 10 ” . Các tập con của  có
+tổng số phần tử bằng 10 là ; 2; 3; 4 ; 3; 5 ; 4; 5
+● Từ  lập được các số thuộc  là 4! .
+● Từ  lập được các số thuộc  là 3! .
+● Từ  lập được các số thuộc  là 3! .
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 20: Một hộp đựng 10 chiếc thẻ được đánh số từ  đến 9 . Lấy ngẫu nhiên ra 3 chiếc thẻ, tính xác suất để 3 chữ số trên 3 chiếc thẻ được lấy ra có thể ghép thành một số chia hết cho 5 .
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách lấy ngẫu nhiên 3 chiếc thẻ từ 10 chiếc thẻ.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 3 chữ số trên 3 chiếc thẻ được lấy ra có thể ghép thành một số
+chia hết cho 5 ” . Để cho biến cố  xảy ra thì trong 3 thẻ lấy được phải có thẻ mang
+chữ số  hoặc chữ số 5 . Ta đi tìm số phần tử của biến cố  , tức 3 thẻ lấy ra không
+có thẻ mang chữ số  và cũng không có thẻ mang chữ số 5 là  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnA.
+
+Câu 21: Có 20 tấm thẻ được đánh số từ 1 đến 20 . Chọn ngẫu nhiên ra 8 tấm thẻ, tính xác suất để có 3 tấm thẻ mang số lẻ, 5 tấm thẻ mang số chẵn trong đó chỉ có đúng 1 tấm thẻ mang số chia hết cho 10 .
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là cách chọn 8 tấm thể trong 20 tấm thẻ.
+Suy ra số phần tử của không mẫu là 
+Gọi  là biến cố ” 3 tấm thẻ mang số lẻ, 5 tấm thẻ mang số chẵn trong đó chỉ có
+đúng 1 tấm thẻ mang số chia hết cho 10 ” . Để tìm số phần tử của  ta làm như sau:
+● Đầu tiên chọn 3 tấm thẻ trong 10 tấm thẻ mang số lẻ, có  cách.
+● Tiếp theo chọn 4 tấm thẻ trong 8 tấm thẻ mang số chẵn (không chia hết cho 10 ),
+có  cách.
+● Sau cùng ta chọn 1 trong 2 tấm thẻ mang số chia hết cho 10 , có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnA.
+
+Câu 22: Gọi  là tập hợp các số tự nhiên có hai chữ số. Chọn ngẫu nhiên đồng thời hai số từ tập hợp . Tính xác suất để hai số được chọn có chữ số hàng đơn vị giống nhau.
+A. .	B. .	C. .	D. 
+Lời giải. Số phần tử của tập  là 
+Không gian mẫu là chọn ngẫu nhiên 2 số từ tập  .
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Số được chọn có chữ số hàng đơn vị giống nhau” . Ta mô tả không
+gian của biến cố  như sau:
+● Có 10 cách chọn chữ số hàng đơn vị (chọn từ các chữ số ; 1; 2; 3 9}).
+● Có  cách chọn hai chữ số hàng chục (chọn từ các chữ số {1; 2; 3 9}).
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnA.
+
+Câu 23: Gọi  là tập hợp các số tự nhiên gồm 9 chữ số khác nhau. Chọn ngẫu nhiên một số từ, tính xác suất để chọn được một số gồm 4 chữ số lẻ và chữ số  luôn đứng giữa hai chữ số lẻ (hai số hai bên chữ số  là số lẻ).
+A. .	B.  .	C. .	D. 
+Lời giải. Số phần tử của tập  là 
+Không gian mẫu là chọn ngẫu nhiên 1 số từ tập  .
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Số được chọn gồm 4 chữ số lẻ và chữ số  luôn đứng giữa hai chữ
+số lẻ ” . Do số  luôn đứng giữa 2 số lẻ nên số  không đứng ở vị trí đầu tiên và vị trí
+cuối cùng. Ta có các khả năng
+● Chọn 1 trong 7 vị trí để xếp số  , có  cách.
+● Chọn 2 trong 5 số lẻ và xếp vào 2 vị trí cạnh số  vừa xếp, có  cách.
+● Chọn 2 số lẻ trong 3 số lẻ còn lại và chọn 4 số chẵn từ {2; 4; 6; 8} sau đó xếp 6
+số này vào 6 vị trí trống còn lại có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 24: Giải bóng chuyền VTV Cup gồm 9 đội bóng tham dự, trong đó có 6 đội nước ngoài và 3 đội của Việt Nam. Ban tổ chức cho bốc thăm ngẫu nhiên để chia thành 3 bảng  và mỗi bảng có 3đội. Tính xác suất để 3 đội bóng của Việt Nam ở 3 bảng khác nhau.
+A. .	B. .	C.  .	D. 
+Lời giải. Không gian mẫu là số cách chia tùy ý 9 đội thành 3 bảng.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 3 đội bóng của Việt Nam ở 3 bảng khác nhau
+● Bước 1. Xếp 3 đội Việt Nam ở 3 bảng khác nhau nên có 3! cách.
+● Bước 2. Xếp 6 đội còn lại vào 3 bảng    này có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn C.
+
+Câu 25: Trong giải cầu lông kỷ niệm ngày truyền thống học sinh sinh viên có 8 người tham gia trong đó có hai bạn Việt và Nam. Các vận động viên được chia làm hai bảng  và , mỗi bảng gồm 4 người. Giả sử việc chia bảng thực hiện bằng cách bốc thăm ngẫu nhiên, tính xác suất để cả 2 bạn Việt và Nam nằm chung 1 bảng đấu.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách chia tùy ý 8 người thành 2 bảng.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 2 bạn Việt và Nam nằm chung 1 bảng đấu
+● Bước 1. Xếp 2 bạn Việt và Nam nằm chung 1 bảng đấu nên có  cách.
+● Bước 2. Xếp 6 bạn còn lại vào 2 bảng   cho đủ mỗi bảng là 4 bạn thì có
+ cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnD.
+Câu 26: Một bộ đề thi toán học sinh giỏi lớp 12 mà mỗi đề gồm 5 câu được chọn từ 15 câu dễ, 10 câu trung bình và 5 câu khó. Một đề thi được gọi là” Tốt ” nếu trong đề thi có cả ba câu dễ, trung bình và khó, đồng thời số câu dễ không ít hơn 2 . Lấy ngẫu nhiên một đề thi trong bộ đề trên. Tìm xác suất để đề thi lấy ra là một đề thi ” Tốt ” .
+A. .	B. .	C. .	D. 
+Lời giải. Số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Đề thi lấy ra là một đề thi ” Tốt ” 
+Vì trong một đề thi ” Tốt ” có cả ba câu dễ, trung bình và khó, đồng thời số câu dễ
+không ít hơn 2 nên ta có các trường hợp sau đây thuận lợi cho biến cố.
+
+● Đề thi gồm 3 câu dễ, 1 câu trung bình và 1 câu khó: có  đề.
+● Đề thi gồm 2 câu dễ, 2 câu trung bình và 1 câu khó: có  đề.
+● Đề thi gồm 2 câu dễ, 1 câu trung bình và 2 câu khó: có  đề.
+Suy ra số phần tử của biến cố  là 
+
+
+Vậy xác suất cần tính . ChọnD.
+
+Câu 27: Trong một kỳ thi vấn đáp thí sinh  phải đứng trước ban giám khảo chọn ngẫu nhiên 3 phiếu câu hỏi từ một thùng phiếu gồm 50 phiếu câu hỏi, trong đó có 4 cặp phiếu câu hỏi mà mỗi cặp phiếu có nội dung khác nhau từng đôi một và trong mỗi một cặp phiếu có nội dung giống nhau. Tính xác suất để thí sinh chọn được 3 phiếu câu hỏi có nội dung khác nhau.
+A. 	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách chọn tùy ý 3 phiếu câu hỏi từ 50 phiếu câu hỏi.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Thí   chọn được 3 phiếu câu hỏi khác nhau” .
+Để tìm số phần tử của  ta tìm số phần tử của biến cố  , lúc này cần chọn được 1
+cặp trong 4 cặp phiếu có câu hỏi giống nhau và chọn 1 phiếu trong 48 phiếu còn lại.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính 
+ Chọn D.
+
+Câu 28: Trong kỳ thi THPT Quốc Gia năm 2016 có môn thi bắt buộc là môn Tiếng Anh. Môn thi này thi dưới hình thức trắc nghiệm với 4 phương án trả lời , D. Mỗi câu trả lời đúng được cộng 0,2 điểm và mỗi câu trả lời sai bị trừ đi 0,1 điểm.
+Bạn Hoa vì học rất kém môn Tiếng Anh nên chọn ngẫu nhiên cả 50 câu trả lời. Tính xác xuất để bạn Hoa đạt được 4 điểm môn Tiếng Anh trong kỳ thi trên.
+A. .	B. .	C. .	D. 
+Lời giải. Gọi  là số câu trả lời đúng, suy ra  là số câu trả lời sai.
+Ta có số điểm của Hoa là 0,  ) 
+Do đó bạn Hoa trả lời đúng 30 câu và sai 20 câu.
+Không gian mẫu là số phương án trả lời 50 câu hỏi mà bạn Hoa chọn ngẫu nhiên.
+Mỗi câu có 4 phương án trả lời nên có  khả năng.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Bạn Hoa trả lời đúng 30 câu và sai 20 câu” . Vì mỗi câu đúng có
+1 phương án trả lời, mỗi câu sai có 3 phương án trả lời. Vì vậy có  . ( 3) khả năng
+thuận lợi cho biến cố  .
+Suy ra số phần tử của biến cố  là  . ( 3)
+Vậy xác suất cần tính . Chọn A.
+
+Câu 29: Có 6 học sinh lớp 11 và 3 học sinh lớp 12 được xếp ngẫu nhiên vào 9 ghế thành một dãy. Tính xác suất để xếp được 3 học sinh lớp 12 xen kẽ giữa 6 học sinh lớp 11 .
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách sắp xếp tất cả 9 học sinh vào một ghế dài.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Xếp 3 học sinh lớp 12 xen kẽ giữa 6 học sinh lớp 11 ” . Ta mô tả
+khả năng thuận lợi của biến cố  như sau:
+● Đầu tiên xếp 6 học sinh lớp 11 thành một dãy, có 6! cách.
+● Sau đó xem 6 học sinh này như 6 vách ngăn nên có 7 vị trí để xếp 3 học sinh
+lớp 12 (gồm 5 vị trí giữa 6 học sinh và 2 vị trí hai đầu). Do đó có  cách xếp 3 học sinh lớp 12 .
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnA.
+
+Câu 30: Đội tuyển học sinh giỏi của một trường THPT có 8 học sinh nam và 4 học sinh nữ. Trong buổi lễ trao phần thưởng, các học sinh trên được xếp thành một hàng ngang. Tính xác suất để khi xếp sao cho 2 học sinh nữ không đứng cạnh nhau.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách sắp xếp tất cả 12 học sinh thành một hàng
+ngang. Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Xếp các học sinh trên thành một hàng ngang mà 2 học sinh nữ
+không đứng cạnh nhau” . Ta mô tả khả năng thuận lợi của biến cố  như sau:
+● Đầu tiên xếp 8 học sinh nam thành một hàng ngang, có 8! cách.
+● Sau đó xem 8 học sinh này như 8 vách ngăn nên có 9 vị trí để xếp 4 học sinh
+nữ thỏa yêu cầu bài toán (gồm 7 vị trí giữa 8 học sinh và 2 vị trí hai đầu). Do đó có
+ cách xếp 4 học sinh nữ.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnD.
+
+Câu 31: Có 3 bì thư giống nhau lần lượt được đánh số thứ tự từ 1 đến 3 và 3 con tem giống nhau lần lượt đánh số thứ tự từ 1 đến 3 . Dán 3 con tem đó vào 3 bì thư sao cho không có bì thư nào không có tem. Tính xác suất để lấy ra được 2 bì thư trong 3 bì thư trên sao cho mỗi bì thư đều có số thứ tự giống với số thứ tự con tem đã
+dán vào nó.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách dán 3 con tem trên 3 bì thư, tức là hoán vị của
+3 con tem trên 3 bì thư. Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 2 bì thư lấy ra có số thứ tự giống với số thứ tự con tem đã dán vào
+nó ” . Thế thì bì thư còn lại cũng có số thứ tự giống với số thứ tự con tem đã dán vào
+nó. Trường hợp này có 1 cách duy nhất.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 32: Trong thư viện có 12 quyển sách gồm 3 quyển Toán giống nhau, 3 quyển Lý giống nhau, 3 quyển Hóa giống nhau và 3 quyển Sinh giống nhau. Có bao nhiêu cách xếp thành một dãy sao cho 3 quyển sách thuộc cung 1 môn không được xếp liền nhau?
+A. 16800.	B. 1680.	C. 140.	D. 4200.
+Lời giải. Xếp 3 cuốn sách Toán kề nhau. Xem 3 cuốn sách Toán là 3 vách ngăn, giữa
+3 cuốn sách Toán có 2 vị trí trống và thêm hai vị trí hai đầu, tổng cộng có 4 vị trí
+trống.
+Bước 1. Chọn 3 vị trí trống trong 4 vị trí để xếp 3 cuốn Lý, có  cách.
+Bước 2. Giữa 6 cuốn Lý và Toán có 5 vị trí trống và thêm 2 vị trí hai đầu, tổng cộng
+có 7 vị trí trống. Chọn 3 vị trí trong 7 vị trí trống để xếp 3 cuốn Hóa, có  cách.
+Bước 3. Giữa 9 cuốn sách Toán, Lý và Hóa đã xếp có 8 vị trí trống và thêm 2 vị trí
+hai đầu, tổng cộng có 10 vị trí trống. Chọn 3 vị trí trong 10 vị trí trống để xếp 3 cuốn
+Sinh, có  cách. Vậy theo quy tắc nhân có  cách. Chọn A.
+
+Câu 33: Xếp 6 học sinh nam và 4 học sinh nữ vào một bàn tròn 10 ghế. Tính xác suất để không có hai học sinh nữ ngồi cạnh nhau.
+A. .	B.  .	C. .	D. 
+Lời giải. Cố định 1 vị trí cho một học sinh nam (hoặc nữ), đánh dấu các ghế còn lại
+từ 1 đến 9.
+Không gian mẫu là hoán vị 9 học sinh (còn lại không cố định) trên 9 ghế đánh dấu.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” không có hai học sinh nữ ngồi cạnh nhau” . Ta mô tả khả năng
+thuận lợi của biến cố  như sau:
+● Đầu tiên ta cố định 1 học sinh nam, 5 học sinh nam còn lại có 5! cách xếp.
+● Ta xem 6 học sinh nam như 6 vách ngăn trên vòng tròn, thế thì sẽ tạo ra 6 ô
+trống để ta xếp 4 học sinh nữ vào (mỗi ô trống chỉ được xếp 1 học sinh nữ). Do đó có
+ cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 34: Có 4 hành khách bước lên một đoàn tàu gồm 4 toa. Mỗi hành khách độc lập với nhau và chọn ngẫu nhiên một toa. Tính xác suất để 1 toa có 3 người, 1 toa có 1 người, 2 toa còn lại không có ai.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách sắp xếp 4 hành khách lên 4 toa tàu. Vì mỗi
+hành khách có 4 cách chọn toa nên có  cách xếp.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 1 toa có 3 người, 1 toa có 1 người, 2 toa còn lại không có ai ” . Để tìm
+số phần tử của , ta chia làm hai giai đoạn như sau:
+● Giai đoạn thứ nhất. Chọn 3 hành khách trong 4 hành khách, chọn 1 toa trong 4
+toa và xếp lên toa đó 3 hành khách vừa chọn. Suy ra có  cách.
+● Giai đoạn thứ hai. Chọn 1 toa trong 3 toa còn lại và xếp lên toa đó 1 một hành
+khách còn lại. Suy ra có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 35: Có 8 người khách bước ngẫu nhiên vào một cửa hàng có 3 quầy. Tính xác suất để 3 người cùng đến quầy thứ nhất.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách sắp xếp 8 người khách vào 3 quầy. Vì mỗi
+người khách có 3 cách chọn quầy nên có  khả năng xảy ra.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Có 3 người cùng đến quầy thứ nhất, 5 người còn lại đến quầy thứ
+hai hoặc ba” . Để tìm số phần tử của  , ta chia làm hai giai đoạn như sau:
+● Giai đoạn thứ nhất. Chọn 3 người khách trong 8 người khách và cho đến quầy
+thứ nhất, có  cách.
+● Giai đoạn thứ hai. Còn lại 5 người khách xếp vào 2 quầy. Mỗi người khách có
+2 cách chọn quầy. Suy ra có  cách xếp.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . ChọnD.
+
+Câu 36: Trong một buổi liên hoan có 10 cặp nam nữ, trong đó có 4 cặp vợ chồng. Chọn ngẫu nhiên 3 người để biểu diễn một tiết mục văn nghệ. Tính xác suất để 3 người được chọn không có cặp vợ chồng nào.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 3 người trong 20 người.
+Suy ra số phần tử không gian mẫu là 
+Gọi  là biến cố ” 3 người được chọn không có cặp vợ chồng nào Để tìm số phần tử
+của  , ta đi tìm số phần tử của biến cố  , với biến cố  là 3 người được chọn luôn
+có 1 cặp vợ chồng.
+● Chọn 1 cặp vợ chồng trong 4 cặp vợ chồng, có  cách.
+● Chọn thêm 1 người trong 18 người, có  cách.
+Suy ra số phần tử của biến cố  là 
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn D.
+
+Câu 37: Một lớp học có 40 học sinh trong đó có 4 cặp anh em sinh đôi. Trong buổi họp đầu năm thầy giáo chủ nhiệm lớp muốn chọn ra 3 học sinh để làm cán sự lớp gồm lớp trưởng, lớp phó và bí thư. Tính xác suất để chọn ra 3 học sinh làm cán sự lớp mà không có cặp anh em sinh đôi nào.
+A. .	B.  .	C. .	D. 
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 3 học sinh trong 40 học sinh.
+Suy ra số phần tử không gian mẫu là 
+Gọi  là biến cố ” 3 học sinh được chọn không có cặp anh em sinh đôi nào Để tìm
+số phần tử của , ta đi tìm số phần tử của biến cố  , với biến cố  là 3 học sinh
+được chọn luôn có 1 cặp anh em sinh đôi.
+● Chọn 1 cặp em sinh đôi trong 4 cặp em  đôi, có  cách.
+● Chọn thêm 1 học sinh trong 38 học sinh, có  cách.
+Suy ra số phần tử của biến cố  là 
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn A.
+
+Câu 38: Một người có 10 đôi giày khác nhau và trong lúc đi du lịch vội vã lấy ngẫu nhiên 4 chiếc. Tính xác suất để trong 4 chiếc giày lấy ra có ít nhất một đôi.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách chọn ngẫu nhiên 4 chiếc giày từ 20 chiếc giày.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 4 chiếc giày lấy ra có ít nhất một đôi Để tìm số phần tử của biến
+cố  , ta đi tìm số phần tử của biến cố  , với biến cố  là 4 chiếc giày được chọn
+không có đôi nào.
+● Số cách chọn 4 đôi giày từ 10 đôi giày là 
+● Mỗi đôi chọn ra 1 chiếc, thế thì mỗi chiếc có  cách chọn. Suy ra 4 chiếc có
+ cách chọn.
+Suy ra số phần tử của biến cố  là 
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn C.
+
+Câu 39: Một trường THPT có 10 lớp 12 , mỗi lớp cử 3 học sinh tham gia vẽ tranh cổ động. Các lớp tiến hành bắt tay giao lưu với nhau (các học sinh cùng lớp không bắt tay với nhau). Tính số lần bắt tay của các học sinh với nhau, biết rằng hai học sinh khác nhau ở hai lớp khác nhau chỉ bắt tay đúng 1 lần.
+A. 405.	B. 435.	C. 30.	D. 45.
+Lời giải. Mỗi lớp cử ra 3 học sinh nên 10 lớp cử ra 30 học sinh.
+Suy ra số lần bắt tay là  (bao gồm các học sinh cùng lớp bắt tay với nhau).
+Số lần bắt tay của các học sinh học cùng một lớp là 
+Vậy số lần bắt tay của các học sinh với nhau là . Chọn A.
+
+Câu 40: Có 5 đoạn thẳng có độ dài lần lượt là     và . Lấy ngẫu nhiên 3 đoạn thẳng trong 5 đoạn thẳng trên, tính xác suất để 3 đoạn thẳng lấy ra lập thành một tam giác.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách lấy 3 đoạn thẳng từ 5 đoạn thẳng.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 3 đoạn thẳng lấy ra lập thành một tam giác ” . Để ba đoạn thẳng
+tạo thành một tam giác chỉ có các trường hợp:  hoặc 
+hoặc  .
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tìm . Chọn A.
+
+Câu 41: Trong mặt phẳng tọa độ Oxy . Ở góc phần tư thứ nhất ta lấy 2 điểm phân biệt; cứ thế ở các góc phần tư thứ hai, thứ ba, thứ tư ta lần lượt lấy 3, 4, 5 điểm phân biệt (các điểm không nằm trên các trục tọa độ). Trong 14 điểm đó ta lấy 2 điểm bất kỳ. Tính xác suất để đoạn thẳng nối hai điểm đó cắt hai trục tọa độ.
+A. .	B. .	C.  .	D. 
+Lời giải. Không gian mẫu là số cách chọn 2 điểm bất kỳ trong 14 điểm đã cho.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Đoạn thẳng nối 2 điểm được chọn cắt hai trục tọa độ ” . Để xảy ra
+biến cố  thì hai đầu đoạn thẳng đó phải ở góc phần tư thứ nhất và thứ ba hoặc
+phần tư thứ hai và thứ tư.
+● Hai đầu đoạn thẳng ở góc phần tư thứ nhất và thứ ba, có  cách.
+● Hai đầu đoạn thẳng ở góc phần tư thứ hai và thứ tư, có  cách.
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn B.
+
+Câu 42: Một lớp học có 30 học sinh gồm có cả nam và nữ. Chọn ngẫu nhiên 3 học sinh để tham gia hoạt động của Đoàn trường. Xác suất chọn được 2 nam và 1 nữ là Tính số học sinh nữ của lớp.
+A. 16.	B. 14.	C. 13.	D. 17.
+Lời giải. Gọi số học sinh nữ của lớp là   .
+Suy ra số học sinh nam là 
+Không gian mẫu là chọn bất kì 3 học sinh từ 30 học sinh.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Chọn được 2 học sinh nam và 1 học sinh nữ” .
+● Chọn 2 nam trong  nam, có  cách.
+● Chọn 1 nữ trong  nữ, có  cách.
+Suy ra số phần tử của biến cố  là 
+Do đó xác suất của biến cố  là 
+Theo giả thiết, ta có 
+Vậy số học sinh nữ của lớp là 14 học sinh. Chọn B.
+
+Câu 43: Một chi đoàn có 3 đoàn viên nữ và một số đoàn viên nam. Cần lập một đội thanh niên tình nguyện (TNTN) gồm 4 người. Biết xác suất để trong 4 người được chọn có 3nữ bằng  lần xác suất 4 người được chọn toàn nam. Hỏi chi đoàn đó có bao nhiêu đoàn viên.
+A. 9.	B. 10.	C. 11.	D. 12.
+Lời giải. Gọi số đoàn viên trong chi đoàn đó là   .
+Suy ra số đoàn viên nam trong chi đoàn là 
+Xác suất để lập đội TNTN trong đó có 3 nữ là  .
+Xác suất để lập đội TNTN có toàn nam là 
+Theo giả thiết, ta có 
+Vậy cho đoàn có 9 đoàn viên. Chọn A.
+
+Câu 44: Một hộp có 10 phiếu, trong đó có 2 phiếu trúng thưởng. Có 10 người lần lượt lấy ngẫu nhiên mỗi người 1 phiếu. Tính xác suất người thứ ba lấy được phiếu trúng thưởng.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là mỗi người lấy ngẫu nhiên 1 phiếu.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” Người thứ ba lấy được phiếu trúng thưởng ” . Ta mô tả khả năng
+thuận lợi của biến cố  như sau:
+● Người thứ ba có  khả năng lấy được phiếu trúng thưởng.
+● 9 người còn lại có số cách lấy phiếu là 9! .
+Suy ra số phần tử của biến cố  là 
+Vậy xác suất cần tính . Chọn C.
+
+Câu 45: Trong kỳ thi THPT Quốc Gia, mỗi lớp thi gồm 24 thí sinh được sắp xếp vào 24 bàn khác nhau. Bạn Nam là một thí sinh dự thi, bạn đăng ký 4 môn thi và cả 4 lần thi đều thi tại một phòng duy nhất. Giả sử giám thị xếp thí sinh vào vị trí một cách ngẫu nhiên, tính xác xuất để trong 4 lần thi thì bạn Nam có đúng 2 lần ngồi cùng vào một vị trí.
+A. .	B. .	C. .	D. 
+Lời giải. Không gian mẫu là số cách ngẫu nhiên chỗ ngồi trong 4 lần thi của Nam.
+Suy ra số phần tử của không gian mẫu là 
+Gọi  là biến cố ” 4 lần thi thì bạn Nam có đúng 2 lần ngồi cùng vào một vị trí ” . Ta
+mô tả không gian của biến cố  như sau:
+● Trong 4 lần có 2 lần trùng vị trí, có  cách.
+● Giả sử lần thứ nhất có 24 cách chọn chỗ ngồi, lần thứ hai trùng với lần thứ nhất
+có 1 cách chọn chỗ ngồi. Hai lần còn lại thứ ba và thứ tư không trùng với các lần
+trước và cũng không trùng nhau nên có 23.22 cách.
+Suy ra số phần tử của biến cố  là  .24.23.22.
+Vậy xác suất cần tính 
+ Chọn A.
+
+

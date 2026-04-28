@@ -35,21 +35,38 @@ class TeacherAnalytics:
         report.append(f"- Số học sinh tham gia: {df['student_id'].nunique()}")
         report.append(f"- Tỷ lệ GPS: G({len(df[df['gps_step']=='G'])}) | P({len(df[df['gps_step']=='P'])}) | S({len(df[df['gps_step']=='S'])})\n")
         
-        # 2. Independence Index (II) Ranking
+        # 2. Independence Index (II) Ranking & Early Warning
         report.append("## 2. Chỉ số tự chủ (Independence Index - II)")
-        report.append("| Học sinh | Lớp | Profile | Chỉ số II | Trạng thái |")
+        report.append("| Học sinh | Lớp | Chỉ số II | Trạng thái | Cảnh báo hệ thống |")
         report.append("| :--- | :--- | :--- | :--- | :--- |")
         
         for sid, group in df.groupby('student_id'):
             s_data = group.iloc[0]
-            gps_counts = group['gps_step'].value_counts()
-            s = gps_counts.get('S', 0)
-            g = gps_counts.get('G', 0)
-            p = gps_counts.get('P', 0)
-            ii = s / (g + p + 0.1)
             
-            status = "🔥 Cao" if ii > 1.0 else ("⚡ Trung bình" if ii > 0.5 else "🆘 Cần hỗ trợ")
-            report.append(f"| {sid} | {s_data['class']} | {s_data['profile']} | {ii:.2f} | {status} |")
+            # Tính II tổng quát
+            gps_counts = group['gps_step'].value_counts()
+            s_total = gps_counts.get('S', 0)
+            g_total = gps_counts.get('G', 0)
+            p_total = gps_counts.get('P', 0)
+            ii_total = s_total / (g_total + p_total + 0.1)
+            
+            # [EARLY WARNING] Kiểm tra II theo từng QID (câu hỏi)
+            qid_stats = group.groupby('qid').apply(lambda x: x['gps_step'].value_counts().get('S', 0) / (x['gps_step'].value_counts().get('G', 0) + x['gps_step'].value_counts().get('P', 0) + 0.1))
+            
+            consecutive_low_ii = 0
+            alert_msg = "✅ Ổn định"
+            for ii_val in qid_stats:
+                if ii_val < 0.2:
+                    consecutive_low_ii += 1
+                else:
+                    consecutive_low_ii = 0
+                
+                if consecutive_low_ii >= 2:
+                    alert_msg = "🆘 CẢNH BÁO: Bị kẹt (II < 0.2)"
+                    break
+            
+            status = "🔥 Cao" if ii_total > 1.0 else ("⚡ Trung bình" if ii_total > 0.5 else "🆘 Thấp")
+            report.append(f"| {sid} | {s_data['class']} | {ii_total:.2f} | {status} | {alert_msg} |")
             
         # 3. Knowledge Gap Analysis
         report.append("\n## 3. Phân tích lỗ hổng kiến thức")

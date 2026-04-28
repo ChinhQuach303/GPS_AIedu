@@ -9,7 +9,7 @@ from langchain_core.messages import SystemMessage, HumanMessage
 # --- CONFIGURATION ---
 OLLAMA_URL = "http://localhost:11434/v1"
 GPS_MODEL = "qwen2.5:7b"
-STUDENT_MODEL = "qwen2.5:1.5b"
+STUDENT_MODEL = "qwen2.5:7b" # Nâng cấp lên 7B để tránh 'ngáo' vai
 DATA_PATH = "data/processed/probabilities_questions.json"
 SYSTEM_PROMPT_PATH = "src/ai/system_prompt.md"
 LOG_OUTPUT_PATH = "data/processed/simulated_conversations.csv"
@@ -22,34 +22,35 @@ tutor_llm = ChatOpenAI(
     temperature=0.2
 )
 
+# Khởi tạo LLM cho Học sinh - Hạ temp xuống 0.4
 student_llm = ChatOpenAI(
     base_url=OLLAMA_URL,
     api_key="ollama",
     model=STUDENT_MODEL,
-    temperature=0.7
+    temperature=0.4
 )
 
 # --- PERSONA DEFINITIONS (Aligned with Research Docs) ---
 PERSONA_CONFIGS = {
     "HS0001": {
         "desc": "Học sinh GIỎI / TĂNG TỐC (Advanced/Fast)",
-        "prompt": "Bạn là học sinh GIỎI. Bạn nắm chắc kiến thức và muốn kiểm tra kết quả nhanh. Bạn hay dùng thuật ngữ toán học chính xác. Nếu thầy gợi ý chậm, bạn sẽ chủ động đưa ra hướng giải của mình (bước S) để thầy xác nhận ngay. Tuyệt đối không đóng vai thầy giáo."
+        "prompt": "BẠN LÀ HỌC SINH (EM), ĐANG HỌC BÀI VỚI THẦY GIÁO. Bạn tư duy nhanh, hay nhảy cóc bước. CẤM: Không được đóng vai giáo viên, không đưa lời khuyên. Nếu thầy gợi ý đúng hướng, hãy giải luôn toàn bộ bài toán ngay lập tức. Xưng em - gọi thầy."
     },
     "HS0002": {
-        "desc": "Học sinh TRUNG BÌNH / QUY CHUẨN (Typical/Normal)",
-        "prompt": "Bạn là học sinh TRUNG BÌNH. Bạn học khá và rất ngoan, luôn tuân thủ hướng dẫn. Bạn đi theo lộ trình: hỏi khái niệm (G) -> xin gợi ý thực hành (P) -> giải bài (S). Bạn trả lời lịch sự và đầy đủ."
+        "desc": "Học sinh KHÁ / QUY CHUẨN (Good/Proactive)",
+        "prompt": "BẠN LÀ HỌC SINH (EM). Bạn thuộc bài, làm theo gợi ý của thầy một cách cẩn thận. Bạn trình bày phép tính của mình và hỏi bước tiếp theo. Nếu đã hiểu khái niệm, hãy chủ động đề xuất cách tính tiếp theo. Xưng em - gọi thầy."
     },
     "HS0003": {
-        "desc": "Học sinh YẾU / HAY QUÊN (Struggling/Slow)",
-        "prompt": "Bạn là học sinh YẾU và hay SỢ TOÁN. Bạn thường xuyên quên kiến thức cũ và dễ bối rối. Hãy hỏi những câu như 'Xác suất là gì?', 'Tại sao lại là mẫu số đó?'. Thường xuyên yêu cầu thầy giải thích lại (Backtracking) dù thầy đã gợi ý sang bước tiếp theo."
+        "desc": "Học sinh TRUNG BÌNH / BỊ ĐỘNG (Typical/Normal)",
+        "prompt": "BẠN LÀ HỌC SINH (EM). Bạn hơi lúng túng với công thức. Nếu sau 3 lần thầy hướng dẫn mà vẫn chưa rõ, hãy mạnh dạn chọn một phương án (C hay A) và hỏi 'Có phải dùng cái này không thầy?' để phá vỡ bế tắc. Xưng em - gọi thầy."
     },
     "HS0004": {
-        "desc": "Học sinh LƯỜI / XIN ĐÁP ÁN (Offtrack/Shortcut)",
-        "prompt": "Bạn là học sinh MUỐN LẤY ĐÁP ÁN NHANH. Bạn lười tư duy và chỉ muốn hoàn thành bài tập sớm để đi chơi. Hãy liên tục hỏi 'Đáp án là bao nhiêu?', 'Thầy giải hộ em luôn đi', 'Em cần kết quả thôi'. Thể hiện sự thiếu kiên trì."
+        "desc": "Học sinh YẾU / HAY QUÊN (Struggling/Slow)",
+        "prompt": "BẠN LÀ HỌC SINH (EM). Bạn sợ toán và hay quên. Tuy nhiên, nếu thầy đã giải thích cùng một vấn đề trên 3 lần, hãy yêu cầu thầy 'Cho em một ví dụ cực kỳ đơn giản với số nhỏ' hoặc 'Ghi công thức cho em lắp số vào' để chúng ta có thể bước tiếp. Đừng chỉ lặp lại 'Em không hiểu'. Xưng em - gọi thầy."
     },
     "HS0005": {
-        "desc": "Học sinh NGẮT QUÃNG (Inactive)",
-        "prompt": "Bạn là học sinh KHÔNG TẬP TRUNG. Bạn chỉ chat 2-3 câu ngắn rồi sẽ âm thầm biến mất không trả lời nữa."
+        "desc": "Học sinh LƯỜI / XIN ĐÁP ÁN (Offtrack/Shortcut)",
+        "prompt": "BẠN LÀ HỌC SINH (EM). Bạn chỉ muốn xin đáp án. Nếu thầy không cho, hãy thử nịnh hoặc giả vờ đã hiểu một nửa để thầy 'buông' đáp án ra. Xưng em - gọi thầy."
     }
 }
 
@@ -62,44 +63,83 @@ def load_system_prompt():
     with open(SYSTEM_PROMPT_PATH, "r", encoding="utf-8") as f:
         return f.read()
 
+def clean_text(text):
+    """Loại bỏ ký tự Trung Quốc và các ký tự lạ formatting."""
+    import re
+    # Loại bỏ dải ký tự Trung Quốc
+    text = re.sub(r'[\u4e00-\u9fff]+', '', text)
+    # Loại bỏ các ký tự formatting lỗi
+    text = text.replace("]% ", "").replace("]%", "")
+    return text.strip()
+
 def log_to_csv(data):
     file_exists = os.path.isfile(LOG_OUTPUT_PATH)
     df = pd.DataFrame([data])
     df.to_csv(LOG_OUTPUT_PATH, mode='a', index=False, header=not file_exists, encoding='utf-8')
 
 # --- SIMULATION CORE ---
-def simulate_session(question_id, persona_id, auto_mode=False):
+def is_already_done(question_id, persona_id):
+    if not os.path.isfile(LOG_OUTPUT_PATH):
+        return False
+    try:
+        df = pd.read_csv(LOG_OUTPUT_PATH)
+        # Kiểm tra xem đã có bản ghi [S] (kết thúc) cho cặp này chưa
+        # Hoặc đơn giản là đã có dữ liệu lượt cuối cùng
+        done = df[(df['QID'] == question_id) & (df['Student ID'] == persona_id)]
+        return len(done) > 0 and any("[S]" in str(row) for row in done['AI Response'])
+    except:
+        return False
+
+# --- SIMULATION CORE ---
+def simulate_session(question_id, persona_id, learned_concepts=None, auto_mode=False):
+    if is_already_done(question_id, persona_id):
+        print(f"⏩ Skipping {persona_id} for Question {question_id} (Already completed)")
+        return learned_concepts
+
+    if learned_concepts is None:
+        learned_concepts = []
     data = load_data()
     q_data = next((q for q in data if q['id'] == question_id), None)
     if not q_data:
         print(f"Question ID {question_id} not found.")
-        return
+        return learned_concepts
 
     system_prompt = load_system_prompt()
     p_config = PERSONA_CONFIGS.get(persona_id, PERSONA_CONFIGS["HS0002"])
     
-    print(f"\n==========================================================")
-    print(f"🚀 START SIMULATION: {persona_id} ({p_config['desc']})")
-    print(f"📝 Question {question_id}: {q_data['question']}")
-    print(f"==========================================================\n")
+    print(f"\n🚀 START SIMULATION: {persona_id} | QID: {question_id}")
     
+    # Tích hợp LangGraph App để chạy logic GPS chuẩn
+    from gps_langgraph import app as gps_app
+
     history = []
     current_student_msg = f"Chào thầy, em đang làm bài này: {q_data['question']}. Thầy hướng dẫn em với ạ."
     
-    print(f"👨‍🎓 Student ({persona_id}): {current_student_msg}")
-    
-    max_turns = 8 if persona_id != "HS0005" else 3
+    # Thiết lập max_turns dựa trên độ khó
+    if question_id in [1, 2, 3]:
+        max_turns = 8
+    elif question_id in [4, 5, 8, 9]:
+        max_turns = 12
+    else:
+        max_turns = 20
     
     for turn in range(1, max_turns + 1):
         # 1. GPS Tutor Response
-        tutor_input = [
-            SystemMessage(content=f"{system_prompt}\n\nDỮ LIỆU ĐỐI CHỨNG: {q_data['solution']}\n\nLưu ý: Chỉ dùng dữ liệu trên để gợi ý. Luôn bắt đầu phản hồi bằng [G], [P] hoặc [S]."),
-            *history,
-            HumanMessage(content=current_student_msg)
-        ]
+        inputs = {
+            "student_msg": current_student_msg,
+            "qid": str(question_id),
+            "history": [{"role": "user" if i%2==0 else "assistant", "content": m.content} for i, m in enumerate(history)]
+        }
         
-        tutor_resp = tutor_llm.invoke(tutor_input).content
-        print(f"👨‍🏫 Tutor: {tutor_resp}")
+        try:
+            result = gps_app.invoke(inputs)
+            tutor_resp = clean_text(result.get("response", "Thầy chưa rõ ý em."))
+        except Exception as e:
+            print(f"❌ Error in Tutor LLM: {e}")
+            break
+            
+        # Hậu xử lý xưng hô Thầy
+        tutor_resp = tutor_resp.replace("Bạn", "Em").replace("bạn", "em")
         
         # Log to CSV
         log_to_csv({
@@ -112,57 +152,97 @@ def simulate_session(question_id, persona_id, auto_mode=False):
             "Turn": turn
         })
         
-        # Interjection logic
-        if not auto_mode:
-            user_input = input("\n[Tiếp tục: Enter | Can thiệp HS: 'H' | Can thiệp Tutor: 'T' | Dừng: 'S']: ").strip().upper()
-            if user_input == 'S': break
-            elif user_input == 'H':
-                current_student_msg = input("Vai Học sinh: ")
-                history.append(HumanMessage(content=current_student_msg))
-                history.append(SystemMessage(content=tutor_resp))
-                continue
-            elif user_input == 'T':
-                tutor_resp = input("Vai Gia sư (gồm nhãn [G/P/S]): ")
-
+        # Cập nhật lịch sử
         history.append(HumanMessage(content=current_student_msg))
         history.append(SystemMessage(content=tutor_resp))
-        
-        # Check termination
-        if "[S]" in tutor_resp and any(word in tutor_resp.lower() for word in ["chính xác", "hợp lý", "chúc mừng"]):
-            print("\n✅ GOAL REACHED: Student correctly solved the problem.")
+
+        # 2. Kiểm tra điều kiện dừng
+        if "[S]" in tutor_resp and turn > 2:
             break
+
+        # 3. Student Response
+        knowledge_context = f"\n[KINH NGHIỆM ĐÃ CÓ]: {'. '.join(learned_concepts)}." if learned_concepts else ""
+        student_system_prompt = (
+            f"{p_config['prompt']}\n"
+            f"{knowledge_context}\n"
+            "YÊU CẦU BẮT BUỘC: 1. CHỈ DÙNG TIẾNG VIỆT. 2. Xưng 'em', gọi 'thầy'. 3. PHẢI tính toán. 4. Trình bày lời giải hoàn chỉnh khi hiểu."
+        )
+
+        for attempt in range(2): # Giảm attempt để nhanh hơn
+            student_input = [
+                SystemMessage(content=student_system_prompt),
+                *history,
+                HumanMessage(content="Hãy trả lời dưới vai trò Học sinh. Bắt đầu bằng 'Dạ thưa thầy, '.")
+            ]
+            try:
+                raw_student_msg = student_llm.invoke(student_input).content
+            except Exception as e:
+                print(f"❌ Error in Student LLM: {e}")
+                break
+
+            if not raw_student_msg.strip().startswith("Dạ thưa thầy"):
+                raw_student_msg = "Dạ thưa thầy, " + raw_student_msg
+                
+            current_student_msg = clean_text(raw_student_msg)
             
-        # 2. Student Response
-        student_input = [
-            SystemMessage(content=(
-                f"{p_config['prompt']}\n"
-                "QUY TẮC PHÁT NGÔN:\n"
-                "- Bạn là HỌC SINH. Tuyệt đối KHÔNG xưng là thầy cô/trợ lý.\n"
-                "- Trả lời ngắn gọn (1-3 câu).\n"
-                "- Nếu thầy khen ở bước [S], hãy cảm ơn và hỏi bài mới hoặc kết thúc.\n"
-                "- Tuyệt đối KHÔNG tự chào hỏi hay giải thích kiểu AI Assistant.\n"
-                "- Nếu bạn đang ở vai HS0003, hãy thỉnh thoảng nói 'em chưa hiểu' dù thầy giải thích kỹ."
-            )),
-            *history
-        ]
+            hallucination_triggers = ["Chào em", "Chào Em", "Thầy hướng dẫn", "Thầy sẽ giúp"]
+            if not any(trigger in current_student_msg for trigger in hallucination_triggers):
+                break
+
+        current_student_msg = current_student_msg.replace("Bạn", "Em").replace("bạn", "em").replace("tôi", "em").replace("Tôi", "Em")
         
-        current_student_msg = student_llm.invoke(student_input).content
-        print(f"👨‍🎓 Student ({persona_id}): {current_student_msg}")
-        
-    print(f"\n✨ SIMULATION COMPLETED: {persona_id}")
-    print(f"----------------------------------------------------------\n")
+    return learned_concepts
+
+def run_batch(qids, personas, max_workers=3):
+    from concurrent.futures import ThreadPoolExecutor
+    
+    print(f"🔥 Starting Batch Simulation with {max_workers} workers")
+    
+    tasks = []
+    for p_id in personas:
+        for qid in qids:
+            tasks.append((qid, p_id))
+            
+    # Sắp xếp để chạy theo cụm câu hỏi (tối ưu cache Ollama)
+    tasks.sort()
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        # Lưu ý: learned_concepts trong chế độ song song sẽ khó đồng bộ 
+        # nên mỗi phiên sẽ bắt đầu với bộ nhớ trống hoặc được load từ file riêng.
+        # Ở đây ta ưu tiên chạy độc lập để tối ưu GPU.
+        futures = [executor.submit(simulate_session, qid, pid) for qid, pid in tasks]
+        for future in futures:
+            future.result()
 
 if __name__ == "__main__":
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument("--qid", type=int, default=1, help="Question ID from JSON")
-    parser.add_argument("--persona", type=str, default="ALL", help="Persona ID or 'ALL'")
-    parser.add_argument("--auto", action="store_true", help="Run without user interjection")
+    parser.add_argument("--range", type=str, help="Question range, e.g. 1-45")
+    parser.add_argument("--qids", type=str, default="1,2,6", help="List of Question IDs")
+    parser.add_argument("--personas", type=str, default="HS0001,HS0002,HS0003,HS0004,HS0005", help="Comma separated Persona IDs")
+    parser.add_argument("--workers", type=int, default=3, help="Number of parallel workers")
     args = parser.parse_args()
     
-    if args.persona == "ALL":
-        for p_id in PERSONA_CONFIGS.keys():
-            simulate_session(args.qid, p_id, auto_mode=True)
-            time.sleep(2) # Cooldown
+    if args.range:
+        start, end = map(int, args.range.split("-"))
+        target_qids = list(range(start, end + 1))
     else:
-        simulate_session(args.qid, args.persona, auto_mode=args.auto)
+        target_qids = [int(x.strip()) for x in args.qids.split(",")]
+        
+    target_personas = [x.strip() for x in args.personas.split(",")]
+    
+    print(f"🚀 BẮT ĐẦU CHIẾN DỊCH MÔ PHỎNG: {len(target_qids)} câu hỏi x {len(target_personas)} học sinh")
+    
+    # Chạy theo từng nhóm học sinh để đảm bảo learned_concepts nếu chạy tuần tự
+    # Hoặc chạy song song hoàn toàn nếu ưu tiên tốc độ
+    if args.workers > 1:
+        run_batch(target_qids, target_personas, max_workers=args.workers)
+    else:
+        for p_id in target_personas:
+            concepts_memory = []
+            for qid in target_qids:
+                concepts_memory = simulate_session(qid, p_id, learned_concepts=concepts_memory)
+                time.sleep(1)
+            
+    print("\n🏁 CHIẾN DỊCH MÔ PHỎNG ĐÃ HOÀN TẤT.")
+
