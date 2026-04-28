@@ -63,3 +63,8 @@ src/tools/__pycache__/
 Thumbs.db
 ehthumbs.db
 Icon?
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key

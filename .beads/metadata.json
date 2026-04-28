@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "GPS_AIedu",
+  "project_id": "4d5326f8-8df7-4583-a213-d2aa5b6d0b4e"
+}
