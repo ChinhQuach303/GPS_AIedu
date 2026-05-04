@@ -1,428 +1,235 @@
 "use client";
 
 import React, { useEffect, useMemo, useState, useRef } from "react";
-import type { CSSProperties } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-import type { ChatMessage, ChatResponse } from "@/lib/types";
+import "katex/dist/katex.min.css";
 
-type SessionInfo = {
-  studentId: string;
-  className: string;
-  group: "Experimental" | "Control";
-  topic: string;
-  profile: string;
+type ChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+  intent?: string;
 };
 
-export default function HomePage() {
-  const [session, setSession] = useState<SessionInfo>({
-    studentId: "",
-    className: "11A1",
-    group: "Experimental",
-    topic: "Xác suất cơ bản",
-    profile: ""
-  });
+type StudentProfile = {
+  id: string;
+  level: string;
+  class: string;
+};
 
+export default function GPSPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
-  const [status, setStatus] = useState<string>("");
+  const [qid, setQid] = useState("1");
+  const [student, setStudent] = useState<StudentProfile>({
+    id: "HS001",
+    level: "Trung bình",
+    class: "11A1"
+  });
 
-  const canChat = useMemo(() => session.studentId.trim().length >= 3, [session.studentId]);
-  const storageKey = "gps_aiedu_chat_v1";
-  const maxStoredMessages = 200;
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      if (!raw) return;
-      const parsed = JSON.parse(raw) as { session?: SessionInfo; messages?: ChatMessage[] };
-      if (parsed.session) setSession(parsed.session);
-      if (Array.isArray(parsed.messages)) setMessages(parsed.messages);
-    } catch {
-      // ignore storage errors
-    }
-  }, []);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    try {
-      const payload = {
-        session,
-        messages: messages.slice(-maxStoredMessages)
-      };
-      localStorage.setItem(storageKey, JSON.stringify(payload));
-    } catch {
-      // ignore storage errors
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [session, messages]);
+  }, [messages]);
 
-  async function fetchStudentInfo(id: string) {
-    if (id.length < 3) return;
-    try {
-      const res = await fetch(`/api/student/${id}`);
-      const data = await res.json();
-      if (data.ok) {
-        setSession(data.student);
-        if (data.history) setMessages(data.history);
-        setStatus("Đã nạp hồ sơ học tập.");
-      }
-    } catch (err) {
-      console.error("Failed to fetch student info", err);
-    }
-  }
+  const progress = useMemo(() => {
+    const stats = { G: 0, P: 0, S: 0 };
+    messages.forEach(m => {
+      if (m.intent === "G") stats.G++;
+      else if (m.intent === "P") stats.P++;
+      else if (m.intent === "S") stats.S++;
+    });
+    const total = stats.G + stats.P + stats.S || 1;
+    return {
+      G: (stats.G / total) * 100,
+      P: (stats.P / total) * 100,
+      S: (stats.S / total) * 100,
+      counts: stats
+    };
+  }, [messages]);
 
   async function sendMessage() {
-    if (!canChat || busy) return;
-    const text = input.trim();
-    if (!text) return;
-
-    setStatus("");
-    setBusy(true);
+    if (!input.trim() || busy) return;
+    const text = input;
     setInput("");
+    setBusy(true);
 
-    const nextMessages = [...messages, { role: "user", content: text } as const];
-    setMessages([...nextMessages, { role: "assistant", content: "" }]);
+    const newMessages = [...messages, { role: "user", content: text } as const];
+    setMessages(newMessages);
 
     try {
-      const response = await fetch("/api/chat", {
+      // Calling the Python FastAPI Backend directly
+      const response = await fetch("http://localhost:8000/chat", {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          studentId: session.studentId.trim(),
-          className: session.className.trim(),
-          group: session.group as any,
-          topic: session.topic.trim(),
-          profile: session.profile.trim(),
+          qid: qid,
           message: text,
-          history: messages,
-          stream: true
+          history: messages.map(m => ({ role: m.role, content: m.content })),
+          student_level: student.level
         })
       });
 
-      const messageId = response.headers.get("x-message-id") || undefined;
-      const contentType = response.headers.get("content-type") || "";
+      if (!response.ok) throw new Error("Backend connection failed.");
 
-      if (!contentType.includes("application/json")) {
-        if (!response.ok || !response.body) {
-          const text = await response.text().catch(() => "");
-          setStatus(text || "Chat failed.");
-          setMessages(nextMessages);
-          return;
-        }
-
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
-        let acc = "";
-
-        while (true) {
-          const { value, done } = await reader.read();
-          if (value) {
-            acc += decoder.decode(value, { stream: !done });
-            setMessages((prev: ChatMessage[]) => {
-              if (prev.length === 0) return prev;
-              const next = [...prev];
-              const last = next[next.length - 1];
-              if (last.role !== "assistant") {
-                next.push({ role: "assistant", content: acc, messageId });
-              } else {
-                next[next.length - 1] = { ...last, content: acc, messageId };
-              }
-              return next;
-            });
-          }
-          if (done) break;
-        }
-        return;
-      }
-
-      const data = (await response.json()) as ChatResponse;
-      if (!data.ok || !data.reply) {
-        setStatus(data.error || "Chat failed.");
-        setMessages(nextMessages);
-        return;
-      }
-
-      setMessages([...nextMessages, { role: "assistant", content: data.reply, messageId: data.messageId }]);
-      if (data.logError) setStatus(`Đã trả lời, nhưng log lỗi: ${data.logError}`);
+      const data = await response.json();
+      setMessages([...newMessages, { role: "assistant", content: data.reply, intent: data.intent }]);
     } catch (err) {
-      setStatus(String(err instanceof Error ? err.message : err));
-      setMessages(nextMessages);
+      console.error(err);
+      setMessages([...newMessages, { role: "assistant", content: "⚠️ Có lỗi kết nối tới máy chủ AI. Vui lòng thử lại." }]);
     } finally {
       setBusy(false);
     }
   }
 
-  async function handleRate(messageId: string, idx: number, ratingType: "satisfaction" | "difficulty", value: number) {
-    if (!messageId) return;
-    try {
-      const payload: any = { messageId };
-      payload[ratingType] = value;
-
-      const res = await fetch("/api/rate", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if (data.ok) {
-        setMessages((prev: ChatMessage[]) => {
-          const next = [...prev];
-          next[idx] = { ...next[idx], [ratingType]: value };
-          return next;
-        });
-        setStatus(`Đã ghi nhận ${value} điểm cho ${ratingType === "satisfaction" ? "sự hài lòng" : "độ khó"}.`);
-      } else {
-        setStatus(`Lỗi khi đánh giá: ${data.error}`);
-      }
-    } catch (err) {
-      setStatus(`Lỗi kết nối khi đánh giá: ${String(err)}`);
-    }
-  }
-
-  const progressStats = useMemo(() => {
-    let G = 0, P = 0, S = 0;
-    messages.forEach((m) => {
-      if (m.role === "assistant") {
-        if (/^\s*\[G\]/i.test(m.content)) G++;
-        else if (/^\s*\[P\]/i.test(m.content)) P++;
-        else if (/^\s*\[S\]/i.test(m.content)) S++;
-      }
-    });
-    return { G, P, S };
-  }, [messages]);
-
   return (
-    <main style={{ maxWidth: 980, margin: "0 auto", padding: 20 }}>
-      <header style={{ display: "flex", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
+    <div className="flex h-screen overflow-hidden">
+      {/* Sidebar */}
+      <aside className="w-80 glass border-r flex flex-col p-6 gap-8 hidden md:flex">
         <div>
-          <h1 style={{ margin: 0, fontSize: 20 }}>GPS AIedu Web Chat</h1>
-          <p style={{ margin: "6px 0 0", color: "var(--muted)" }}>
-            Chat với gia sư GPS và tự động log vào Google Sheet <code>Raw Data</code>.
-          </p>
-        </div>
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <a href="/api/health" target="_blank" rel="noreferrer">
-            Health
-          </a>
-          <a href="/api/models" target="_blank" rel="noreferrer">
-            Models
-          </a>
-        </div>
-      </header>
-
-      <section
-        style={{
-          marginTop: 16,
-          background: "var(--panel)",
-          border: "1px solid var(--border)",
-          borderRadius: 12,
-          padding: 12
-        }}
-      >
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 10 }}>
-          <label style={{ display: "grid", gap: 6 }}>
-            <span style={{ color: "var(--muted)" }}>Student ID</span>
-            <input
-              value={session.studentId}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const id = e.target.value;
-                setSession({ ...session, studentId: id });
-                if (id.length >= 4) fetchStudentInfo(id);
-              }}
-              placeholder="HS01"
-              style={inputStyle}
-            />
-          </label>
-          <label style={{ display: "grid", gap: 6 }}>
-            <span style={{ color: "var(--muted)" }}>Class</span>
-            <input
-              value={session.className}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSession({ ...session, className: e.target.value })}
-              style={inputStyle}
-            />
-          </label>
-          <label style={{ display: "grid", gap: 6 }}>
-            <span style={{ color: "var(--muted)" }}>Topic</span>
-            <input
-              value={session.topic}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSession({ ...session, topic: e.target.value })}
-              style={inputStyle}
-            />
-          </label>
-          <label style={{ display: "grid", gap: 6 }}>
-            <span style={{ color: "var(--muted)" }}>Profile (optional)</span>
-            <input
-              value={session.profile}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSession({ ...session, profile: e.target.value })}
-              placeholder="Typical"
-              style={inputStyle}
-            />
-          </label>
-          <label style={{ display: "grid", gap: 6 }}>
-            <span style={{ color: "var(--muted)" }}>Group</span>
-            <select
-              value={session.group}
-              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSession({ ...session, group: e.target.value as any })}
-              style={inputStyle}
-            >
-              <option value="Experimental">Experimental (GPS)</option>
-              <option value="Control">Control (Free AI)</option>
-            </select>
-          </label>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            GPS AIedu
+          </h1>
+          <p className="text-sm text-slate-400 mt-2">Gia sư Xác suất Thống kê thông minh</p>
         </div>
 
-        {!canChat ? (
-          <p style={{ margin: "10px 0 0", color: "var(--muted)" }}>Nhập Student ID để bắt đầu chat.</p>
-        ) : null}
-      </section>
-
-      {canChat && (
-        <div style={{
-          marginTop: 16, display: "flex", flexDirection: "column", gap: 8,
-          background: "#1f3b7430", border: "1px solid #1f3b74", borderRadius: 8, padding: "12px 16px"
-        }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontWeight: "bold", fontSize: 13 }}>TIẾN TRÌNH G.P.S</span>
-            <span style={{ fontSize: 12, color: "var(--muted)" }}>{progressStats.G + progressStats.P + progressStats.S} lượt hội thoại</span>
-          </div>
-          <div style={{ display: "flex", height: 8, gap: 4 }}>
-            <div style={{ flex: progressStats.G || 1, background: "#ffd48a", borderRadius: 4, transition: "flex 0.5s ease" }} title="Guide" />
-            <div style={{ flex: progressStats.P || 1, background: "#8effa8", borderRadius: 4, transition: "flex 0.5s ease" }} title="Practice" />
-            <div style={{ flex: progressStats.S || 1, background: "#8ac8ff", borderRadius: 4, transition: "flex 0.5s ease" }} title="Solve" />
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "var(--muted)" }}>
-            <span>HƯỚNG DẪN (G)</span>
-            <span>LUYỆN TẬP (P)</span>
-            <span>HOÀN THÀNH (S)</span>
-          </div>
-        </div>
-      )}
-
-      <section
-        style={{
-          marginTop: 16,
-          background: "var(--panel)",
-          border: "1px solid var(--border)",
-          borderRadius: 12,
-          padding: 12,
-          minHeight: 420
-        }}
-      >
-        <div style={{ display: "grid", gap: 10 }}>
-          {messages.length === 0 ? (
-            <div style={{ color: "var(--muted)" }}>
-              Gợi ý: hỏi theo GPS. Ví dụ: “(G) Giải thích giúp em xác suất có điều kiện là gì?”
+        <div className="flex flex-col gap-4">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-500">Hồ sơ học sinh</h3>
+          <div className="space-y-4">
+            <div className="flex flex-col gap-1">
+              <span className="text-xs text-slate-500">Mã học sinh</span>
+              <input 
+                className="bg-white/5 border border-white/10 rounded-lg p-2 text-sm outline-none focus:border-blue-500/50"
+                value={student.id}
+                onChange={e => setStudent({...student, id: e.target.value})}
+              />
             </div>
-          ) : null}
-          {messages.map((m: ChatMessage, idx: number) => (
-            <div
-              key={idx}
-              style={{
-                padding: 10,
-                borderRadius: 10,
-                border: "1px solid var(--border)",
-                background: m.role === "user" ? "#0f244d" : "#0e1a2f",
-                whiteSpace: "pre-wrap"
-              }}
-            >
-              <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 6 }}>
-                {m.role === "user" ? "Học sinh" : "Gia sư GPS"}
+            <div className="flex flex-col gap-1">
+              <span className="text-xs text-slate-500">Trình độ</span>
+              <select 
+                className="bg-white/5 border border-white/10 rounded-lg p-2 text-sm outline-none focus:border-blue-500/50"
+                value={student.level}
+                onChange={e => setStudent({...student, level: e.target.value})}
+              >
+                <option value="Giỏi">Giỏi</option>
+                <option value="Khá">Khá</option>
+                <option value="Trung bình">Trung bình</option>
+                <option value="Yếu">Yếu</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-auto">
+          <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-300">
+            Hệ thống đang sử dụng kiến trúc Multi-Agent ReAct (Qwen-2.5 7B).
+          </div>
+        </div>
+      </aside>
+
+      {/* Main Chat Area */}
+      <main className="flex-1 flex flex-col relative">
+        {/* Header / Progress bar */}
+        <header className="p-6 glass border-b flex flex-col gap-4 z-10">
+          <div className="flex justify-between items-center">
+            <h2 className="font-semibold text-lg">Bài tập #{qid}</h2>
+            <div className="text-xs text-slate-400 font-mono">
+              STATUS: {busy ? "THINKING..." : "READY"}
+            </div>
+          </div>
+          
+          <div className="flex flex-col gap-2">
+            <div className="flex h-2 w-full bg-white/5 rounded-full overflow-hidden gap-1">
+              <div className="progress-segment bg-amber-400" style={{ width: `${progress.G}%` }} />
+              <div className="progress-segment bg-emerald-400" style={{ width: `${progress.P}%` }} />
+              <div className="progress-segment bg-blue-500" style={{ width: `${progress.S}%` }} />
+            </div>
+            <div className="flex justify-between text-[10px] font-bold text-slate-500 uppercase tracking-tighter">
+              <span className={progress.counts.G > 0 ? "text-amber-400" : ""}>Guide</span>
+              <span className={progress.counts.P > 0 ? "text-emerald-400" : ""}>Practice</span>
+              <span className={progress.counts.S > 0 ? "text-blue-500" : ""}>Solve</span>
+            </div>
+          </div>
+        </header>
+
+        {/* Messages */}
+        <div ref={scrollRef} className="flex-1 overflow-y-auto p-6 flex flex-col scroll-smooth">
+          {messages.length === 0 && (
+            <div className="m-auto text-center space-y-4 max-w-md">
+              <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto border border-blue-500/40">
+                ✨
               </div>
-              <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+              <h3 className="text-xl font-bold">Bắt đầu phiên học</h3>
+              <p className="text-sm text-slate-400">
+                Hãy đặt câu hỏi về bài tập toán. Thầy sẽ hướng dẫn em từng bước một theo lộ trình G-P-S.
+              </p>
+            </div>
+          )}
+          {messages.map((m, i) => (
+            <div key={i} className={`chat-bubble ${m.role === 'user' ? 'user' : 'assistant'}`}>
+              <div className="text-[10px] opacity-50 uppercase font-bold mb-1 tracking-wider">
+                {m.role === 'user' ? 'Học sinh' : 'Gia sư GPS'}
+              </div>
+              <ReactMarkdown 
+                remarkPlugins={[remarkMath]} 
+                rehypePlugins={[rehypeKatex]}
+                className="prose prose-invert max-w-none text-sm md:text-base"
+              >
                 {m.content}
               </ReactMarkdown>
-              {m.role === "assistant" && idx === messages.length - 1 && !busy && (
-                <div style={{ marginTop: 10, borderTop: "1px solid #1e2d4d", paddingTop: 8 }}>
-                  <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
-                    <div>
-                      <span style={{ fontSize: 12, color: "var(--muted)", marginRight: 8 }}>
-                        {m.satisfaction ? `Độ hài lòng: ${m.satisfaction}/5` : "Hài lòng:"}
-                      </span>
-                      {!m.satisfaction && [1, 2, 3, 4, 5].map((s) => (
-                        <button
-                          key={s}
-                          onClick={() => m.messageId && handleRate(m.messageId, idx, "satisfaction", s)}
-                          style={{
-                            background: "none", border: "none", cursor: "pointer",
-                            fontSize: 16, padding: "0 2px"
-                          }}
-                        >⭐</button>
-                      ))}
-                    </div>
-                    <div>
-                      <span style={{ fontSize: 12, color: "var(--muted)", marginRight: 8 }}>
-                        {m.difficulty ? `Độ khó: ${m.difficulty}/5` : "Độ khó:"}
-                      </span>
-                      {!m.difficulty && [1, 2, 3, 4, 5].map((s) => (
-                        <button
-                          key={s}
-                          onClick={() => m.messageId && handleRate(m.messageId, idx, "difficulty", s)}
-                          style={{
-                            background: "none", border: "none", cursor: "pointer",
-                            fontSize: 16, padding: "0 2px"
-                          }}
-                        >🤔</button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           ))}
+          {busy && (
+            <div className="chat-bubble assistant animate-pulse">
+              <div className="flex gap-1 py-2">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '200ms' }} />
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '400ms' }} />
+              </div>
+            </div>
+          )}
         </div>
-      </section>
 
-      <section style={{ marginTop: 12 }}>
-        <div style={{ display: "flex", gap: 10 }}>
-          <textarea
-            value={input}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
-            placeholder="Nhập câu hỏi..."
-            rows={3}
-            style={{
-              ...inputStyle,
-              resize: "vertical",
-              width: "100%"
-            }}
-            disabled={!canChat || busy}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
-                e.preventDefault();
-                void sendMessage();
-              }
-            }}
-          />
-          <button
-            onClick={() => void sendMessage()}
-            disabled={!canChat || busy}
-            style={{
-              padding: "10px 14px",
-              borderRadius: 10,
-              border: "1px solid var(--border)",
-              background: busy ? "#1b2a47" : "#1f3b74",
-              color: "var(--text)",
-              minWidth: 120,
-              cursor: busy ? "not-allowed" : "pointer"
-            }}
-          >
-            {busy ? "Đang..." : "Gửi"}
-          </button>
+        {/* Input area */}
+        <div className="p-6 glass border-t mt-auto">
+          <div className="relative flex items-center max-w-4xl mx-auto">
+            <textarea 
+              className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 pr-16 text-sm outline-none focus:border-blue-500/50 resize-none transition-all"
+              rows={2}
+              placeholder="Hỏi Thầy về bài toán này..."
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  sendMessage();
+                }
+              }}
+            />
+            <button 
+              className="absolute right-4 bg-blue-500 hover:bg-blue-600 p-2 rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={sendMessage}
+              disabled={busy || !input.trim()}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+            </button>
+          </div>
+          <p className="text-[10px] text-center text-slate-500 mt-3">
+            Nhấn Enter để gửi • Nhấn Shift+Enter để xuống dòng
+          </p>
         </div>
-        <div style={{ marginTop: 8, color: status ? "#ffd48a" : "var(--muted)" }}>
-          {status || "Mẹo: Nhấn Enter để gửi, Shift+Enter để xuống dòng."}
-        </div>
-      </section>
-    </main>
+      </main>
+
+      <style jsx global>{`
+        .prose p { margin-bottom: 0.5rem; }
+        .prose ul { margin-left: 1rem; list-style-type: disc; }
+        .prose ol { margin-left: 1rem; list-style-type: decimal; }
+      `}</style>
+    </div>
   );
 }
-
-const inputStyle: CSSProperties = {
-  width: "100%",
-  padding: "10px 12px",
-  borderRadius: 10,
-  border: "1px solid var(--border)",
-  background: "#0b1323",
-  color: "var(--text)",
-  outline: "none"
-};

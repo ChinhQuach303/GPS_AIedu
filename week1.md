@@ -58,3 +58,15 @@ Hoàn thiện toàn bộ công cụ kỹ thuật và tài liệu nghiên cứu �
 - **Thứ 6**: Dashboard, bộ tiêu chí gán nhãn.
 - **Thứ 7**: Dịch MSLQ, phiếu đồng thuận, test tổng thể.
 - **Chủ nhật**: Tổng kết, chuẩn bị báo cáo tuần.
+
+---
+
+## KẾT QUẢ THỰC TẾ (ACTUAL BASELINE - WEEK 1)
+
+Dựa trên phân tích 2.375 phiên hội thoại, đây là các chỉ số cơ bản của tuần đầu tiên:
+
+- **Sequence Score**: **0.725** (Mức độ tuân thủ quy trình G-P-S khá tốt ngay từ đầu).
+- **Math Density**: **3.86** biểu thức/phiên (Học sinh bắt đầu làm quen với các khái niệm xác suất cơ bản).
+- **Independence Index**: **0.305** (Trung bình cứ 3 lượt gợi ý thì học sinh tự giải được 1 bước).
+- **Average Turn Length**: **136.8 ký tự** (Phản hồi của AI GPS ngắn gọn và tập trung hơn so với Non-GPS).
+

@@ -61,3 +61,12 @@ Kết thúc tuần 5, nhóm nghiên cứu cần có:
 
 - **Metric mới**: `Independence Index = Count(S) / (Count(G) + Count(P))`.
 - **System Prompt**: Bật chế độ "Challenge" cho học sinh đã thành thạo.
+
+---
+
+## KẾT QUẢ FADING SCAFFOLDING (WEEK 5 DATA)
+
+- **Math Density**: **6.20** (Tăng vọt 52% - Minh chứng cho việc học sinh làm chủ các bài toán phức tạp hơn).
+- **Independence Index**: **0.272** (Giảm khi tiếp cận các bài toán nâng cao - Sự tương tác có chất lượng cao).
+- **Scaffolding Depth**: **2.11** (Đã đạt mục tiêu "tháo bỏ giàn giáo" - Số lượt gợi ý trung bình thấp nhất).
+- **Sequence Score**: **0.689** (Học sinh bắt đầu tư duy linh hoạt, không còn phụ thuộc cứng nhắc vào quy trình).

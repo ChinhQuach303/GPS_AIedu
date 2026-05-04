@@ -1,0 +1,13 @@
+Week,Group,Total_Turns,Independence_Index,Scaffolding_Depth,Sequence_Score,Math_Density,Avg_Turn_Length,Dataset
+1,GPS,11.925,0.212,1.367,0.648,2.258,136.82,Combined
+1,Non-GPS,0.035,0.0,0.0,0.5,1.325,486.939,Combined
+2,GPS,15.143,0.299,2.286,0.727,4.99,175.988,Combined
+2,Non-GPS,0.011,0.0,0.0,0.5,2.2,808.737,Combined
+3,GPS,15.543,0.344,2.81,0.735,4.819,197.672,Combined
+3,Non-GPS,0.0,0.0,0.0,0.5,2.556,814.639,Combined
+4,GPS,15.329,0.331,2.548,0.732,4.076,171.889,Combined
+4,Non-GPS,0.0,0.0,0.0,0.5,2.094,740.756,Combined
+5,GPS,16.324,0.272,2.114,0.689,6.195,180.101,Combined
+5,Non-GPS,0.05,0.0,0.0,0.5,2.533,766.546,Combined
+6,GPS,15.582,0.335,3.218,0.715,14.018,268.819,Combined
+6,Non-GPS,0.0,0.0,0.0,0.5,2.973,721.867,Combined

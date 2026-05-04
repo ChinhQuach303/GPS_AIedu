@@ -63,6 +63,16 @@ Kết thúc tuần 2, nhóm nghiên cứu cần có:
 
 ---
 
+## KẾT QUẢ TRIỂN KHAI PILOT (WEEK 2 DATA)
+
+- **Independence Index**: **0.299** (Ổn định so với tuần 1).
+- **Scaffolding Depth**: **2.29** (Số lượt gợi ý G+P trung bình tăng nhẹ khi học sinh tiếp xúc bài tập thực tế).
+- **Math Density**: **4.99** (Sự gia tăng đáng kể các biểu thức toán học trong hội thoại).
+- **Sequence Score**: **0.727** (Duy trì tính nhất quán của quy trình GPS trong môi trường lớp học).
+
+
+---
+
 ## CÔNG CỤ SỬ DỤNG
 - **Webchat**: `https://your-pilot-link.vercel.app`
 - **Dashboard**: Link Google Sheet (tab `Alerts` và `GPS Tracker`).
