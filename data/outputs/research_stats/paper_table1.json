@@ -1,0 +1,20 @@
+{
+  "Table 1 - Group Comparison": {
+    "GPS": {
+      "N": 1577,
+      "Hake_Gain": 11.95,
+      "Independence_Index": 0.292,
+      "GPS_Fidelity_%": 52.8,
+      "Cohen_d": 0.162,
+      "p_value": 1.3e-05
+    },
+    "Non-GPS": {
+      "N": 1247,
+      "Hake_Gain": 11.534,
+      "Independence_Index": 0.0,
+      "GPS_Fidelity_%": "N/A",
+      "Cohen_d": "baseline",
+      "p_value": "baseline"
+    }
+  }
+}
