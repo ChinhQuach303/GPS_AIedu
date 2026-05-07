@@ -22,12 +22,11 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # ─────────────────────────────────────────────
 # 1. Hake's Normalized Gain
 # ─────────────────────────────────────────────
-def hake_gain(pre_score: float, post_score: float, max_score: float = 10.0) -> float:
+def hake_gain(pre_score: float, post_score: float, max_score: float = 100.0) -> float:
     """g = (post - pre) / (max - pre)"""
     if max_score == pre_score:
         return 0.0
     return (post_score - pre_score) / (max_score - pre_score)
-
 
 # ─────────────────────────────────────────────
 # 2. Cohen's d (Effect Size)
@@ -70,21 +69,17 @@ def compute_markov_transitions(df: pd.DataFrame) -> dict:
         "Non-GPS": avg_turn_dist(non_gps)
     }
 
-
-# ─────────────────────────────────────────────
-# 4. Main Analysis Pipeline
-# ─────────────────────────────────────────────
 def run_analysis():
-    print(f"📂 Đọc dữ liệu từ: {INPUT_CSV}")
+    print(f"Reading data from: {INPUT_CSV}")
     df = pd.read_csv(INPUT_CSV)
-    print(f"   → {len(df)} phiên hội thoại | Columns: {list(df.columns)}")
+    print(f"   -> {len(df)} sessions | Columns: {list(df.columns)}")
 
     report = {}
 
     # --- 4. Tổng hợp theo Level ---
+    # Chỉnh sửa: Đảm bảo Estimated_Post_Score được xử lý đúng thang 100
     level_stats = df.groupby(["Group", "Level"]).agg(
         sessions=("Student_ID", "count"),
-        avg_ISI=("ISI", "mean") if "ISI" in df.columns else ("Turns_G", "count"),
         avg_independence=("Independence_Index", "mean"),
         avg_estimated_score=("Estimated_Post_Score", "mean"),
     ).round(3).reset_index().to_dict(orient="records")
@@ -96,22 +91,19 @@ def run_analysis():
         avg_math_density=("Math_Density", "mean"),
         avg_independence=("Independence_Index", "mean"),
         avg_gps_fidelity=("GPS_Fidelity", "mean"),
-        avg_turns_G=("Turns_G", "mean"),
-        avg_turns_P=("Turns_P", "mean"),
-        avg_turns_S=("Turns_S", "mean"),
         avg_post_score=("Estimated_Post_Score", "mean"),
     ).round(3).reset_index()
     report["group_summary"] = group_summary_df.to_dict(orient="records")
-    print(f"\n📊 Group Summary:\n{group_summary_df.to_string()}")
+    print(f"\nGroup Summary:\n{group_summary_df.to_string()}")
 
     # --- B. Hake's Gain theo Level × Group ---
-    PRE_BASELINE = 5.0
+    PRE_BASELINE = 50.0 # Giả định điểm Pre-test trung bình là 50/100
     df["Hake_Gain"] = df["Estimated_Post_Score"].apply(
-        lambda post: hake_gain(PRE_BASELINE, post, max_score=10.0)
+        lambda post: hake_gain(PRE_BASELINE, post, max_score=100.0)
     )
     hake_df = df.groupby(["Group", "Level"])["Hake_Gain"].mean().round(3).reset_index()
     report["hake_gain"] = hake_df.to_dict(orient="records")
-    print(f"\n📊 Hake's Gain (g):\n{hake_df.to_string()}")
+    print(f"\nHake's Gain (g):\n{hake_df.to_string()}")
 
     # --- C. Cohen's d và T-test (GPS vs Non-GPS) ---
     gps_scores   = df[df["Group"] == "GPS"]["Estimated_Post_Score"].dropna()
@@ -130,10 +122,10 @@ def run_analysis():
         "effect_size": "Large" if abs(d) >= 0.8 else ("Medium" if abs(d) >= 0.5 else "Small"),
         "significant": p_value < 0.05
     }
-    print(f"\n📊 Statistical Test:")
+    print(f"\nStatistical Test (Score):")
     print(f"   GPS mean:    {gps_scores.mean():.3f}")
     print(f"   Non-GPS mean:{nongps_scores.mean():.3f}")
-    print(f"   t={t_stat:.4f}, p={p_value:.6f}, Cohen's d={d:.3f} → {report['statistical_test']['effect_size']}")
+    print(f"   t={t_stat:.4f}, p={p_value:.6f}, Cohen's d={d:.3f}")
 
     # --- D. T-test cho Independence Index ---
     gps_ind   = df[df["Group"] == "GPS"]["Independence_Index"].dropna()
@@ -148,24 +140,23 @@ def run_analysis():
         "cohen_d": round(d2, 3),
         "significant": p2 < 0.05
     }
-    print(f"\n📊 Independence Index Test:")
-    print(f"   GPS:{gps_ind.mean():.3f} | Non-GPS:{nongps_ind.mean():.3f} | p={p2:.6f}")
+    print(f"\nIndependence Index Test:")
+    print(f"   GPS:{gps_ind.mean():.3f} | Non-GPS:{nongps_ind.mean():.3f} | p={p2:.6f}, d={d2:.3f}")
 
     # --- E. Markov Chain Transition ---
     markov = compute_markov_transitions(df)
     report["markov_transitions"] = markov
-    print(f"\n📊 Avg Turn Distribution (Markov proxy):")
+    print(f"\nAvg Turn Distribution (Markov proxy):")
     for grp, val in markov.items():
         print(f"   [{grp}] G:{val['G_ratio']:.1%} | P:{val['P_ratio']:.1%} | S:{val['S_ratio']:.1%}")
 
-    # --- F. Weekly Trend (nếu có cột Week) ---
+    # --- F. Weekly Trend ---
     if "Week" in df.columns:
         weekly = df.groupby(["Group", "Week"]).agg(
             avg_independence=("Independence_Index", "mean"),
             avg_math_density=("Math_Density", "mean"),
         ).round(3).reset_index()
         report["weekly_trend"] = weekly.to_dict(orient="records")
-        print(f"\n📊 Weekly Trend:\n{weekly.to_string()}")
 
     # --- G. Lưu kết quả ---
     class NpEncoder(json.JSONEncoder):
@@ -179,38 +170,37 @@ def run_analysis():
     output_path = OUTPUT_DIR / "research_results.json"
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2, cls=NpEncoder)
-    print(f"\n✅ Kết quả đã lưu tại: {output_path}")
+    print(f"\nDone! Results saved at: {output_path}")
 
-    # Xuất bảng tóm tắt Table 1 cho paper
-    gps_row = group_summary_df[group_summary_df["Group"]=="GPS"].iloc[0].to_dict() if len(group_summary_df[group_summary_df["Group"]=="GPS"]) > 0 else {}
-    nongps_row = group_summary_df[group_summary_df["Group"]=="Non-GPS"].iloc[0].to_dict() if len(group_summary_df[group_summary_df["Group"]=="Non-GPS"]) > 0 else {}
+    # Xuất bảng Table 1
     paper_table = {
         "Table 1 - Group Comparison": {
             "GPS": {
-                "N": int(gps_row.get("n_sessions", 0)),
+                "N": int(len(gps_ind)),
                 "Hake_Gain": round(float(df[df["Group"]=="GPS"]["Hake_Gain"].mean()), 3),
                 "Independence_Index": round(float(gps_ind.mean()), 3),
-                "GPS_Fidelity_%": round(float(gps_row.get("avg_gps_fidelity", 0)) * 100, 1),
-                "Cohen_d": round(float(d), 3),
-                "p_value": round(float(p_value), 6)
+                "Math_Density": round(float(df[df["Group"]=="GPS"]["Math_Density"].mean()), 2),
+                "Cohen_d_II": round(float(d2), 3),
+                "p_value_II": round(float(p2), 6)
             },
             "Non-GPS": {
-                "N": int(nongps_row.get("n_sessions", 0)),
+                "N": int(len(nongps_ind)),
                 "Hake_Gain": round(float(df[df["Group"]!="GPS"]["Hake_Gain"].mean()), 3),
                 "Independence_Index": round(float(nongps_ind.mean()), 3),
-                "GPS_Fidelity_%": "N/A",
-                "Cohen_d": "baseline",
-                "p_value": "baseline"
+                "Math_Density": round(float(df[df["Group"]!="GPS"]["Math_Density"].mean()), 2),
+                "Cohen_d_II": "baseline",
+                "p_value_II": "baseline"
             }
         }
     }
     paper_table_path = OUTPUT_DIR / "paper_table1.json"
     with open(paper_table_path, "w", encoding="utf-8") as f:
         json.dump(paper_table, f, ensure_ascii=False, indent=2)
-    print(f"📄 Paper Table 1 đã lưu tại: {paper_table_path}")
+    print(f"Paper Table 1 saved at: {paper_table_path}")
 
     return report
 
 
 if __name__ == "__main__":
     run_analysis()
+

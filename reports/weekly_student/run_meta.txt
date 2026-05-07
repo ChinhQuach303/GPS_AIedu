@@ -1,0 +1,5 @@
+﻿input=C:\Users\quach\code\GPS_AIedu\simulated_conversations.csv
+outdir=C:\Users\quach\code\GPS_AIedu\reports\weekly_student
+students=5
+min_timestamp=2026-04-21 11:25:20
+max_timestamp=2026-04-22 16:39:39

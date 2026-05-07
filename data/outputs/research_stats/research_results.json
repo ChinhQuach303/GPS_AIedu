@@ -4,7 +4,6 @@
       "Group": "GPS",
       "Level": "Giỏi",
       "sessions": 227,
-      "avg_ISI": 227,
       "avg_independence": 0.33,
       "avg_estimated_score": 88.434
     },
@@ -12,7 +11,6 @@
       "Group": "GPS",
       "Level": "Khá",
       "sessions": 448,
-      "avg_ISI": 448,
       "avg_independence": 0.252,
       "avg_estimated_score": 72.223
     },
@@ -20,7 +18,6 @@
       "Group": "GPS",
       "Level": "Trung bình",
       "sessions": 633,
-      "avg_ISI": 633,
       "avg_independence": 0.328,
       "avg_estimated_score": 56.867
     },
@@ -28,7 +25,6 @@
       "Group": "GPS",
       "Level": "Yếu",
       "sessions": 269,
-      "avg_ISI": 269,
       "avg_independence": 0.242,
       "avg_estimated_score": 50.869
     },
@@ -36,7 +32,6 @@
       "Group": "Non-GPS",
       "Level": "Giỏi",
       "sessions": 161,
-      "avg_ISI": 161,
       "avg_independence": 0.0,
       "avg_estimated_score": 85.0
     },
@@ -44,7 +39,6 @@
       "Group": "Non-GPS",
       "Level": "Khá",
       "sessions": 385,
-      "avg_ISI": 385,
       "avg_independence": 0.0,
       "avg_estimated_score": 70.0
     },
@@ -52,7 +46,6 @@
       "Group": "Non-GPS",
       "Level": "Trung bình",
       "sessions": 493,
-      "avg_ISI": 493,
       "avg_independence": 0.0,
       "avg_estimated_score": 55.0
     },
@@ -60,7 +53,6 @@
       "Group": "Non-GPS",
       "Level": "Yếu",
       "sessions": 208,
-      "avg_ISI": 208,
       "avg_independence": 0.0,
       "avg_estimated_score": 50.0
     }
@@ -72,9 +64,6 @@
       "avg_math_density": 5.026,
       "avg_independence": 0.292,
       "avg_gps_fidelity": 0.528,
-      "avg_turns_G": 1.176,
-      "avg_turns_P": 1.112,
-      "avg_turns_S": 1.371,
       "avg_post_score": 64.75
     },
     {
@@ -83,9 +72,6 @@
       "avg_math_density": 2.556,
       "avg_independence": 0.0,
       "avg_gps_fidelity": 0.1,
-      "avg_turns_G": 0.0,
-      "avg_turns_P": 0.0,
-      "avg_turns_S": 0.0,
       "avg_post_score": 62.67
     }
   ],
@@ -93,42 +79,42 @@
     {
       "Group": "GPS",
       "Level": "Giỏi",
-      "Hake_Gain": 16.687
+      "Hake_Gain": 0.769
     },
     {
       "Group": "GPS",
       "Level": "Khá",
-      "Hake_Gain": 13.445
+      "Hake_Gain": 0.444
     },
     {
       "Group": "GPS",
       "Level": "Trung bình",
-      "Hake_Gain": 10.373
+      "Hake_Gain": 0.137
     },
     {
       "Group": "GPS",
       "Level": "Yếu",
-      "Hake_Gain": 9.174
+      "Hake_Gain": 0.017
     },
     {
       "Group": "Non-GPS",
       "Level": "Giỏi",
-      "Hake_Gain": 16.0
+      "Hake_Gain": 0.7
     },
     {
       "Group": "Non-GPS",
       "Level": "Khá",
-      "Hake_Gain": 13.0
+      "Hake_Gain": 0.4
     },
     {
       "Group": "Non-GPS",
       "Level": "Trung bình",
-      "Hake_Gain": 10.0
+      "Hake_Gain": 0.1
     },
     {
       "Group": "Non-GPS",
       "Level": "Yếu",
-      "Hake_Gain": 9.0
+      "Hake_Gain": 0.0
     }
   ],
   "statistical_test": {

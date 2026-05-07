@@ -1,0 +1,191 @@
+Gieo một đồng tiền cân đối và đồng chất bốn lần. Xác suất để cả bốn lần xuất hiện mặt sấp là?. Em muốn hỗ trợ để giải bài trên. tao muốn đáp án, cho tao câu trả lời
+
+[G]
+Chào em, thầy hiểu là em đang muốn có ngay đáp án, nhưng để "làm chủ" được dạng bài này và không bị nhầm lẫn trong phòng thi, ta cùng xây dựng công thức nhé.
+
+Với bài toán gieo đồng tiền 4 lần, em cần xác định:
+
+Không gian mẫu ∣Ω∣: Mỗi lần gieo có 2 khả năng (Sấp hoặc Ngửa). Vậy 4 lần gieo liên tiếp thì có tổng cộng bao nhiêu kết quả?
+
+Biến cố A: Chỉ có duy nhất 1 trường hợp là cả 4 lần đều Sấp (SSSS).
+
+Em thử tính xem 2 
+4
+  bằng bao nhiêu để tìm ra mẫu số của xác suất nào?
+
+đáp án là bao nhiêu, khó hiểu quá
+
+[P]
+Đừng lo, thầy sẽ giúp em làm nó cực kỳ dễ hiểu. Hãy tưởng tượng mỗi lần gieo là một lựa chọn:
+
+Lần 1: 2 cách (S hoặc N)
+
+Lần 2: 2 cách
+
+Lần 3: 2 cách
+
+Lần 4: 2 cách
+
+Theo quy tắc nhân, tổng số trường hợp (Không gian mẫu) là: ∣Ω∣=2×2×2×2=16.
+
+Trong 16 kết quả đó, chỉ có đúng 1 trường hợp duy nhất thỏa mãn đề bài là: (S, S, S, S).
+
+Công thức xác suất là P(A)= 
+∣Ω∣
+∣A∣
+​
+ . Bây giờ em thử thay số 1 và 16 vào công thức này xem kết quả cuối cùng là bao nhiêu?
+
+1/16
+
+[S]
+Chính xác rồi! Kết quả cuối cùng là P=1/16.
+
+Để hiểu sâu hơn, em có thể nhìn vào sơ đồ cây của bài toán này:
+
+Mỗi nhánh của cây đại diện cho một khả năng, và chỉ có duy nhất một con đường dẫn đến 4 lần Sấp liên tiếp trong tổng số 16 con đường có thể xảy ra.
+
+Em đã nắm chắc cách tính không gian mẫu cho đồng xu rồi đấy. Nếu bây giờ thầy thay đổi đề bài thành gieo đồng xu 5 lần và tìm xác suất cả 5 lần đều ngửa, em có đoán ngay được đáp án không?
+
+[G]
+Chào em! Rất vui được đồng hành cùng em chinh phục chương Xác suất và Thống kê lớp 11. Anh là Gia sư G.P.S, sẵn sàng hỗ trợ em tư duy để tự tìm ra lời giải thay vì chỉ đưa đáp án.
+
+Để bắt đầu, em đang gặp khó khăn ở dạng bài tập nào? Hãy gửi đề bài cụ thể cho anh nhé!
+
+10:12 PM
+
+Gieo một đồng tiền cân đối và đồng chất bốn lần. Xác suất để cả bốn lần xuất hiện mặt sấp là?. Em muốn hỗ trợ để giải bài trên bài này đáp án 1/16 đúng không, quá dễ
+
+10:12 PM
+
+GPS_GUIDE
+
+
+[S]
+Chính xác! Đáp án $1/16$ là hoàn toàn đúng.
+
+Vì mỗi lần gieo có 2 khả năng (S hoặc N), nên 4 lần gieo độc lập sẽ có tổng không gian mẫu là 
+2
+4
+=
+16
+2 
+4
+ =16. Chỉ có duy nhất 1 trường hợp thuận lợi là (S, S, S, S). Vậy $P = 1/16$.
+
+Em đã nắm rất chắc phần xác suất cơ bản này rồi. Em có muốn thử sức với một bài toán khó hơn một chút, ví dụ như tính xác suất để có đúng 2 lần sấp trong 4 lần gieo không?
+
+
+Chào bạn, tôi có thể giúp gì?
+
+10:07 PM
+
+Gieo một đồng tiền cân đối và đồng chất bốn lần. Xác suất để cả bốn lần xuất hiện mặt sấp là?. Em muốn hỗ trợ để giải bài trên
+
+10:07 PM
+
+GPS_GUIDE
+
+
+
+Thinking
+[G]
+Chào em! Để tính xác suất, ta cần xác định không gian mẫu (
+∣
+Ω
+∣
+∣Ω∣) và số kết quả thuận lợi (
+∣
+Ω
+𝐴
+∣
+∣Ω 
+A
+​
+ ∣).
+
+Mỗi lần tung đồng xu có 2 khả năng (Sấp hoặc Ngửa). Với 4 lần tung độc lập, theo quy tắc nhân, tổng số khả năng xảy ra là bao nhiêu? Và có bao nhiêu trường hợp mà cả 4 lần đều là mặt Sấp?
+
+10:07 PM
+
+Mỗi lượt tung có 2 khả năng, mỗi lần tung độc lập với nhau nên là 2^4=16 đúng không?
+
+10:09 PM
+
+GPS_GUIDE
+
+
+[P]
+Chính xác rồi! Không gian mẫu 
+∣
+Ω
+∣
+=
+2
+4
+=
+16
+∣Ω∣=2 
+4
+ =16 là hoàn toàn đúng.
+
+Bây giờ, hãy tập trung vào biến cố $A$: "Cả bốn lần đều xuất hiện mặt sấp". Để biến cố này xảy ra, mỗi lần tung phải ra mặt Sấp. Có bao nhiêu cách để điều đó xảy ra? (Gợi ý: Chỉ có duy nhất 1 bộ kết quả thỏa mãn là {S, S, S, S}).
+
+Vậy xác suất 
+𝑃
+(
+𝐴
+)
+=
+∣
+Ω
+𝐴
+∣
+∣
+Ω
+∣
+P(A)= 
+∣Ω∣
+∣Ω 
+A
+​
+ ∣
+​
+  sẽ bằng bao nhiêu?
+
+10:09 PM
+
+đúng rồi, vậy đáp án là 1/16 đúng chứ
+
+10:09 PM
+
+GPS_GUIDE
+
+
+[S]
+Chính xác! Logic của em hoàn toàn đúng. Số kết quả thuận lợi 
+∣
+Ω
+𝐴
+∣
+=
+1
+∣Ω 
+A
+​
+ ∣=1, vậy xác suất là 
+𝑃
+(
+𝐴
+)
+=
+1
+16
+P(A)= 
+16
+1
+​
+ .
+
+Em đã nắm vững cách tính xác suất cơ bản cho các biến cố độc lập. Em có muốn thử sức với một bài toán khó hơn một chút, ví dụ như tính xác suất để "có đúng 2 lần xuất hiện mặt sấp" trong 4 lần tung không?
+
