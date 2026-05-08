@@ -4,9 +4,9 @@ import json
 import os
 import pandas as pd
 import time
-from src.core.graph import gps_tutor_app
-from src.core.baseline_agent import SingleAgentTutor
-from src.ai.behavioral_simulator_v2 import StudentSimulatorV2
+from src.agents.tutor_gps.graph import gps_tutor_app
+from src.agents.tutor_gps.baseline_agent import SingleAgentTutor
+from src.agents.student_sim.behavioral_simulator_v2 import StudentSimulatorV2
 from langchain_core.messages import HumanMessage, AIMessage
 import re
 

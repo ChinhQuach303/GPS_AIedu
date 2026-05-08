@@ -1,7 +1,7 @@
 
 import asyncio
 import time
-from src.core.graph import gps_tutor_app
+from src.agents.tutor_gps.graph import gps_tutor_app
 from langchain_core.messages import HumanMessage
 
 async def run_single_simulation(student_id, question, thread_id):

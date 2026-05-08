@@ -1,8 +1,8 @@
 
 from langgraph.graph import StateGraph, END
-from src.core.state import AgentState
-from src.core.nodes.gps_nodes import guide_node, practice_node, solve_node
-from src.core.supervisor import supervisor_node
+from src.agents.tutor_gps.state import AgentState
+from src.agents.tutor_gps.nodes.gps_nodes import guide_node, practice_node, solve_node
+from src.agents.tutor_gps.supervisor import supervisor_node
 
 from langgraph.checkpoint.memory import MemorySaver
 

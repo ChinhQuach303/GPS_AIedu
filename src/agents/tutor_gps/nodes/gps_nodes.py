@@ -1,6 +1,6 @@
 
 from langchain_core.messages import SystemMessage, HumanMessage
-from src.core.state import AgentState
+from src.agents.tutor_gps.state import AgentState
 from src.utils.llm_factory import get_llm
 
 llm = get_llm()

@@ -44,7 +44,7 @@ def run_ab_simulation(qid, persona_id, architecture_type="Single"):
     
     # Import Tutor tương ứng
     if architecture_type == "Multi":
-        from src.ai.multi_agent_gps import run_multi_agent_tutor as tutor_fn
+        from src.agents.student_sim.multi_agent_gps import run_multi_agent_tutor as tutor_fn
     else:
         from src.gps_langgraph import run_gps_tutor as tutor_fn
 

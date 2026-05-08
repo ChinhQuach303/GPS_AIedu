@@ -1,6 +1,6 @@
 
 import asyncio
-from src.core.graph import gps_tutor_app
+from src.agents.tutor_gps.graph import gps_tutor_app
 from langchain_core.messages import HumanMessage
 
 async def chat_with_tutor(user_input: str, thread_id: str = "test_1", student_level: str = "Trung bình", student_id: str = "S001"):

@@ -1,7 +1,7 @@
 
 import json
 from langchain_core.messages import SystemMessage, HumanMessage
-from src.core.state import AgentState
+from src.agents.tutor_gps.state import AgentState
 from src.utils.llm_factory import get_llm
 
 llm = get_llm(temperature=0.1) # Giảm temperature để phân loại intent chính xác hơn
@@ -44,6 +44,21 @@ async def supervisor_node(state: AgentState) -> dict:
         result = json.loads(content)
         next_agent = result.get("next_agent", "guide")
         intent_cat = result.get("intent_category", "understanding")
+        
+        # --- CƠ CHẾ CHỐNG KẸT (ANTI-STAGNATION) ---
+        # Nếu đã ở cùng một trạng thái trong 3 lượt liên tiếp, ép chuyển node
+        if len(trace_labels) >= 3:
+            last_3 = [str(t)[0] for t in trace_labels[-3:]]
+            if last_3[0] == last_3[1] == last_3[2]:
+                stuck_node = last_3[0]
+                if stuck_node == 'P' and next_agent == 'practice':
+                    print("⚠️ Supervisor: Phát hiện kẹt ở Practice. Ép chuyển sang Solve.")
+                    next_agent = "solve"
+                elif stuck_node == 'G' and next_agent == 'guide':
+                    print("⚠️ Supervisor: Phát hiện kẹt ở Guide. Ép chuyển sang Practice.")
+                    next_agent = "practice"
+        # ------------------------------------------
+
         
         return {
             "current_intent": next_agent,

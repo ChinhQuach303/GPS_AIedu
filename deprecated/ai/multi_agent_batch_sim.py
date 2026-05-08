@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import SystemMessage, HumanMessage
-from src.ai.multi_agent_gps import run_multi_agent_tutor
+from src.agents.student_sim.multi_agent_gps import run_multi_agent_tutor
 
 # --- CONFIGURATION ---
 OLLAMA_URL = "http://localhost:11434/v1"

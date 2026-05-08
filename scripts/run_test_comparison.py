@@ -1,8 +1,8 @@
 
 import asyncio
 import json
-from src.core.graph import gps_tutor_app
-from src.core.baseline_agent import SingleAgentTutor
+from src.agents.tutor_gps.graph import gps_tutor_app
+from src.agents.tutor_gps.baseline_agent import SingleAgentTutor
 from langchain_core.messages import HumanMessage, AIMessage
 
 async def test_multi_agent(question):

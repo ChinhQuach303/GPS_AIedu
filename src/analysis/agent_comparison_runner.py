@@ -7,8 +7,8 @@ import os
 sys.path.append(os.getcwd())
 
 from src.gps_langgraph import run_gps_tutor as run_single_agent
-from src.ai.multi_agent_gps import run_multi_agent_tutor
-from src.ai.agent_to_agent_sim import simulate_session
+from src.agents.student_sim.multi_agent_gps import run_multi_agent_tutor
+from src.agents.student_sim.agent_to_agent_sim import simulate_session
 
 def run_ab_test(qids: list, profiles: list):
     results = []
