@@ -28,7 +28,7 @@
   },
   {
     "name": "Human Pilot Turn Log",
-    "path": "data\\processed\\GPS_AIedu.csv",
+    "path": "data\\processed\\human_pilot_turn_log.csv",
     "layer": "human_pilot",
     "role": "5-student x 45-question GPS calibration/human pilot layer",
     "exists": true,
@@ -37,7 +37,7 @@
   },
   {
     "name": "Expanded Behavioral Corpus",
-    "path": "data\\processed\\gps_aiedu_gold_standard.csv",
+    "path": "data\\processed\\expanded_exploratory_corpus.csv",
     "layer": "exploratory_augmented_corpus",
     "role": "large augmented corpus; not treated as human gold standard until audited",
     "exists": true,

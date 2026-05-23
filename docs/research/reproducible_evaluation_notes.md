@@ -2,10 +2,10 @@
 
 This project now separates evidence into four layers:
 
-1. **Foundation / pilot interaction log**: 5 students x 45 questions, stored in `data/processed/GPS_AIedu.csv`.
+1. **Foundation / pilot interaction log**: 5 students x 45 questions, stored in `data/processed/human_pilot_turn_log.csv`.
 2. **Controlled evaluation**: `cleaned_massive_results.csv` vs `cleaned_baseline_results.csv`.
 3. **Cross-model stress test**: `cross_model_conversations.csv`.
-4. **Expanded augmented corpus**: `gps_aiedu_gold_standard.csv`; this should be described as exploratory until independently audited.
+4. **Expanded augmented corpus**: `expanded_exploratory_corpus.csv`; this should be described as exploratory until independently audited.
 
 Primary paper claims should use deterministic metrics from `src/evaluation/metrics/pedagogy_metrics.py`:
 

@@ -443,8 +443,8 @@ def correlation_diagnostics(sessions: pd.DataFrame) -> pd.DataFrame:
 
 def audit_all(root: Path) -> Dict[str, object]:
     return {
-        "human_pilot": human_pilot_summary(root / "data/processed/GPS_AIedu.csv"),
-        "expanded": expanded_corpus_quality(root / "data/processed/gps_aiedu_gold_standard.csv"),
+        "human_pilot": human_pilot_summary(root / "data/processed/human_pilot_turn_log.csv"),
+        "expanded": expanded_corpus_quality(root / "data/processed/expanded_exploratory_corpus.csv"),
         "question_bank": question_bank_audit(root / "data/processed/probabilities_questions.json"),
         "irr": compute_irr_from_file(root / "data/outputs/irr_scores.csv"),
     }

@@ -114,7 +114,7 @@ def _qid_from_notes(notes: str) -> str:
 
 def load_human_pilot_sessions() -> pd.DataFrame:
     """Convert the real 5-student turn log into session-level dialogues."""
-    path = ROOT / "data" / "processed" / "GPS_AIedu.csv"
+    path = ROOT / "data" / "processed" / "human_pilot_turn_log.csv"
     df = pd.read_csv(path)
     if "Group" in df.columns:
         df = df[df["Group"].eq("Foundation (Real)")].copy()

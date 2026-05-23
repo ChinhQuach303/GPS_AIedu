@@ -49,14 +49,14 @@ CONTROLLED_DATASETS: Dict[str, DatasetSpec] = {
 SUPPORT_DATASETS: Dict[str, DatasetSpec] = {
     "human_pilot": DatasetSpec(
         name="Human Pilot Turn Log",
-        path=Path("data/processed/GPS_AIedu.csv"),
+        path=Path("data/processed/human_pilot_turn_log.csv"),
         layer="human_pilot",
         role="5-student x 45-question GPS calibration/human pilot layer",
         required_columns=("Student ID", "Question", "AI Response", "GPS Step (Truth)", "Group"),
     ),
     "expanded": DatasetSpec(
         name="Expanded Behavioral Corpus",
-        path=Path("data/processed/gps_aiedu_gold_standard.csv"),
+        path=Path("data/processed/expanded_exploratory_corpus.csv"),
         layer="exploratory_augmented_corpus",
         role="large augmented corpus; not treated as human gold standard until audited",
         required_columns=("Student_ID", "QID", "Level", "Group", "Dialogue"),

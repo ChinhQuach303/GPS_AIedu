@@ -16,7 +16,7 @@ from scipy import stats
 
 from src.evaluation.metrics.pedagogy_metrics import cohen_d, expanded_corpus_quality
 
-INPUT_CSV = Path("data/processed/gps_aiedu_gold_standard.csv")
+INPUT_CSV = Path("data/processed/expanded_exploratory_corpus.csv")
 OUTPUT_DIR = Path("data/outputs/research_stats")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -106,7 +106,7 @@ def run_analysis() -> dict:
     lines = [
         "# Expanded Corpus Exploratory Statistics",
         "",
-        "This file is generated from `data/processed/gps_aiedu_gold_standard.csv`, but the corpus should be described as an expanded/augmented behavioral corpus, not as a human-validated gold standard.",
+        "This file is generated from `data/processed/expanded_exploratory_corpus.csv`, but the corpus should be described as an expanded/augmented behavioral corpus, not as a human-validated gold standard.",
         "",
         "## Quality audit",
         f"- Rows: {quality.get('rows')}",

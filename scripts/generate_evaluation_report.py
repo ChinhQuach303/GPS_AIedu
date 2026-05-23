@@ -123,8 +123,8 @@ def generate_report() -> dict:
 
     irr = compute_irr_from_file(DATA_DIR / "irr_scores.csv")
     qb = question_bank_audit(PROCESSED_DIR / "probabilities_questions.json")
-    human_pilot = human_pilot_summary(PROCESSED_DIR / "GPS_AIedu.csv")
-    expanded = expanded_corpus_quality(PROCESSED_DIR / "gps_aiedu_gold_standard.csv")
+    human_pilot = human_pilot_summary(PROCESSED_DIR / "human_pilot_turn_log.csv")
+    expanded = expanded_corpus_quality(PROCESSED_DIR / "expanded_exploratory_corpus.csv")
 
     audit_payload = {
         "summary": summaries,

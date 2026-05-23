@@ -1,6 +1,6 @@
 # Expanded Corpus Exploratory Statistics
 
-This file is generated from `data/processed/gps_aiedu_gold_standard.csv`, but the corpus should be described as an expanded/augmented behavioral corpus, not as a human-validated gold standard.
+This file is generated from `data/processed/expanded_exploratory_corpus.csv`, but the corpus should be described as an expanded/augmented behavioral corpus, not as a human-validated gold standard.
 
 ## Quality audit
 - Rows: 2824

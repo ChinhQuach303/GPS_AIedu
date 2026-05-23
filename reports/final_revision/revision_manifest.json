@@ -26,8 +26,31 @@
       "mean_difficulty": 3.0296296296296297
     },
     "expanded": {
-      "available": false,
-      "reason": "Missing file: C:\\Users\\quach\\code\\GPS_AIedu\\data\\processed\\gps_aiedu_gold_standard.csv"
+      "available": true,
+      "rows": 2824,
+      "columns": [
+        "Student_ID",
+        "QID",
+        "Level",
+        "Group",
+        "Week",
+        "Dialogue",
+        "Turns_G",
+        "Turns_P",
+        "Turns_S",
+        "Math_Density",
+        "Independence_Index",
+        "Difficulty",
+        "Estimated_Post_Score",
+        "GPS_Fidelity"
+      ],
+      "groups": {
+        "GPS": 1577,
+        "Non-GPS": 1247
+      },
+      "independence_index_gt_1": 24,
+      "independence_index_mean": 0.16313880996672353,
+      "gps_fidelity_mean": 0.33916430594900854
     },
     "question_bank": {
       "available": true,
