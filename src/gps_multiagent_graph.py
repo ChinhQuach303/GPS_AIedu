@@ -1,5 +1,5 @@
 import operator
-from typing import Annotated, List, Literal, TypedDict, Union
+from typing import Annotated, Any, Dict, List, Literal, TypedDict, Union
 
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import BaseMessage, HumanMessage, SystemMessage
@@ -8,14 +8,15 @@ from langgraph.prebuilt import create_react_agent
 
 # --- 1. DATA LAYER (Reuse existing question data) ---
 import json
-def load_questions():
+def load_questions() -> Dict[str, Any]:
     try:
         with open("data/processed/probabilities_questions.json", "r", encoding="utf-8") as f:
-            return {str(q['id']): q for q in json.load(f)}
-    except:
+            data = json.load(f)
+            return {str(q['id']): q for q in data}
+    except Exception:
         return {}
 
-QUESTIONS = load_questions()
+QUESTIONS: Dict[str, Any] = load_questions()
 
 # --- 2. STATE DEFINITION ---
 class AgentState(TypedDict):
@@ -29,13 +30,16 @@ class AgentState(TypedDict):
     p_count: int # For Fading Scaffolding rule
 
 # --- 3. MODELS & CONFIG ---
-def load_system_prompt():
-    with open("src/ai/system_prompt.md", "r", encoding="utf-8") as f:
-        return f.read()
+def load_system_prompt() -> str:
+    try:
+        with open("src/agents/student_sim/system_prompt.md", "r", encoding="utf-8") as f:
+            return f.read()
+    except Exception:
+        return "You are a tutoring assistant."
 
-SYSTEM_PERSONA = load_system_prompt()
+SYSTEM_PERSONA: str = load_system_prompt()
 
-llm = ChatOpenAI(
+llm: ChatOpenAI = ChatOpenAI(
     base_url="http://localhost:11434/v1",
     api_key="ollama",
     model="qwen2.5:7b",
@@ -46,7 +50,7 @@ llm = ChatOpenAI(
 from langchain_core.tools import tool
 
 @tool
-def verify_math_step(calculation: str, expected_result: str):
+def verify_math_step(calculation: str, expected_result: str) -> str:
     """Checks if a student's calculation matches the expected result."""
     # Simple check for demo purposes
     if str(expected_result) in calculation:
@@ -54,7 +58,7 @@ def verify_math_step(calculation: str, expected_result: str):
     return f"Incorrect. The expected result was related to {expected_result}."
 
 @tool
-def get_pedagogical_hint(qid: str, phase: str):
+def get_pedagogical_hint(qid: str, phase: str) -> str:
     """Retrieves a specific hint from the ground truth solution based on the current phase."""
     gt = QUESTIONS.get(qid, {})
     solution = gt.get('solution', 'No solution available.')
@@ -104,7 +108,7 @@ solve_agent = create_react_agent(
 
 # --- 6. SUPERVISOR NODE ---
 
-def supervisor_node(state: AgentState):
+def supervisor_node(state: AgentState) -> dict[str, Any]:
     messages = state["messages"]
     last_message = messages[-1].content
     history_len = len(messages)
@@ -126,7 +130,7 @@ def supervisor_node(state: AgentState):
     
     try:
         response = llm.invoke([SystemMessage(content=prompt)])
-        decision = response.content.strip().upper()
+        decision = str(response.content).strip().upper()
         if 'G' in decision: 
             next_agent = "Guide"
         elif 'S' in decision: 
@@ -134,14 +138,14 @@ def supervisor_node(state: AgentState):
         else: 
             next_agent = "Practice"
             p_count += 1 # Increment practice count
-    except:
+    except Exception:
         next_agent = "Guide"
     
     return {"next_step": next_agent, "p_count": p_count}
 
 # --- 7. GRAPH CONSTRUCTION ---
 
-def create_gps_graph():
+def create_gps_graph() -> Any:
     builder = StateGraph(AgentState)
     
     builder.add_node("Supervisor", supervisor_node)
@@ -167,10 +171,10 @@ def create_gps_graph():
     
     return builder.compile()
 
-gps_graph = create_gps_graph()
+gps_graph: Any = create_gps_graph()
 
 # --- 8. RUNNER ---
-def run_tutor(qid: str, student_msg: str, history: List[BaseMessage] = []):
+def run_tutor(qid: str, student_msg: str, history: List[BaseMessage] = []) -> str:
     gt = QUESTIONS.get(qid, {})
     input_messages = history + [HumanMessage(content=student_msg)]
     
@@ -185,7 +189,7 @@ def run_tutor(qid: str, student_msg: str, history: List[BaseMessage] = []):
     }
     
     final_state = gps_graph.invoke(initial_state)
-    return final_state["messages"][-1].content
+    return str(final_state["messages"][-1].content)
 
 if __name__ == "__main__":
     # Test run

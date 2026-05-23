@@ -1,9 +1,0 @@
-EMNLP 2026 RESEARCH SUMMARY REPORT
-==================================
-
-1. GPS-Agent VAI Mean: 0.2412
-2. Baseline VAI Mean: 0.1236
-3. Cross-Model (Phi-3) VAI Mean: 0.1896
-4. Improvement Over Baseline: 95.16%
-
-5. Inter-Rater Reliability (Cohen's Kappa): 0.68 (Substantial)

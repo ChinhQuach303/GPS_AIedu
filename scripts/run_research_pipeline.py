@@ -64,7 +64,7 @@ def main():
         os.remove(LOG_FILE)
         
     log("="*60)
-    log("HỆ THỐNG ĐIỀU PHỐI NGHIÊN CỨU EMNLP 2026 - GPS-AIEDU")
+    log("HỆ THỐNG ĐIỀU PHỐI NGHIÊN CỨU - GPS-AIEDU")
     log("="*60)
     
     steps = [

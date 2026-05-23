@@ -1,0 +1,485 @@
+{
+  "metric_groups": {
+    "binary_metrics": [
+      "direct_answer_leakage",
+      "phase_validity",
+      "solve_reached",
+      "gps_completion",
+      "premature_solve",
+      "skipped_guide",
+      "skipped_practice",
+      "stall",
+      "guide_loop",
+      "practice_pressure",
+      "reflection_completion",
+      "non_vietnamese_leakage",
+      "degeneracy_flag"
+    ],
+    "continuous_metrics": [
+      "n_turns",
+      "tutor_turns",
+      "student_turns",
+      "parsed_turn_ratio",
+      "student_tokens",
+      "tutor_tokens",
+      "token_balance_student_share",
+      "tutor_student_token_ratio",
+      "student_math",
+      "tutor_math",
+      "total_math",
+      "vai",
+      "math_density",
+      "student_reasoning_turns",
+      "student_reasoning_rate",
+      "max_same_phase_run",
+      "n_guide",
+      "n_practice",
+      "n_solve",
+      "phase_balance_entropy",
+      "answer_dependency_index",
+      "autonomy_process_score"
+    ],
+    "primary_binary_metrics": [
+      "direct_answer_leakage",
+      "phase_validity",
+      "gps_completion",
+      "premature_solve",
+      "stall"
+    ],
+    "primary_continuous_metrics": [
+      "vai",
+      "math_density",
+      "student_reasoning_rate",
+      "token_balance_student_share",
+      "autonomy_process_score"
+    ]
+  },
+  "data_layers": {
+    "GPS-Agent": "C:\\Users\\quach\\code\\GPS_AIedu\\data\\outputs\\cleaned_massive_results.csv",
+    "Single-Agent": "C:\\Users\\quach\\code\\GPS_AIedu\\data\\outputs\\cleaned_baseline_results.csv",
+    "Cross-Model Phi-3": "C:\\Users\\quach\\code\\GPS_AIedu\\data\\outputs\\cross_model_conversations.csv"
+  },
+  "n_total_sessions_evaluated": 249,
+  "audits": {
+    "human_pilot": {
+      "available": true,
+      "total_rows": 4163,
+      "human_pilot_turns": 810,
+      "expanded_turns": 3353,
+      "students": 5,
+      "questions": 45,
+      "sessions": 225,
+      "phase_counts": {
+        "G": 315,
+        "P": 270,
+        "S": 225
+      },
+      "mean_satisfaction": 3.9753086419753085,
+      "mean_difficulty": 3.0296296296296297
+    },
+    "expanded": {
+      "available": true,
+      "rows": 2824,
+      "columns": [
+        "Student_ID",
+        "QID",
+        "Level",
+        "Group",
+        "Week",
+        "Dialogue",
+        "Turns_G",
+        "Turns_P",
+        "Turns_S",
+        "Math_Density",
+        "Independence_Index",
+        "Difficulty",
+        "Estimated_Post_Score",
+        "GPS_Fidelity"
+      ],
+      "groups": {
+        "GPS": 1577,
+        "Non-GPS": 1247
+      },
+      "independence_index_gt_1": 24,
+      "independence_index_mean": 0.16313880996672353,
+      "gps_fidelity_mean": 0.33916430594900854
+    },
+    "question_bank": {
+      "available": true,
+      "n_questions": 45,
+      "missing_answer": 15,
+      "questions_with_blank_options": 43,
+      "validated_for_correctness": 2,
+      "audit_table": [
+        {
+          "id": 1,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 2,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 3,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 4,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 0,
+          "validated_for_correctness": true
+        },
+        {
+          "id": 5,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 6,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 7,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 8,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 9,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 10,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 11,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 12,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 13,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 14,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 15,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 16,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 17,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 18,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 19,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 20,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 21,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 22,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 23,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 24,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 25,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 26,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 27,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 28,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 29,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 30,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 31,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 32,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 1,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 33,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 34,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 35,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 36,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 37,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 38,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 39,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 1,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 40,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 41,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 42,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 0,
+          "validated_for_correctness": true
+        },
+        {
+          "id": 43,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 1,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 44,
+          "has_question": true,
+          "has_answer": true,
+          "n_options": 4,
+          "blank_options": 4,
+          "validated_for_correctness": false
+        },
+        {
+          "id": 45,
+          "has_question": true,
+          "has_answer": false,
+          "n_options": 6,
+          "blank_options": 5,
+          "validated_for_correctness": false
+        }
+      ]
+    },
+    "irr": {
+      "available": true,
+      "n": 100,
+      "rater_a_mean": 3.0,
+      "rater_b_mean": 3.0,
+      "quadratic_weighted_kappa": NaN,
+      "unweighted_kappa": NaN
+    }
+  }
+}

@@ -1,6 +1,0 @@
-name,path,layer,role,exists,required_columns,columns
-GPS-Agent,data\outputs\cleaned_massive_results.csv,controlled_simulation,experimental multi-agent tutoring condition,True,session_id;question;level;trace;dialogue,session_id;question;level;trace;dialogue
-Single-Agent,data\outputs\cleaned_baseline_results.csv,controlled_simulation,single-agent baseline condition,True,session_id;question;level;trace;dialogue,session_id;question;level;trace;dialogue
-Cross-Model Phi-3,data\outputs\cross_model_conversations.csv,cross_model_stress_test,independent student-simulator stress test,True,session_id;question;level;trace;dialogue,session_id;question;level;trace;dialogue
-Human Pilot Turn Log,data\processed\GPS_AIedu.csv,human_pilot,5-student x 45-question GPS calibration/human pilot layer,True,Student ID;Question;AI Response;GPS Step (Truth);Group,Timestamp;Student ID;Class;Topic;Profile;Question;AI Response;Notes;Satisfaction (1-5);Difficulty (1-5);GPS Step (Truth);Auto Label;Student Hash;Thinking Time (minutes);Group
-Expanded Behavioral Corpus,data\processed\gps_aiedu_gold_standard.csv,exploratory_augmented_corpus,large augmented corpus; not treated as human gold standard until audited,True,Student_ID;QID;Level;Group;Dialogue,Student_ID;QID;Level;Group;Week;Dialogue;Turns_G;Turns_P;Turns_S;Math_Density;Independence_Index;Difficulty;Estimated_Post_Score;GPS_Fidelity

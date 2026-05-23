@@ -4,14 +4,14 @@ import numpy as np
 from datetime import datetime
 
 class TeacherAnalytics:
-    def __init__(self, db_path="webchat/gps_aiedu.sqlite"):
-        self.db_path = db_path
+    def __init__(self, db_path: str = "webchat/gps_aiedu.sqlite") -> None:
+        self.db_path: str = db_path
         
-    def get_raw_data(self):
+    def get_raw_data(self) -> pd.DataFrame:
         conn = sqlite3.connect(self.db_path)
-        df = pd.read_sql_query("SELECT * FROM messages", conn)
-        ratings = pd.read_sql_query("SELECT * FROM ratings", conn)
-        students = pd.read_sql_query("SELECT * FROM students", conn)
+        df: pd.DataFrame = pd.read_sql_query("SELECT * FROM messages", conn)
+        ratings: pd.DataFrame = pd.read_sql_query("SELECT * FROM ratings", conn)
+        students: pd.DataFrame = pd.read_sql_query("SELECT * FROM students", conn)
         conn.close()
         
         # Merge data
@@ -20,8 +20,8 @@ class TeacherAnalytics:
             df = df.merge(ratings, on="message_id", how="left")
         return df
 
-    def generate_report(self):
-        df = self.get_raw_data()
+    def generate_report(self) -> str:
+        df: pd.DataFrame = self.get_raw_data()
         if df.empty:
             return "No data available yet."
             

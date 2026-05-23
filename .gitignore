@@ -1,70 +1,176 @@
-# Python artifacts
-.venv/
-env/
-ENV/
-venv/
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-.pytest_cache/
-.mypy_cache/
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Node / Next.js outputs
-node_modules/
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nosexy
+.nosetests
+.pytest_cache/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# Translation files
+*.mo
+*.gmo
+
+# Django stuff:
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-.npm/
-.nvmrc
-.next/
-webchat/.next/
-out/
-webchat/out/
-dist/
-build/
-webchat/build/
-webchat/.turbo/
-.webscraper/
-webchat/.vercel/
-webchat/.expo/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
 
-# Local env files
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+.pybuilder/
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+#   For a library or app, you might want to share your .python-version.
+#   You should decide if this file should be shared or not.
+# .python-version
+
+# pipenv
+#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
+#   However, in case of collaboration, if delegates have different platforms or python versions,
+#   pipenv may install different packages.
+#   For a library, you should ignore Pipfile.lock.
+# Pipfile.lock
+
+# poetry
+#   Similar to Pipfile.lock, poetry.lock should generally be tracked.
+#   However, if you wish to ignore it, uncomment the line below.
+# poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, pdm.lock should generally be tracked.
+# .pdm-python.map
+# .pdm-build/
+
+# PEP 582; used by e.g. pdm when local packages are installed
+__pypackages__/
+
+# Celery stuff
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-**/.env.local
-**/.env.*.local
-.env.*
-!.env.example
-!**/.env.example
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
-# Local / generated data
-data/raw/_tmp_*.csv
-data/raw/mock_week1_realistic.csv
+# Spyder project settings
+.spyderproject
+.spyproject
 
-# Apps Script / editor artifacts
-src/tools/__pycache__/
+# Rope project settings
+.ropeproject
 
-# IDE / OS
+# mkdocs documentation
+/site/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype type checker
+.pytype/
+
+# Cython debug symbols
+cython_debug/
+
+# OS/IDE
 .vscode/
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
 .DS_Store
 Thumbs.db
-ehthumbs.db
-Icon?
 
-# Beads / Dolt files (added by bd init)
-.dolt/
-*.db
-.beads-credential-key
+# Project-specific logs and temporary files
+*.log
+webchat/.next/
+webchat/out/
+webchat/build/
+webchat/.vercel/
+
+# Generated zip packages / latex outputs that shouldn't be checked in
+*.zip
+*.pdf
+compile.log
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.toc
+*.synctex.gz
+paper/emnlp_full_metrics/main.pdf
+paper/emnlp_full_metrics/compile.log
+paper/emnlp_final_revision/main.pdf
+paper/emnlp_final_revision/compile.log
+paper/emnlp_overleaf/main.pdf
+paper/emnlp_overleaf/compile.log

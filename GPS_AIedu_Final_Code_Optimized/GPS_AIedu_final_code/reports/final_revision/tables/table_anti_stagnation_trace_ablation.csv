@@ -1,3 +1,0 @@
-system,n_sessions,trigger_rate,stall_before_rate,stall_after_trace_gate_rate,gps_completion_before_rate,gps_completion_after_trace_gate_rate
-GPS-Agent,100,0.41,0.41,0.0,0.62,0.75
-Cross-Model Phi-3,49,0.7959183673469388,0.7959183673469388,0.0,0.08163265306122448,0.7346938775510204

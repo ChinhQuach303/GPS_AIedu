@@ -1,230 +1,129 @@
 {
-  "level_stats": [
-    {
-      "Group": "GPS",
-      "Level": "Giỏi",
-      "sessions": 227,
-      "avg_independence": 0.33,
-      "avg_estimated_score": 88.434
+  "corpus_name": "Expanded GPS-AIEdu Corpus (exploratory, not human-validated gold standard)",
+  "quality": {
+    "available": true,
+    "rows": 2824,
+    "columns": [
+      "Student_ID",
+      "QID",
+      "Level",
+      "Group",
+      "Week",
+      "Dialogue",
+      "Turns_G",
+      "Turns_P",
+      "Turns_S",
+      "Math_Density",
+      "Independence_Index",
+      "Difficulty",
+      "Estimated_Post_Score",
+      "GPS_Fidelity"
+    ],
+    "groups": {
+      "GPS": 1577,
+      "Non-GPS": 1247
     },
-    {
-      "Group": "GPS",
-      "Level": "Khá",
-      "sessions": 448,
-      "avg_independence": 0.252,
-      "avg_estimated_score": 72.223
-    },
-    {
-      "Group": "GPS",
-      "Level": "Trung bình",
-      "sessions": 633,
-      "avg_independence": 0.328,
-      "avg_estimated_score": 56.867
-    },
-    {
-      "Group": "GPS",
-      "Level": "Yếu",
-      "sessions": 269,
-      "avg_independence": 0.242,
-      "avg_estimated_score": 50.869
-    },
-    {
-      "Group": "Non-GPS",
-      "Level": "Giỏi",
-      "sessions": 161,
-      "avg_independence": 0.0,
-      "avg_estimated_score": 85.0
-    },
-    {
-      "Group": "Non-GPS",
-      "Level": "Khá",
-      "sessions": 385,
-      "avg_independence": 0.0,
-      "avg_estimated_score": 70.0
-    },
-    {
-      "Group": "Non-GPS",
-      "Level": "Trung bình",
-      "sessions": 493,
-      "avg_independence": 0.0,
-      "avg_estimated_score": 55.0
-    },
-    {
-      "Group": "Non-GPS",
-      "Level": "Yếu",
-      "sessions": 208,
-      "avg_independence": 0.0,
-      "avg_estimated_score": 50.0
-    }
-  ],
+    "independence_index_gt_1": 24,
+    "independence_index_mean": 0.16313880996672353,
+    "gps_fidelity_mean": 0.33916430594900854
+  },
   "group_summary": [
     {
       "Group": "GPS",
       "n_sessions": 1577,
+      "avg_independence_raw": 0.2921,
+      "ii_gt_1": 24,
+      "avg_independence_bounded": 0.2866,
       "avg_math_density": 5.026,
-      "avg_independence": 0.292,
-      "avg_gps_fidelity": 0.528,
-      "avg_post_score": 64.75
+      "avg_gps_fidelity": 0.5283,
+      "avg_estimated_post_score": 64.75
     },
     {
       "Group": "Non-GPS",
       "n_sessions": 1247,
-      "avg_math_density": 2.556,
-      "avg_independence": 0.0,
+      "avg_independence_raw": 0.0,
+      "ii_gt_1": 0,
+      "avg_independence_bounded": 0.0,
+      "avg_math_density": 2.5557,
       "avg_gps_fidelity": 0.1,
-      "avg_post_score": 62.67
+      "avg_estimated_post_score": 62.6704
     }
   ],
-  "hake_gain": [
+  "level_summary": [
     {
       "Group": "GPS",
       "Level": "Giỏi",
-      "Hake_Gain": 0.769
+      "n_sessions": 227,
+      "avg_independence_bounded": 0.3253,
+      "avg_math_density": 6.7313,
+      "avg_estimated_post_score": 88.4339
     },
     {
       "Group": "GPS",
       "Level": "Khá",
-      "Hake_Gain": 0.444
+      "n_sessions": 448,
+      "avg_independence_bounded": 0.2504,
+      "avg_math_density": 3.8594,
+      "avg_estimated_post_score": 72.2225
     },
     {
       "Group": "GPS",
       "Level": "Trung bình",
-      "Hake_Gain": 0.137
+      "n_sessions": 633,
+      "avg_independence_bounded": 0.3206,
+      "avg_math_density": 4.9463,
+      "avg_estimated_post_score": 56.8669
     },
     {
       "Group": "GPS",
       "Level": "Yếu",
-      "Hake_Gain": 0.017
+      "n_sessions": 269,
+      "avg_independence_bounded": 0.2343,
+      "avg_math_density": 5.7175,
+      "avg_estimated_post_score": 50.8695
     },
     {
       "Group": "Non-GPS",
       "Level": "Giỏi",
-      "Hake_Gain": 0.7
+      "n_sessions": 161,
+      "avg_independence_bounded": 0.0,
+      "avg_math_density": 2.6273,
+      "avg_estimated_post_score": 85.0
     },
     {
       "Group": "Non-GPS",
       "Level": "Khá",
-      "Hake_Gain": 0.4
+      "n_sessions": 385,
+      "avg_independence_bounded": 0.0,
+      "avg_math_density": 2.4052,
+      "avg_estimated_post_score": 70.0
     },
     {
       "Group": "Non-GPS",
       "Level": "Trung bình",
-      "Hake_Gain": 0.1
+      "n_sessions": 493,
+      "avg_independence_bounded": 0.0,
+      "avg_math_density": 2.5112,
+      "avg_estimated_post_score": 55.0
     },
     {
       "Group": "Non-GPS",
       "Level": "Yếu",
-      "Hake_Gain": 0.0
+      "n_sessions": 208,
+      "avg_independence_bounded": 0.0,
+      "avg_math_density": 2.8846,
+      "avg_estimated_post_score": 50.0
     }
   ],
-  "statistical_test": {
-    "test": "Welch's t-test (GPS vs Non-GPS, Estimated_Post_Score)",
-    "gps_mean": 64.75,
-    "nongps_mean": 62.67,
-    "t_statistic": 4.3608,
-    "p_value": 1.3e-05,
-    "cohen_d": 0.162,
-    "effect_size": "Small",
-    "significant": true
-  },
-  "independence_index_test": {
-    "gps_mean": 0.292,
-    "nongps_mean": 0.0,
-    "t_statistic": 32.9893,
-    "p_value": 0.0,
-    "cohen_d": 1.112,
-    "significant": true
-  },
-  "markov_transitions": {
-    "GPS": {
-      "avg_G": 1.18,
-      "avg_P": 1.11,
-      "avg_S": 1.37,
-      "G_ratio": 0.321,
-      "P_ratio": 0.304,
-      "S_ratio": 0.375
-    },
-    "Non-GPS": {
-      "avg_G": 0.0,
-      "avg_P": 0.0,
-      "avg_S": 0.0,
-      "G_ratio": 0,
-      "P_ratio": 0,
-      "S_ratio": 0
-    }
-  },
-  "weekly_trend": [
+  "exploratory_tests": [
     {
-      "Group": "GPS",
-      "Week": 1,
-      "avg_independence": 0.215,
-      "avg_math_density": 2.427
-    },
-    {
-      "Group": "GPS",
-      "Week": 2,
-      "avg_independence": 0.317,
-      "avg_math_density": 4.058
-    },
-    {
-      "Group": "GPS",
-      "Week": 3,
-      "avg_independence": 0.34,
-      "avg_math_density": 4.686
-    },
-    {
-      "Group": "GPS",
-      "Week": 4,
-      "avg_independence": 0.334,
-      "avg_math_density": 3.396
-    },
-    {
-      "Group": "GPS",
-      "Week": 5,
-      "avg_independence": 0.28,
-      "avg_math_density": 5.158
-    },
-    {
-      "Group": "GPS",
-      "Week": 6,
-      "avg_independence": 0.286,
-      "avg_math_density": 7.287
-    },
-    {
-      "Group": "Non-GPS",
-      "Week": 1,
-      "avg_independence": 0.0,
-      "avg_math_density": 1.524
-    },
-    {
-      "Group": "Non-GPS",
-      "Week": 2,
-      "avg_independence": 0.0,
-      "avg_math_density": 2.217
-    },
-    {
-      "Group": "Non-GPS",
-      "Week": 3,
-      "avg_independence": 0.0,
-      "avg_math_density": 2.772
-    },
-    {
-      "Group": "Non-GPS",
-      "Week": 4,
-      "avg_independence": 0.0,
-      "avg_math_density": 2.123
-    },
-    {
-      "Group": "Non-GPS",
-      "Week": 5,
-      "avg_independence": 0.0,
-      "avg_math_density": 2.408
-    },
-    {
-      "Group": "Non-GPS",
-      "Week": 6,
-      "avg_independence": 0.0,
-      "avg_math_density": 3.272
+      "comparison": "GPS vs Non-GPS",
+      "metric": "Estimated_Post_Score (heuristic)",
+      "gps_mean": 64.75003804070413,
+      "nongps_mean": 62.67040898155573,
+      "p_value": 1.3423870412580751e-05,
+      "cohen_d": 0.1616112608424821,
+      "interpretation": "exploratory_only_not_learning_outcome"
     }
   ]
 }

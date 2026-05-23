@@ -1,4 +1,0 @@
-system,n_sessions,n_questions,n_levels,direct_answer_leakage_rate,direct_answer_leakage_ci_low,direct_answer_leakage_ci_high,phase_validity_rate,phase_validity_ci_low,phase_validity_ci_high,gps_completion_rate,premature_solve_rate,stall_rate
-GPS-Agent,100,25,4,0.09,0.04,0.15,0.75,0.66,0.83,0.62,0.25,0.41
-Single-Agent,100,25,4,0.54,0.44,0.64,0.0,0.0,0.0,0.0,0.0,0.0
-Cross-Model Phi-3,49,25,2,0.42857142857142855,0.2857142857142857,0.5714285714285714,1.0,1.0,1.0,0.08163265306122448,0.0,0.7959183673469388
