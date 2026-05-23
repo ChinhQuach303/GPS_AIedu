@@ -1,0 +1,3 @@
+Group,n_sessions,avg_independence_raw,ii_gt_1,avg_independence_bounded,avg_math_density,avg_gps_fidelity,avg_estimated_post_score
+GPS,1577,0.2921,24,0.2866,5.026,0.5283,64.75
+Non-GPS,1247,0.0,0,0.0,2.5557,0.1,62.6704

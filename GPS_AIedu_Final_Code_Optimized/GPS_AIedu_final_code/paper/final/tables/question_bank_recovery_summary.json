@@ -1,0 +1,7 @@
+{
+  "n_questions": 45,
+  "original_json_missing_answers": 15,
+  "recovered_answers_from_raw_solution": 45,
+  "options_need_typesetting_repair": 43,
+  "interpretation": "Answer-key coverage is complete after recovery from the raw solution text; option strings still need typography/formula repair before releasing a polished multiple-choice bank."
+}

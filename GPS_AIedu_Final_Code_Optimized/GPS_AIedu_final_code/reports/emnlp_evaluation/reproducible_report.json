@@ -1,0 +1,183 @@
+{
+  "summary": [
+    {
+      "system": "GPS-Agent",
+      "n_sessions": 100,
+      "n_questions": 25,
+      "n_levels": 4,
+      "vai_mean": 0.32557094466173025,
+      "vai_sd": 0.2135077007330727,
+      "math_density_mean": 1.1252725207545509,
+      "student_reasoning_turns_mean": 7.04,
+      "direct_answer_leakage_rate": 0.09,
+      "stall_rate": 0.41,
+      "phase_validity_rate": 0.75,
+      "reflection_completion_rate": 0.12643678160919541,
+      "non_vietnamese_leakage_rate": 0.0
+    },
+    {
+      "system": "Single-Agent",
+      "n_sessions": 100,
+      "n_questions": 25,
+      "n_levels": 4,
+      "vai_mean": 0.3204027887333254,
+      "vai_sd": 0.2305935740396726,
+      "math_density_mean": 1.0055476190476191,
+      "student_reasoning_turns_mean": 5.55,
+      "direct_answer_leakage_rate": 0.54,
+      "stall_rate": 0.0,
+      "phase_validity_rate": 0.0,
+      "reflection_completion_rate": null,
+      "non_vietnamese_leakage_rate": 0.0
+    },
+    {
+      "system": "Cross-Model Phi-3",
+      "n_sessions": 49,
+      "n_questions": 25,
+      "n_levels": 2,
+      "vai_mean": 0.36088204003645924,
+      "vai_sd": 0.33375796066129093,
+      "math_density_mean": 0.7212240674127056,
+      "student_reasoning_turns_mean": 11.938775510204081,
+      "direct_answer_leakage_rate": 0.42857142857142855,
+      "stall_rate": 0.7959183673469388,
+      "phase_validity_rate": 1.0,
+      "reflection_completion_rate": 0.0,
+      "non_vietnamese_leakage_rate": 0.2857142857142857
+    }
+  ],
+  "tests": [
+    {
+      "comparison": "GPS-Agent vs Single-Agent",
+      "metric": "VAI",
+      "a_mean": 0.32557094466173025,
+      "b_mean": 0.3204027887333254,
+      "delta": 0.005168155928404861,
+      "relative_delta_pct": 1.6130183975103822,
+      "welch_t": 0.16445512420164518,
+      "p_value": 0.8695416247410644,
+      "cohen_d": 0.023257466704771843,
+      "a_bootstrap_ci_low": 0.2848195418129094,
+      "a_bootstrap_ci_high": 0.36726535087544093
+    },
+    {
+      "comparison": "GPS-Agent vs Single-Agent",
+      "metric": "Math Density",
+      "a_mean": 1.1252725207545509,
+      "b_mean": 1.0055476190476191,
+      "delta": 0.11972490170693173,
+      "relative_delta_pct": 11.906437789622172,
+      "welch_t": 0.8298833385761083,
+      "p_value": 0.40761351767415216,
+      "cohen_d": 0.11736322726017955,
+      "a_bootstrap_ci_low": 0.942038258445214,
+      "a_bootstrap_ci_high": 1.319413858980985
+    },
+    {
+      "comparison": "GPS-Agent vs Single-Agent",
+      "metric": "Direct-answer leakage",
+      "a_mean": 0.09,
+      "b_mean": 0.54,
+      "delta": -0.45000000000000007,
+      "relative_delta_pct": -83.33333333333334,
+      "fisher_odds_ratio": 0.08424908424908426,
+      "p_value": 3.831780827904869e-12,
+      "a_bootstrap_ci_low": 0.04,
+      "a_bootstrap_ci_high": 0.15
+    },
+    {
+      "comparison": "GPS-Agent vs Single-Agent",
+      "metric": "Phase validity",
+      "a_mean": 0.75,
+      "b_mean": 0.0,
+      "delta": 0.75,
+      "relative_delta_pct": null,
+      "fisher_odds_ratio": Infinity,
+      "p_value": 2.8726002195048504e-33,
+      "a_bootstrap_ci_low": 0.66,
+      "a_bootstrap_ci_high": 0.83
+    },
+    {
+      "comparison": "GPS-Agent vs Single-Agent",
+      "metric": "Stall rate",
+      "a_mean": 0.41,
+      "b_mean": 0.0,
+      "delta": 0.41,
+      "relative_delta_pct": null,
+      "fisher_odds_ratio": Infinity,
+      "p_value": 5.028722485533832e-15,
+      "a_bootstrap_ci_low": 0.31,
+      "a_bootstrap_ci_high": 0.51
+    },
+    {
+      "comparison": "Cross-Model Phi-3 vs Single-Agent",
+      "metric": "Direct-answer leakage",
+      "a_mean": 0.42857142857142855,
+      "b_mean": 0.54,
+      "delta": -0.11142857142857149,
+      "relative_delta_pct": -20.634920634920643,
+      "fisher_odds_ratio": 0.6388888888888888,
+      "p_value": 0.22518227757952713,
+      "a_bootstrap_ci_low": 0.2857142857142857,
+      "a_bootstrap_ci_high": 0.5714285714285714
+    }
+  ],
+  "irr": {
+    "available": true,
+    "n": 100,
+    "rater_a_mean": 3.0,
+    "rater_b_mean": 3.0,
+    "quadratic_weighted_kappa": NaN,
+    "unweighted_kappa": NaN
+  },
+  "question_bank_audit": {
+    "available": true,
+    "n_questions": 45,
+    "missing_answer": 15,
+    "questions_with_blank_options": 43,
+    "validated_for_correctness": 2
+  },
+  "human_pilot_summary": {
+    "available": true,
+    "total_rows": 4163,
+    "human_pilot_turns": 810,
+    "expanded_turns": 3353,
+    "students": 5,
+    "questions": 45,
+    "sessions": 225,
+    "phase_counts": {
+      "G": 315,
+      "P": 270,
+      "S": 225
+    },
+    "mean_satisfaction": 3.9753086419753085,
+    "mean_difficulty": 3.0296296296296297
+  },
+  "expanded_corpus_quality": {
+    "available": true,
+    "rows": 2824,
+    "columns": [
+      "Student_ID",
+      "QID",
+      "Level",
+      "Group",
+      "Week",
+      "Dialogue",
+      "Turns_G",
+      "Turns_P",
+      "Turns_S",
+      "Math_Density",
+      "Independence_Index",
+      "Difficulty",
+      "Estimated_Post_Score",
+      "GPS_Fidelity"
+    ],
+    "groups": {
+      "GPS": 1577,
+      "Non-GPS": 1247
+    },
+    "independence_index_gt_1": 24,
+    "independence_index_mean": 0.16313880996672353,
+    "gps_fidelity_mean": 0.33916430594900854
+  }
+}

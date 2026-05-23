@@ -1,0 +1,68 @@
+
+% ACL-compatible local preview style for offline compilation.
+% For official submission, replace this file with the current unmodified acl.sty
+% from https://github.com/acl-org/acl-style-files or compile inside the official
+% ACL/EMNLP Overleaf template.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{acl}[2026/05/22 ACL-compatible preview style]
+\newif\ifaclreview
+\newif\ifaclfinal
+\DeclareOption{review}{\aclreviewtrue\aclfinalfalse}
+\DeclareOption{final}{\aclreviewfalse\aclfinaltrue}
+\DeclareOption{preprint}{\aclreviewfalse\aclfinaltrue}
+\ExecuteOptions{final}
+\ProcessOptions\relax
+\RequirePackage[a4paper,margin=2.5cm,heightrounded=true]{geometry}
+\setlength\columnsep{0.6cm}
+\flushbottom
+\twocolumn
+\sloppy
+\RequirePackage{times}
+\RequirePackage{latexsym}
+\RequirePackage{caption}
+\RequirePackage{natbib}
+\RequirePackage{url}
+\RequirePackage{xcolor}
+\IfFileExists{lineno.sty}{%
+  \RequirePackage[switch,mathlines]{lineno}
+  \ifaclreview\AtBeginDocument{\linenumbers}\fi
+}{}
+\newlength\titlebox
+\setlength\titlebox{11\baselineskip}
+\pagestyle{plain}
+\pagenumbering{arabic}
+\def\addcontentsline#1#2#3{}
+\newcommand\outauthor{%
+  \begin{tabular}[t]{c}
+  \ifaclreview\bfseries Anonymous EMNLP submission\else\bfseries\@author\fi
+  \end{tabular}}
+\AtBeginDocument{%
+\def\maketitle{\par\begingroup\def\thefootnote{\fnsymbol{footnote}}\twocolumn[\@maketitle]\@thanks\endgroup\setcounter{footnote}{0}\let\maketitle\relax\let\@maketitle\relax\gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax}
+\def\@maketitle{\vbox to \titlebox{\hsize\textwidth\linewidth\hsize\vskip 0.125in minus 0.125in\centering{\Large\bfseries \@title \par}\vskip 0.2in plus 1fil minus 0.1in{\hbox to \linewidth\bgroup\large\hfil\hfil\hbox to 0pt\bgroup\hss\outauthor\hss\egroup\hfil\hfil\egroup}\vskip 0.3in plus 2fil minus 0.1in}}
+}
+\renewenvironment{abstract}{\begin{center}\large\textbf{Abstract}\end{center}\begin{list}{}{\setlength{\rightmargin}{0.6cm}\setlength{\leftmargin}{0.6cm}}\item[]\ignorespaces\normalsize}{\unskip\end{list}}
+\DeclareCaptionFont{aclten}{\fontsize{10pt}{12pt}\selectfont}
+\captionsetup{font=aclten}
+\bibliographystyle{acl_natbib}
+\renewcommand\cite{\citep}
+\newcommand\shortcite{\citeyearpar}
+\newcommand\newcite{\citet}
+\def\thebibliography#1{\vskip\parskip\vskip\baselineskip\def\baselinestretch{1}\ifx\@currsize\normalsize\@normalsize\else\@currsize\fi\vskip-\parskip\vskip-\baselineskip\section*{References\@mkboth {References}{References}}\list{}{\setlength{\labelwidth}{0pt}\setlength{\leftmargin}{\parindent}\setlength{\itemindent}{-\parindent}}\def\newblock{\hskip .11em plus .33em minus -.07em}\sloppy\clubpenalty4000\widowpenalty4000\sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+\def\section{\@startsection {section}{1}{\z@}{-2.0ex plus -0.5ex minus -.2ex}{1.5ex plus 0.3ex minus .2ex}{\large\bfseries\raggedright}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{-1.8ex plus -0.5ex minus -.2ex}{0.8ex plus .2ex}{\normalsize\bfseries\raggedright}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{-1.5ex plus -0.5ex minus -.2ex}{0.5ex plus .2ex}{\normalsize\bfseries\raggedright}}
+\def\paragraph{\@startsection{paragraph}{4}{\z@}{1.5ex plus 0.5ex minus .2ex}{-1em}{\normalsize\bfseries}}
+\parindent 1em
+\topsep 4pt plus 1pt minus 2pt
+\partopsep 1pt plus 0.5pt minus 0.5pt
+\itemsep 2pt plus 1pt minus 0.5pt
+\parsep 2pt plus 1pt minus 0.5pt
+\leftmargin 2em
+\leftmargini\leftmargin
+\leftmarginii 2em
+\labelsep 5pt
+\abovedisplayskip 7pt plus2pt minus5pt
+\belowdisplayskip \abovedisplayskip
+\abovedisplayshortskip 0pt plus3pt
+\belowdisplayshortskip 4pt plus3pt minus3pt

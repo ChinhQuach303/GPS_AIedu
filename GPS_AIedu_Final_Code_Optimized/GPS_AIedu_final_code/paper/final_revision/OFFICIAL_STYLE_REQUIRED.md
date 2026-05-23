@@ -1,0 +1,1 @@
+This package includes a local preview fallback for acl.sty. Before official submission, replace acl.sty and acl_natbib.bst with the official ACL style files from https://github.com/acl-org/acl-style-files or the ACL Overleaf template.

@@ -1,0 +1,9 @@
+Group,Level,n_sessions,avg_independence_bounded,avg_math_density,avg_estimated_post_score
+GPS,Giỏi,227,0.3253,6.7313,88.4339
+GPS,Khá,448,0.2504,3.8594,72.2225
+GPS,Trung bình,633,0.3206,4.9463,56.8669
+GPS,Yếu,269,0.2343,5.7175,50.8695
+Non-GPS,Giỏi,161,0.0,2.6273,85.0
+Non-GPS,Khá,385,0.0,2.4052,70.0
+Non-GPS,Trung bình,493,0.0,2.5112,55.0
+Non-GPS,Yếu,208,0.0,2.8846,50.0

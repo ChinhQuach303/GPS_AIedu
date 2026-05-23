@@ -1,0 +1,22 @@
+GPS-AGENT REPRODUCIBLE EVALUATION REPORT
+================================================
+
+DATA LAYERS
+- Human pilot log: 5 students, 45 questions, 225 sessions, 810 G/P/S turns.
+- Expanded turn log: 4163 total turns (810 human pilot + 3353 expanded).
+- Controlled evaluation: 100 GPS-Agent sessions vs 100 Single-Agent sessions over 25 unique questions.
+- Cross-model validation: 49 Phi-3 sessions.
+
+MAIN RESULTS
+- Direct-answer leakage: GPS-Agent 9.0% vs Single-Agent 54.0%; Fisher p=0.000, odds ratio=0.084.
+- Phase validity: GPS-Agent 75.0% vs Single-Agent 0.0%; Fisher p=0.000.
+- VAI is secondary and not significant in the current controlled logs: GPS-Agent 0.326 vs Single-Agent 0.320; Welch p=0.870, Cohen's d=0.023.
+- Stall/scaffolding-pressure signal: GPS-Agent 41.0% vs Single-Agent 0.0%; report as limitation, not as success.
+- Cross-model Phi-3 stress test: leakage 42.9%, stall 79.6%, non-Vietnamese leakage 28.6%.
+
+IRR
+- Observed IRR from irr_scores.csv: quadratic weighted kappa=NA, unweighted kappa=NA, n=100. Do not claim substantial agreement unless this improves after reannotation.
+
+DATA QUALITY NOTES
+- Question bank: 45 questions; missing answers=15; questions with blank options=43; validated for correctness=2.
+- Expanded corpus: 2824 rows; Independence_Index > 1 count=24. Treat as exploratory/augmented corpus until audited.

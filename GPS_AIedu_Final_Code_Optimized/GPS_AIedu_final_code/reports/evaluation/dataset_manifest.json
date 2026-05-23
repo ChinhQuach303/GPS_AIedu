@@ -1,0 +1,47 @@
+[
+  {
+    "name": "GPS-Agent",
+    "path": "data\\outputs\\cleaned_massive_results.csv",
+    "layer": "controlled_simulation",
+    "role": "experimental multi-agent tutoring condition",
+    "exists": true,
+    "required_columns": "session_id;question;level;trace;dialogue",
+    "columns": "session_id;question;level;trace;dialogue"
+  },
+  {
+    "name": "Single-Agent",
+    "path": "data\\outputs\\cleaned_baseline_results.csv",
+    "layer": "controlled_simulation",
+    "role": "single-agent baseline condition",
+    "exists": true,
+    "required_columns": "session_id;question;level;trace;dialogue",
+    "columns": "session_id;question;level;trace;dialogue"
+  },
+  {
+    "name": "Cross-Model Phi-3",
+    "path": "data\\outputs\\cross_model_conversations.csv",
+    "layer": "cross_model_stress_test",
+    "role": "independent student-simulator stress test",
+    "exists": true,
+    "required_columns": "session_id;question;level;trace;dialogue",
+    "columns": "session_id;question;level;trace;dialogue"
+  },
+  {
+    "name": "Human Pilot Turn Log",
+    "path": "data\\processed\\GPS_AIedu.csv",
+    "layer": "human_pilot",
+    "role": "5-student x 45-question GPS calibration/human pilot layer",
+    "exists": true,
+    "required_columns": "Student ID;Question;AI Response;GPS Step (Truth);Group",
+    "columns": "Timestamp;Student ID;Class;Topic;Profile;Question;AI Response;Notes;Satisfaction (1-5);Difficulty (1-5);GPS Step (Truth);Auto Label;Student Hash;Thinking Time (minutes);Group"
+  },
+  {
+    "name": "Expanded Behavioral Corpus",
+    "path": "data\\processed\\gps_aiedu_gold_standard.csv",
+    "layer": "exploratory_augmented_corpus",
+    "role": "large augmented corpus; not treated as human gold standard until audited",
+    "exists": true,
+    "required_columns": "Student_ID;QID;Level;Group;Dialogue",
+    "columns": "Student_ID;QID;Level;Group;Week;Dialogue;Turns_G;Turns_P;Turns_S;Math_Density;Independence_Index;Difficulty;Estimated_Post_Score;GPS_Fidelity"
+  }
+]

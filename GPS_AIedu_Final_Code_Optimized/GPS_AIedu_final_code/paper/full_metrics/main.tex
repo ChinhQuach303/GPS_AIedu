@@ -1,0 +1,156 @@
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage[hidelinks]{hyperref}
+
+\title{GPS-Agent: Full-Metric Evaluation of a State-Graph Tutor for Reducing Direct Answer-Giving in Mathematics Dialogue}
+\author{Anonymous Submission}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Large language models are strong mathematical solvers, but this creates a pedagogical failure mode: direct answer-giving before the learner has reasoned through a problem. We present GPS-Agent, a Socratic tutoring framework that enforces a Guide--Practice--Solve protocol. This revision reports a full deterministic metric suite over Vietnamese probability/combinatorics tutoring logs: 5 student profiles, 45 questions, 225 human pilot sessions, 810 annotated turns, 100 controlled GPS-Agent sessions, 100 single-agent baseline sessions, and 49 cross-model stress-test sessions. GPS-Agent reduces direct-answer leakage from 54.0\% to 9.0\% (Fisher $p=3.83e-12$) and increases phase-validity from 0.0\% to 75.0\% ($p=2.87e-33$). We also report engagement, language, phase-dynamics, failure, data-quality, and IRR diagnostics. The evidence supports a process-control claim, not yet a long-term learning-gain claim.
+\end{abstract}
+
+\section{Introduction}
+LLM tutors frequently optimize for helpfulness by solving the learner's problem directly. For mathematics education, this is problematic because the visible output can be correct while the learning process is weak. GPS-Agent addresses this issue by separating pedagogical functions into state-constrained Guide, Practice, and Solve phases.
+
+Earlier drafts of this project reported only a narrow set of metrics. This version expands the evaluation suite to cover five groups: pedagogical control, phase dynamics, learner engagement, language/data quality, and statistical diagnostics. Every metric is regenerated from CSV logs by deterministic code; no paper number is hard-coded.
+
+\section{System}
+GPS-Agent uses a LangGraph-style state graph with specialized nodes. Guide elicits prior knowledge and problem interpretation. Practice decomposes the task into smaller computations. Solve confirms the final answer only after prior Guide and Practice evidence. The Supervisor routes turns and stores a phase trace. This trace makes phase validity auditable rather than purely prompt-dependent.
+
+\section{Data Layers}
+\paragraph{Human pilot.} The project contains a human pilot turn log with 5 student profiles, 45 questions, 225 sessions, and 810 annotated turns. Phase counts are Guide=315, Practice=270, Solve=225. This layer calibrates the protocol and supports data-quality analysis.
+
+\paragraph{Controlled comparison.} The main comparison uses 100 GPS-Agent sessions and 100 baseline sessions. Both share the same schema and are therefore used for statistical tests.
+
+\paragraph{Cross-model stress test.} The cross-model layer contains 49 Phi-3-style student-simulator sessions. It is used as a stress test, not as a success-only result, because stall and language leakage are higher than in the primary GPS-Agent condition.
+
+\paragraph{Expanded corpus.} The expanded exploratory corpus has 2824 rows. It is not called a human gold standard because the audit still finds schema and metric-quality issues.
+
+\paragraph{Question-bank audit.} The 45-question bank contains 45 questions, with 15 missing answers and 43 malformed-option cases. Correctness-based claims are therefore restricted to validated subsets.
+
+\section{Metric Suite}
+\paragraph{Pedagogical-control metrics.} We compute direct-answer leakage, phase validity, GPS completion, premature Solve, skipped Guide, skipped Practice, and stall/scaffolding pressure.
+
+\paragraph{Phase-dynamics metrics.} We compute Guide/Practice/Solve counts, maximum same-phase run, phase-balance entropy, guide-loop rate, and practice-pressure rate.
+
+\paragraph{Engagement metrics.} We compute VAI, math density, student reasoning-turn rate, student/tutor token balance, tutor-student token ratio, answer-dependency index, and a secondary autonomy-process score. The autonomy-process score is not treated as a learning-outcome metric; it is a diagnostic aggregate of process behavior.
+
+\paragraph{Quality metrics.} We compute non-Vietnamese leakage, parse coverage, degeneracy flags, reflection requirement/completion, and IRR diagnostics.
+
+\section{Results}
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+System & $N$ & Q & Leak. & Valid & GPS comp. & Prem. S & Stall \\
+\midrule
+GPS-Agent & 100 & 25 & 9.0 & 75.0 & 62.0 & 25.0 & 41.0 \\
+Single-Agent & 100 & 25 & 54.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+Cross-Model Phi-3 & 49 & 25 & 42.9 & 100.0 & 8.2 & 0.0 & 79.6 \\
+\bottomrule
+\end{tabular}
+\caption{Full pedagogical-control metrics. Leak., Valid, GPS comp., Prem. S, and Stall are percentages.}
+\label{tab:control}
+\end{table*}
+
+Table~\ref{tab:control} shows the central result. GPS-Agent reduces direct-answer leakage from 54.0\% to 9.0\%, with odds ratio 0.084 and Fisher $p=3.83e-12$. It also increases phase validity from 0.0\% to 75.0\% ($p=2.87e-33$) and GPS completion from 0.0\% to 62.0\% ($p=3.13e-25$). These are the strongest defensible claims.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig01_direct_answer_leakage.png}
+\caption{GPS-Agent substantially reduces direct-answer leakage.}
+\label{fig:leakage}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig02_phase_validity.png}
+\caption{GPS-Agent makes pedagogical phase validity measurable and substantially higher than the single-agent baseline.}
+\label{fig:phase}
+\end{figure}
+
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+System & VAI & Math dens. & Reason rate & Student tok. & Tutor/Stud tok. & Answer dep. & APS \\
+\midrule
+GPS-Agent & 0.326 & 1.125 & 0.771 & 0.252 & 3.663 & 4.649 & 0.689 \\
+Single-Agent & 0.320 & 1.006 & 0.761 & 0.179 & 5.960 & 4.210 & 0.385 \\
+Cross-Model Phi-3 & 0.361 & 0.721 & 0.635 & 0.456 & 18.829 & 11.527 & 0.642 \\
+\bottomrule
+\end{tabular}
+\caption{Engagement and autonomy diagnostics. APS = autonomy-process score. These are secondary process metrics, not learning-outcome claims.}
+\label{tab:engagement}
+\end{table*}
+
+The engagement picture is more cautious. GPS-Agent VAI is 0.326, while the baseline VAI is 0.320; Welch $p=0.870$ and Cohen's $d=0.023$. Student reasoning-turn rate is 0.771 for GPS-Agent and 0.761 for the baseline ($p=0.681$). The autonomy-process score is higher under GPS-Agent (0.689 vs. 0.385, $p=2.90e-34$), but it remains a process diagnostic.
+
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+Level & $N$ & Leak. & Valid & GPS comp. & Stall & VAI & Reason \\
+\midrule
+Excellent & 25 & 20.0 & 84.0 & 64.0 & 52.0 & 0.311 & 0.769 \\
+Good & 25 & 0.0 & 72.0 & 64.0 & 36.0 & 0.358 & 0.807 \\
+Average & 25 & 8.0 & 80.0 & 72.0 & 40.0 & 0.293 & 0.744 \\
+Weak & 25 & 8.0 & 64.0 & 48.0 & 36.0 & 0.341 & 0.763 \\
+\bottomrule
+\end{tabular}
+\caption{GPS-Agent metrics by student level. Percentages are shown as 0--100 values.}
+\label{tab:level}
+\end{table*}
+
+\section{Failure and Robustness}
+The main remaining weakness is scaffolding pressure. GPS-Agent stall is 41.0\%, compared with 0.0\% for the baseline ($p=5.03e-15$). This should not be interpreted as a baseline advantage: the baseline avoids stalls partly by not enforcing structured tutoring. However, from a pedagogical perspective, long repeated Practice or Guide chains may frustrate students.
+
+The cross-model stress test confirms this limitation. Cross-model direct-answer leakage is 42.9\%, stall is 79.6\%, non-Vietnamese leakage is 28.6\%, and VAI is 0.361. This suggests partial robustness but also model-sensitivity in language and stagnation control.
+
+\section{IRR and Data Quality Diagnostics}
+The current IRR file should be treated as diagnostic only. Recomputed agreement over 100 paired ratings gives quadratic weighted kappa=-- and unweighted kappa=--. Therefore the paper does not claim substantial agreement until a calibrated human or human-audited rubric is added.
+
+\section{Discussion}
+The fuller metric suite changes the interpretation of the project. The strongest result is not that GPS-Agent already improves final learning outcomes; the strongest result is that it makes process control measurable and reduces answer-giving. This is important because a tutor that cannot avoid premature solution disclosure is unlikely to support independent mathematical reasoning.
+
+The results also define the next engineering target. The Supervisor should learn to distinguish productive struggle from unproductive stagnation. In future versions, Anti-Stagnation should be based on student-state evidence, frustration cues, and history-aware fading rather than only consecutive phase counts.
+
+\section{Conclusion}
+We presented a full-metric evaluation of GPS-Agent. The system substantially reduces direct-answer leakage and improves Guide--Practice--Solve compliance compared with a single-agent baseline. Secondary engagement metrics are reported transparently, but do not yet justify claims about long-term learning gain. The deliverable is therefore best framed as a reproducible system paper on pedagogical process control in LLM tutoring.
+
+\section{Limitations}
+The human/foundation layer is small, the controlled comparison relies on simulated learners, the 45-question bank still requires answer and option cleaning, and IRR must be rerun with calibrated annotation. The local style files included here are compile-compatible fallbacks; final submission should use official ACL style files.
+
+\section{Ethics Statement}
+GPS-Agent should support teachers rather than replace them. Logs may contain sensitive indicators of learning difficulty and must be protected. Metrics such as autonomy, stall, and leakage should be used for system diagnosis and teacher support, not punitive evaluation of learners.
+
+\begin{thebibliography}{}
+\bibitem[Koedinger and Corbett(2006)]{koedinger2006cognitive}
+Koedinger, Kenneth R. and Corbett, Albert T. 2006. Cognitive tutors: Technology bringing learning science to the classroom. In \emph{The Cambridge Handbook of the Learning Sciences}.
+\bibitem[Macina et~al.(2023)]{macina2023mathdial}
+Macina, Jakub, Nico Daheim, Saurabh Srivastava, Philipp Mondorf, Katja Markert, Mrinmaya Sachan, and Mirella Lapata. 2023. MathDial: A dialogue tutoring dataset with rich pedagogical properties grounded in math reasoning problems. In \emph{Findings of EMNLP}.
+\bibitem[Ryan and Deci(2000)]{ryan2000self}
+Ryan, Richard M. and Edward L. Deci. 2000. Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being. \emph{American Psychologist}, 55(1):68--78.
+\bibitem[Tack and Piech(2022)]{tack2022teacher}
+Tack, Anais and Chris Piech. 2022. The AI Teacher Test: Measuring the pedagogical ability of Blender and GPT-3 in educational dialogues. In \emph{Proceedings of EDM}.
+\bibitem[VanLehn(2011)]{vanlehn2011relative}
+VanLehn, Kurt. 2011. The relative effectiveness of human tutoring, intelligent tutoring systems, and other tutoring systems. \emph{Educational Psychologist}, 46(4):197--221.
+\bibitem[Vygotsky(1978)]{vygotsky1978mind}
+Vygotsky, Lev S. 1978. \emph{Mind in Society: The Development of Higher Psychological Processes}. Harvard University Press.
+\bibitem[Wood et~al.(1976)]{wood1976role}
+Wood, David, Jerome S. Bruner, and Gail Ross. 1976. The role of tutoring in problem solving. \emph{Journal of Child Psychology and Psychiatry}, 17(2):89--100.
+\end{thebibliography}
+\end{document}

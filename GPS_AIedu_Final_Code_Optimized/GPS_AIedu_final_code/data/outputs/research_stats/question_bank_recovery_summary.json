@@ -1,0 +1,8 @@
+{
+  "n_questions": 45,
+  "original_json_missing_answers": 15,
+  "recovered_answers_from_raw_solution": 45,
+  "answer_key_coverage_after_recovery": 1.0,
+  "options_need_typesetting_repair": 43,
+  "interpretation": "Answer-key coverage is complete after deterministic recovery from the raw solution text; the remaining question-bank issue is option/formula typesetting repair, not missing answers."
+}

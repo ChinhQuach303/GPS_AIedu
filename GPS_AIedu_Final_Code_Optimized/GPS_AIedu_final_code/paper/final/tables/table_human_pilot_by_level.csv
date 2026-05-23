@@ -1,0 +1,5 @@
+system,level,n_sessions,direct_answer_leakage_rate,phase_valid_rate,gps_complete_rate,stall_rate,vai_mean,math_density_mean,student_reasoning_rate_mean,autonomy_process_score_mean,token_balance_student_share_mean
+Human Pilot (GPS),Giỏi,45,0.0,1.0,1.0,0.0,0.0,0.0,0.6962962962962963,0.6740740740740742,0.4927546020721661
+Human Pilot (GPS),Mất tập trung,45,0.0,1.0,1.0,0.0,0.0,0.0,0.5777777777777777,0.6444444444444445,0.4401773286743269
+Human Pilot (GPS),Trung bình,90,0.0,1.0,1.0,0.0,0.0,0.0,0.6962962962962962,0.6740740740740739,0.4616498788123421
+Human Pilot (GPS),Yếu,45,0.0,1.0,1.0,0.0,0.0,0.0,0.6622222222222223,0.6655555555555555,0.41973419296222214

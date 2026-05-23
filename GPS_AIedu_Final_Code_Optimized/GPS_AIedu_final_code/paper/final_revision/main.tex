@@ -1,0 +1,178 @@
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+
+\title{GPS-Agent: A State-Graph Tutoring Framework for Process Control in Vietnamese Mathematics Dialogue}
+\author{Anonymous Submission}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+LLM-based tutors can solve mathematics problems fluently, but this creates a pedagogical failure mode: direct answer-giving before the learner has reasoned through the problem. We present GPS-Agent, a state-graph tutoring framework that enforces a Guide--Practice--Solve protocol. This revision separates a real five-student human pilot log from controlled simulated learner experiments. The human pilot contains 5 real students, 45 probability/combinatorics questions, 225 sessions, and 810 annotated turns. The controlled comparison contains 100 GPS-Agent sessions and 100 single-agent baseline sessions. GPS-Agent reduces direct-answer leakage from 54.0\% to 9.0\% (Fisher $p=3.83e-12$) and increases phase-constraint validity from 0.0\% to 75.0\% ($p=2.87e-33$). We report failures transparently: VAI is not significantly improved ($p=0.870$), IRR is currently invalid as a reliability claim, and stall remains high. The paper therefore claims process control, not long-term learning gain.
+\end{abstract}
+
+\section{Introduction}
+LLM tutors are attractive because they offer immediate, fluent, individualized help. In mathematics education, however, fluency can undermine learning: the tutor may provide a complete worked solution when the student needs a hint, a subproblem, or a prompt for self-explanation. We call this the \emph{Answer-Giving Trap}.
+
+GPS-Agent addresses the Answer-Giving Trap by constraining interaction flow. Instead of using a single prompt to ask an LLM to be Socratic, GPS-Agent separates tutoring into Guide, Practice, and Solve phases and routes among them with a stateful Supervisor. This paper evaluates whether that architectural constraint improves \emph{process control}: avoiding premature answers and preserving pedagogical phase structure.
+
+\paragraph{Contributions.} We make four contributions. First, we formulate direct-answer leakage as a measurable failure mode for LLM tutoring. Second, we present GPS-Agent, a state-graph tutor for Vietnamese probability/combinatorics dialogue. Third, we provide a full deterministic metric suite covering leakage, phase dynamics, engagement, quality, and failure modes. Fourth, we separate evidence layers: a real five-student human pilot, a controlled simulated learner comparison, a cross-model stress test, and an exploratory expanded corpus.
+
+\section{Related Work}
+Classical intelligent tutoring systems and cognitive tutors showed that stepwise feedback and constraint-based instruction can improve learning, but they often require domain-specific knowledge engineering. Recent LLM tutoring work, including MathDial-style dialogue tutoring and the AI Teacher Test, evaluates whether models can provide pedagogically appropriate hints rather than direct solutions. GPS-Agent differs by treating pedagogical sequencing as an architectural control problem rather than only a prompting problem. It is closer to graph-based multi-agent orchestration, where state and routing are first-class components.
+
+\section{GPS-Agent}
+GPS-Agent implements a Guide--Practice--Solve protocol. Guide elicits the student's interpretation and prior knowledge. Practice decomposes the problem into one substep at a time. Solve confirms and reflects on the answer only after prior Guide and Practice evidence. A Supervisor maintains the phase trace and decides whether the next turn should remain in the current phase or transition.
+
+\section{Data}
+\paragraph{Human pilot.} The human pilot layer is real human-pilot data, not simulated learner data. It contains 5 students, 45 questions, 225 sessions, and 810 annotated turns. The five students cover four observed proficiency/behavior profiles: advanced, typical, struggling, and off-track/direct-answer-seeking. Therefore, the paper refers to \emph{five students} but \emph{four profile bands}.
+
+\paragraph{Controlled simulated comparison.} The main statistical comparison uses matched controlled sessions: 100 GPS-Agent sessions and 100 single-agent baseline sessions. These sessions are generated with the same question pool and student-level labels, so they are suitable for process-control comparisons.
+
+\paragraph{Cross-model stress test and expanded corpus.} The Phi-3 cross-model set contains 49 sessions and is used as a robustness stress test. The expanded exploratory corpus contains 2824 rows, but is not treated as a human gold standard because metric and schema audits still reveal inconsistencies.
+
+\paragraph{Question-bank audit.} The question bank currently has 45 questions, but 15 have missing answers and 43 have malformed options. Therefore, correctness-based claims are restricted to validated subsets. The release includes a validation template for manual repair.
+
+\section{Metrics}
+We compute five groups of deterministic metrics. Pedagogical-control metrics include direct-answer leakage, phase-constraint validity, full GPS completion, premature Solve, skipped Guide/Practice, and stall. Engagement metrics include VAI, math density, student reasoning-turn rate, token balance, answer-dependency index, and an autonomy-process score. Quality metrics include non-Vietnamese leakage, parse coverage, degeneracy flags, reflection completion, and IRR diagnostics.
+
+\paragraph{Validity versus completion.} Phase-constraint validity and full GPS completion are intentionally different. A session can be phase-valid if it does not violate ordering constraints, even if it never reaches Solve. Full GPS completion requires all three phases G, P, and S. This distinction explains why the cross-model stress test can show high phase validity but low completion.
+
+\section{Results}
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+System & $N$ & Q & Leak. & Valid & GPS comp. & Solve & Stall \\
+\midrule
+GPS-Agent & 100 & 25 & 9.0 & 75.0 & 62.0 & 87.0 & 41.0 \\
+Single-Agent & 100 & 25 & 54.0 & 0.0 & 0.0 & 0.0 & 0.0 \\
+Cross-Model Phi-3 & 49 & 25 & 42.9 & 100.0 & 8.2 & 8.2 & 79.6 \\
+\bottomrule
+\end{tabular}
+\caption{Controlled and stress-test process-control metrics. Leak., Valid, GPS comp., Solve, and Stall are percentages. Valid means no phase-order violation; GPS comp. requires Guide, Practice, and Solve.}
+\label{tab:main}
+\end{table*}
+
+Table~\ref{tab:main} is the primary result. GPS-Agent reduces direct-answer leakage from 54.0\% to 9.0\% (Fisher $p=3.83e-12$, odds ratio=0.084). It also increases phase-constraint validity from 0.0\% to 75.0\% ($p=2.87e-33$) and full GPS completion from 0.0\% to 62.0\% ($p=3.13e-25$). These are the strongest claims.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig01_direct_answer_leakage.png}
+\caption{Direct-answer leakage by system. Lower is better; GPS-Agent sharply reduces early answer disclosure compared with the single-agent baseline.}
+\label{fig:leakage}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{figures/fig03_gps_completion.png}
+\caption{Full Guide--Practice--Solve completion. This is stricter than phase validity because it requires reaching all three phases.}
+\label{fig:gpscompletion}
+\end{figure}
+
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+Layer & $N$ & Q & Levels & Valid & Comp. & Leak. & VAI \\
+\midrule
+Human Pilot (GPS) & 225 & 45 & 4 & 100.0 & 100.0 & 0.0 & 0.000 \\
+\bottomrule
+\end{tabular}
+\caption{Real human-pilot layer from five students. This layer triangulates feasibility but is not used to claim long-term learning gain.}
+\label{tab:human}
+\end{table*}
+
+The human pilot in Table~\ref{tab:human} confirms that the project has a real student layer: 225 sessions from five students over 45 questions. It is reported separately to avoid mixing human data with simulated learner comparisons.
+
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+Level & $N$ & Leak. & Valid & Comp. & Stall & VAI \\
+\midrule
+Excellent & 25 & 20.0 & 84.0 & 64.0 & 52.0 & 0.311 \\
+Good & 25 & 0.0 & 72.0 & 64.0 & 36.0 & 0.358 \\
+Average & 25 & 8.0 & 80.0 & 72.0 & 40.0 & 0.293 \\
+Weak & 25 & 8.0 & 64.0 & 48.0 & 36.0 & 0.341 \\
+\bottomrule
+\end{tabular}
+\caption{GPS-Agent controlled metrics by student level. The controlled comparison has four level bands; the human pilot has five students.}
+\label{tab:levels}
+\end{table*}
+
+Table~\ref{tab:levels} resolves the earlier inconsistency: the experiment contains five real students in the human pilot but four controlled proficiency bands in the simulated comparison.
+
+\section{Failure Analysis and Anti-Stagnation}
+The largest weakness is stall/scaffolding pressure: GPS-Agent stall is 41.0\%, compared with 0.0\% for the baseline ($p=5.03e-15$). This is not a baseline win; the baseline can avoid stall by giving answers. But it is a real usability risk.
+
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{lrrrrrr}
+\toprule
+System & $N$ & Trigger & Stall$_b$ & Stall$_a$ & Comp$_b$ & Comp$_a$ \\
+\midrule
+GPS-Agent & 100 & 41.0 & 41.0 & 0.0 & 62.0 & 75.0 \\
+Cross-Model Phi-3 & 49 & 79.6 & 79.6 & 0.0 & 8.2 & 73.5 \\
+\bottomrule
+\end{tabular}
+\caption{Routing-only anti-stagnation ablation on existing traces. This estimates the effect of forcing a phase transition after repeated identical phases; it is not a regenerated dialogue experiment.}
+\label{tab:ablation}
+\end{table*}
+
+Table~\ref{tab:ablation} shows a conservative trace-level ablation. The gate is not enough to prove pedagogical quality, but it demonstrates that the observed stall is mechanically addressable at the Supervisor routing level.
+
+\section{Qualitative Examples}
+\begin{table*}[t]
+\centering
+\small
+\begin{tabular}{p{0.13\linewidth}p{0.80\linewidth}}
+\toprule
+System & Excerpt \\
+\midrule
+GPS-Agent & Em: Gieo mot ong tien can oi va ong chat bon lan. Xac suat e ca bon lan xuat hien mat sap la? / Thay: Chao em! e giai bai toan nay, chung ta can lam ro mot so khai niem co ban truoc nhe. 1. Em co nho xac suat cua viec gieo uoc mat sap khi gieo mot ong tien can oi va ong chat la bao nhieu khong? 2. Khi gieo... \\
+Single-Agent & Thay: Thay chao em! Hom nay chung ta se cung giai bai toan ve xac suat nhe. e bai nay noi gi nhi? Em co the mo ta lai noi dung cua e bai cho thay biet khong? Em hay nghi xem, khi gieo mot ong tien can oi va ong chat, thi mat nao xuat hien co xac suat la bao nhieu? / Em: Gieo ong tien 4 lan, ta can su co nao e... \\
+\bottomrule
+\end{tabular}
+\caption{Short dialogue excerpts. The GPS-Agent excerpt maintains staged scaffolding, while the baseline tends to expose computation and final-answer content earlier.}
+\label{tab:qual}
+\end{table*}
+
+\section{IRR and Reliability}
+The current IRR scores are not usable as a reliability contribution. Recomputed agreement over 100 paired scores gives quadratic weighted kappa=-- and unweighted kappa=--. Therefore, IRR is removed from the contribution list. A calibrated human or human-audited annotation pass is required before making reliability claims.
+
+\section{Reproducibility}
+The tutor backend in the current code uses an Ollama-compatible OpenAI endpoint with Qwen2.5:7B, temperature 0.1 for tutor/Supervisor calls, and Phi-3-mini for cross-model student simulation at temperature 0.7. The student simulator uses higher temperature to diversify behavior. All paper-facing metrics in this revision are generated by deterministic scripts from CSV files; no reported metric is hard-coded.
+
+\section{Discussion}
+The evidence supports a narrow but useful claim: GPS-Agent improves process control. It reduces direct answer-giving and makes phase compliance auditable. The evidence does not yet support a claim about long-term learning gain. The human pilot provides feasibility triangulation, but larger human pre/post studies are needed.
+
+\section{Conclusion}
+GPS-Agent is a state-graph framework for controlling LLM tutor behavior in Vietnamese mathematics dialogue. In controlled experiments, it substantially reduces direct-answer leakage and increases pedagogical phase control. The revised paper separates human and simulated data, removes invalid IRR claims, audits the question bank, and reports stall as the main remaining engineering target.
+
+\section{Limitations}
+The human pilot has only five students. The main GPS-versus-baseline comparison still uses simulated learners. The question bank is not yet fully validated for answer correctness. The anti-stagnation ablation is trace-level rather than a regenerated dialogue experiment. The provided local style files are preview-compatible fallbacks; final submission should use official ACL style files.
+
+\section{Ethics Statement}
+The system is intended to assist teachers, not replace them. Logs involving students may contain sensitive information about learning difficulties, so consent, anonymization, secure storage, and non-punitive use of analytics are necessary.
+
+\begin{thebibliography}{}
+\bibitem[Koedinger and Corbett(2006)]{koedinger2006cognitive} Koedinger, Kenneth R. and Albert T. Corbett. 2006. Cognitive tutors: Technology bringing learning science to the classroom. In \emph{The Cambridge Handbook of the Learning Sciences}.
+\bibitem[Macina et~al.(2023)]{macina2023mathdial} Macina, Jakub et~al. 2023. MathDial: A dialogue tutoring dataset with rich pedagogical properties grounded in math reasoning problems. In \emph{Findings of EMNLP}.
+\bibitem[Tack and Piech(2022)]{tack2022teacher} Tack, Anais and Chris Piech. 2022. The AI Teacher Test: Measuring the pedagogical ability of Blender and GPT-3 in educational dialogues. In \emph{Proceedings of EDM}.
+\bibitem[VanLehn(2011)]{vanlehn2011relative} VanLehn, Kurt. 2011. The relative effectiveness of human tutoring, intelligent tutoring systems, and other tutoring systems. \emph{Educational Psychologist}, 46(4):197--221.
+\bibitem[Vygotsky(1978)]{vygotsky1978mind} Vygotsky, Lev S. 1978. \emph{Mind in Society}. Harvard University Press.
+\bibitem[Wood et~al.(1976)]{wood1976role} Wood, David, Jerome S. Bruner, and Gail Ross. 1976. The role of tutoring in problem solving. \emph{Journal of Child Psychology and Psychiatry}, 17(2):89--100.
+\end{thebibliography}
+\end{document}

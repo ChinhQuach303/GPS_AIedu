@@ -1,0 +1,20 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{acl}[2026/05/22 local ACL-compatible preview fallback; replace with official acl-org/acl-style-files]
+\newif\ifaclreview
+\DeclareOption{review}{\aclreviewtrue}
+\DeclareOption{final}{\aclreviewfalse}
+\ProcessOptions\relax
+\RequirePackage[letterpaper,margin=1in]{geometry}
+\RequirePackage{times}
+\RequirePackage{latexsym}
+\RequirePackage{fancyhdr}
+\RequirePackage{titlesec}
+\RequirePackage{caption}
+\setlength{\columnsep}{0.25in}
+\AtBeginDocument{\if@twocolumn\else\twocolumn\fi}
+\pagestyle{plain}
+\titleformat{\section}{\large\bfseries}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+\newcommand{\aclfinalcopy}{}
+\newcommand{\aclpaperid}[1]{}
+\renewenvironment{abstract}{\begin{center}\bfseries Abstract\end{center}\small}{\par}
